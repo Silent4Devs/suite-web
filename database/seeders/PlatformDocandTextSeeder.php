@@ -2,8 +2,8 @@
 
 namespace Database\Seeders;
 
-use Illuminate\Database\Seeder;
 use App\Models\Escuela\Platform;
+use Illuminate\Database\Seeder;
 
 class PlatformDocandTextSeeder extends Seeder
 {
@@ -20,7 +20,7 @@ class PlatformDocandTextSeeder extends Seeder
             ],
             [
                 'name' => 'Documento',
-            ]
+            ],
         ];
 
         Platform::insert($new_plataforms);

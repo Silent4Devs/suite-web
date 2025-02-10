@@ -2,7 +2,6 @@
 
 namespace App\Models\Escuela;
 
-use App\Models\Escuela\Platform;
 use App\Traits\ClearsResponseCache;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -33,6 +32,7 @@ class Lesson extends Model implements Auditable
     public function getPlatformFormatAttribute()
     {
         $platf = Platform::where('id', $this->platform_id)->first();
+
         return $platf->name;
         //  dd($this->formatType);
     }
@@ -40,8 +40,8 @@ class Lesson extends Model implements Auditable
     public function getFileFormatAttribute()
     {
 
-        if($this->resource){
-            $ruta = storage_path('app/' . $this->resource->url);
+        if ($this->resource) {
+            $ruta = storage_path('app/'.$this->resource->url);
 
             // Obtener la extensión del archivo
             $informacionArchivo = pathinfo($ruta);
@@ -51,14 +51,14 @@ class Lesson extends Model implements Auditable
         }
     }
 
-    //Relacion uno a uno
+    // Relacion uno a uno
 
     public function description()
     {
         return $this->hasOne('App\Models\Escuela\Description');
     }
 
-    //Relacion uno a muchos inversa
+    // Relacion uno a muchos inversa
     public function section()
     {
         return $this->belongsTo('App\Models\Escuela\Section');
@@ -69,20 +69,20 @@ class Lesson extends Model implements Auditable
         return $this->belongsTo('App\Models\Escuela\Platform');
     }
 
-    //Relacion muchos a muchos
+    // Relacion muchos a muchos
     public function users()
     {
         return $this->belongsToMany('App\Models\User');
     }
 
-    //Relacion uno a uno polimorfica
+    // Relacion uno a uno polimorfica
 
     public function resource()
     {
         return $this->morphOne('App\Models\Escuela\Resource', 'resourceable');
     }
 
-    //Relacion uno a muchos polimorfica
+    // Relacion uno a muchos polimorfica
 
     public function comments()
     {

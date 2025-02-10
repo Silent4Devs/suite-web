@@ -542,7 +542,7 @@ class tbApiMobileControllerRequisiciones extends Controller
         if ($requisicion->firma_solicitante === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->solicitante_id)) {
                 if ($user->empleado->id == $firma_siguiente->solicitante_id) {
-                    //solicitante_id
+                    // solicitante_id
                     $tipo_firma = 'firma_solicitante';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
@@ -574,7 +574,7 @@ class tbApiMobileControllerRequisiciones extends Controller
         } elseif ($requisicion->firma_jefe === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->jefe_id)) {
                 if ($user->empleado->id == $firma_siguiente->jefe_id) {
-                    //jefe_id
+                    // jefe_id
                     $tipo_firma = 'firma_jefe';
                     $alerta = $this->validacionLista($tipo_firma);
                 } else {
@@ -622,7 +622,7 @@ class tbApiMobileControllerRequisiciones extends Controller
         } elseif ($requisicion->firma_finanzas === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->responsable_finanzas_id)) {
                 if ($user->empleado->id == $firma_siguiente->responsable_finanzas_id) {
-                    //responsable_finanzas_id
+                    // responsable_finanzas_id
                     $tipo_firma = 'firma_finanzas';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera de finanzas:'.$firma_siguiente->responsableFinanzas->name;
@@ -663,7 +663,7 @@ class tbApiMobileControllerRequisiciones extends Controller
         } elseif ($requisicion->firma_compras === null && $requisicion->estado != 'rechazado') {
             if ($firma_siguiente && isset($firma_siguiente->comprador_id)) {
                 if ($user->empleado->id == $comprador->user->id && $user->empleado->id == $firma_siguiente->comprador_id) {
-                    //comprador_id
+                    // comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del comprador:'.$comprador->user->name.'';
@@ -677,7 +677,7 @@ class tbApiMobileControllerRequisiciones extends Controller
                 }
             } else {
                 if ($user->empleado->id == $comprador->user->id) {
-                    //comprador_id
+                    // comprador_id
                     $tipo_firma = 'firma_compras';
                 } else {
                     $mensaje = 'No tiene permisos para firmar En espera del comprador:'.$comprador->user->name.'';
@@ -868,27 +868,27 @@ class tbApiMobileControllerRequisiciones extends Controller
                     'estado' => 'curso',
                 ]);
                 $requisicion->save();
-                //Buscamos supervisor
+                // Buscamos supervisor
                 $user = User::find($requisicion->id_user);
                 $supervisor = $user->empleado->supervisor;
 
-                //Buscamos modelo correspondiente a lideres
+                // Buscamos modelo correspondiente a lideres
                 $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-                //Traemos participantes
+                // Traemos participantes
                 $listaPart = $listaReq->participantes;
 
-                //Buscamos al supervisor por su id
+                // Buscamos al supervisor por su id
                 $supList = $listaPart->where('empleado_id', $supervisor->id)->first();
 
-                //Buscamos en que nivel se encuentra el supervisor
+                // Buscamos en que nivel se encuentra el supervisor
                 $nivel = $supList->nivel;
 
-                //traemos a todos los participantes correspondientes a ese nivel
+                // traemos a todos los participantes correspondientes a ese nivel
                 $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-                //Buscamos 1 por 1 los participantes del nivel (area)
+                // Buscamos 1 por 1 los participantes del nivel (area)
                 foreach ($participantesNivel as $key => $partNiv) {
-                    //Si su estado esta activo se le manda el correo
+                    // Si su estado esta activo se le manda el correo
                     if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
                         $responsable = $partNiv->empleado;
                         $userEmail = $responsable->email;

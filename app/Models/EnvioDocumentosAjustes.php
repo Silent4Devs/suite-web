@@ -24,7 +24,7 @@ class EnvioDocumentosAjustes extends Model implements Auditable
         'team_id',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getFirstWithCoordinadorMensajero()
     {
         return Cache::remember('EnvioDocumentosAjustes:EnviodocumentosAjustes_with_coordinador_mensajero', 3600 * 7, function () {

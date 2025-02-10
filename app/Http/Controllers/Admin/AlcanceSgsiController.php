@@ -172,7 +172,7 @@ class AlcanceSgsiController extends Controller
                 'fecha_publicacion' => $request->input('fecha_publicacion'),
                 'fecha_revision' => $request->input('fecha_revision'),
                 'estatus' => 'Pendiente',
-                'id_reviso_alcance' => User::getCurrentUser()->empleado->id, //Para saber quien lo elaboro/responsable
+                'id_reviso_alcance' => User::getCurrentUser()->empleado->id, // Para saber quien lo elaboro/responsable
             ]);
 
             $this->solicitudAprobacion($alcanceSgsi->id);
@@ -349,7 +349,7 @@ class AlcanceSgsiController extends Controller
             $proceso = ProcesosListaDistribucion::updateOrCreate(
                 [
                     'modulo_id' => $lista->id,
-                    'proceso_id' => $id_alcance, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
+                    'proceso_id' => $id_alcance, // Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
                 ],
                 [
                     'estatus' => 'Pendiente',
@@ -368,7 +368,7 @@ class AlcanceSgsiController extends Controller
                 );
             }
 
-            //Superaprobadores
+            // Superaprobadores
             foreach ($proceso->participantes as $part) {
                 if ($part->participante->nivel == 0) {
                     $emailSuperAprobador = $part->participante->empleado->email;
@@ -377,7 +377,7 @@ class AlcanceSgsiController extends Controller
                 }
             }
 
-            //Aprobadores normales
+            // Aprobadores normales
             foreach ($proceso->participantes as $part) {
                 if ($part->participante->nivel == 1) {
                     // for ($j = 1; $j <= 5; $j++) {
@@ -512,7 +512,7 @@ class AlcanceSgsiController extends Controller
             $participante = $proceso->participantes[0]->participante;
 
             // dd($id, $request->all(), $aprobador, $proceso, $participante);
-            //SuperAprobador
+            // SuperAprobador
             if ($participante->nivel == 0) {
                 // dd("superaprobador");
                 $proceso->update([

@@ -17,7 +17,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     use LivewireAlert;
     use WithFileUploads;
 
-    //Basicos
+    // Basicos
     public $evaluador;
 
     public $id_evaluacion;
@@ -31,7 +31,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $autoevaluacion = false;
 
-    //Traer datos de la evaluación
+    // Traer datos de la evaluación
     public $evaluacion;
 
     public $evaluado;
@@ -50,7 +50,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $evaluacion_colors = [];
 
-    //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
+    // Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_objetivos_evaluador;
 
     public $escalas;
@@ -67,10 +67,10 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $porcentajeCalificado;
 
-    //Se emite un evento que el livewire principal va a escuchar gracias a listeners
+    // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
-        //Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
+        // Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
         $this->dispatch('dataFromChild1', dataFromChild1: $this->porcentajeCalificado);
     }
 
@@ -429,7 +429,6 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
         $this->sendDataToParent();
     }
-
 
     public function cambiarSeccion($llave)
     {

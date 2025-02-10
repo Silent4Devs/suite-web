@@ -207,11 +207,11 @@ class ActivosController extends Controller
         if ($request->file('documento')) {
             $file = $request->file('documento');
 
-            //obtenemos el nombre del archivo
+            // obtenemos el nombre del archivo
             $nombre = $file->getClientOriginalName();
             //    dd($nombre);
 
-            //indicamos que queremos guardar un nuevo archivo en el disco local
+            // indicamos que queremos guardar un nuevo archivo en el disco local
             //    Storage::disk(('app\public\responsivasActivos'))->put($nombre,$file);
             $file->storeAs('public\responsivasActivos', $nombre);
             $activo->update(['documento' => $nombre]);

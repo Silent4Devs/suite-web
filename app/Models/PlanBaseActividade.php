@@ -52,7 +52,7 @@ class PlanBaseActividade extends Model implements Auditable, HasMedia
         'team_id',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('PlanBaseActividades:PlanBaseActividades_all', 3600 * 4, function () {
@@ -163,7 +163,7 @@ class PlanBaseActividade extends Model implements Auditable, HasMedia
     public function user()
     {
         return $this->belongsTo(User::class, 'id');
-        //return $this->belongsTo('User');
+        // return $this->belongsTo('User');
     }
 
     public function actividad_fase()

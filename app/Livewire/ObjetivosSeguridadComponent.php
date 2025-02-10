@@ -140,7 +140,7 @@ class ObjetivosSeguridadComponent extends Component
         $this->evaluacion = $evaluaciones->evaluacion;
         $this->fecha = $evaluaciones->fecha->format('Y-m-d');
 
-        //$this->resultado = $evaluaciones->resultado;
+        // $this->resultado = $evaluaciones->resultado;
         $this->view = 'edit';
         $this->id_evaluacion = $evaluaciones->id;
     }

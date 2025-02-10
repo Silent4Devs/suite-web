@@ -33,7 +33,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //https now working by nginx
+        // https now working by nginx
         // if (env('APP_ENV') === 'production') {
         //     $this->app['request']->server->set('HTTPS', 'on'); // Force HTTPS
 

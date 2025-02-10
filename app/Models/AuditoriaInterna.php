@@ -89,7 +89,7 @@ class AuditoriaInterna extends Model implements Auditable, HasMedia
         'deleted_at',
         'team_id',
         'lider_id',
-        'creador_auditoria_id', //Creador de la auditoria
+        'creador_auditoria_id', // Creador de la auditoria
     ];
 
     protected function serializeDate(DateTimeInterface $date)

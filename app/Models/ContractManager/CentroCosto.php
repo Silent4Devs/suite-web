@@ -23,7 +23,7 @@ class CentroCosto extends Model implements Auditable
         'archivo',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('CentroCosto:all', 3600 * 12, function () {

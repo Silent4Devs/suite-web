@@ -141,9 +141,9 @@ class ControlDocumentosController extends Controller
     {
         $controlDocumento->update([
             'clave' => $request->clave,
-            //"nombre" => $request->nombre,
+            // "nombre" => $request->nombre,
             'fecha_creacion' => $request->fecha_creacion,
-            //"version" => $request->version,
+            // "version" => $request->version,
             'elaboro_id' => $request->elaboro_id,
             'reviso_id' => $request->reviso_id,
         ]);

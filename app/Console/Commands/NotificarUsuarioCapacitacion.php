@@ -41,7 +41,7 @@ class NotificarUsuarioCapacitacion extends Command
      */
     public function handle()
     {
-        //One hour is added to compensate for PHP being one hour faster
+        // One hour is added to compensate for PHP being one hour faster
         $now = Carbon::now()->addHour()->format('Y-m-d h:i');
         logger($now);
         $capacitaciones = Recurso::with('empleados')->all();

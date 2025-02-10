@@ -29,7 +29,7 @@ class Competencia extends Model implements Auditable
 
     const POR_PERFIL = 3;
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Competencias:Competencias_all', 3600 * 7, function () {

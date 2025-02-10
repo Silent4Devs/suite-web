@@ -21,9 +21,9 @@ class Porcentaje2022
 
         $resultado = $gap1cont;
 
-        //$porc2 = (round($gap12cont) * 20) / 100;
+        // $porc2 = (round($gap12cont) * 20) / 100;
         return $resultado;
-    }//termina func
+    }// termina func
 
     public function GapDosPorc($gap2porcentaje, $total, $gap2satisfactorio, $gap2parcialmente)
     {
@@ -39,7 +39,7 @@ class Porcentaje2022
             'Porcentaje' => $porcentaje,
             'Avance' => $avance,
         ];
-    }//termina func
+    }// termina func
 
     public function GapTresPorc(
         $gap3porcentaje,
@@ -48,9 +48,9 @@ class Porcentaje2022
         $gap3asatisfactorios,
         $gap3aparcialmente
     ) {
-        //Sacar el valor correspondiente
+        // Sacar el valor correspondiente
         $valor = 30 / $gap3porcentaje;
-        //Valor de satisfactoriamente y de parcialmente
+        // Valor de satisfactoriamente y de parcialmente
         $porcg3satis = $valor;
         $porcg3parc = $valor / 2;
 
@@ -64,7 +64,7 @@ class Porcentaje2022
             'verificar' => $gapverif,
             'actuar' => $gapactu,
         ];
-    }//termina func
+    }// termina func
 
     public function GAPTotal($porcentajeGap1, $porcentajeGap2, $porcentajeGap3)
     {

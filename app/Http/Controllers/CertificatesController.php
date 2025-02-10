@@ -108,10 +108,10 @@ class CertificatesController extends Controller
 
         $modulo = ListaDistribucion::where('modelo', '=', $this->modelo)->first();
         try {
-            //code...
+            // code...
             event(new CatalogueCertificatesEvent($catalogueTraining, 'aprobado', 'catalogue_training', 'Certificado', 'LD'));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
 
         $proceso_general = ProcesosListaDistribucion::with('participantes')
@@ -145,7 +145,7 @@ class CertificatesController extends Controller
         $participante_control = $proceso->participantes[0];
         $participante = $proceso->participantes[0]->participante;
 
-        //SuperAprobador
+        // SuperAprobador
         if ($participante->nivel == 0) {
             $proceso->update([
                 'estatus' => 'Aprobado',
@@ -175,10 +175,10 @@ class CertificatesController extends Controller
     {
         $emailAprobado = $catalogueTraining->empleado->email;
         try {
-            //code...
+            // code...
             Mail::to(removeUnicodeCharacters($emailAprobado))->queue(new ApprovalNotificationCertificatesMail($catalogueTraining->id, $catalogueTraining->name));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             dd($th);
         }
         $procesoAprobado = ProcesosListaDistribucion::with('participantes')->find($proceso->id);
@@ -195,10 +195,10 @@ class CertificatesController extends Controller
         $aprobacion = ProcesosListaDistribucion::with('participantes')->where('proceso_id', '=', $id)->where('modulo_id', '=', $modulo->id)->first();
 
         try {
-            //code...
+            // code...
             event(new CatalogueCertificatesEvent($catalogueTraining, 'rechazado', 'catalogue_training', 'Certificado', 'LD'));
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
         }
 
         $comment = ComentariosProcesosListaDistribucion::create([

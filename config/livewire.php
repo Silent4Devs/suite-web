@@ -60,7 +60,7 @@ return [
     */
 
     'middleware_group' => 'web',
-    //multitenant
+    // multitenant
     /*'middleware_group' => [
         'web',
         'universal',

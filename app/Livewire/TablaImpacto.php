@@ -143,7 +143,7 @@ class TablaImpacto extends Component
 
     public function guardarContenido($tipo, $nivel, $contenido)
     {
-        //Guarda el contenido sino hay un registro existente de eso, en caso de haber sólo lo actualiza
+        // Guarda el contenido sino hay un registro existente de eso, en caso de haber sólo lo actualiza
         $tipoNivel = TipoNivelImpacto::updateOrCreate(['tipo_impacto_id' => $tipo, 'niveles_impacto_id' => $nivel], ['contenido' => $contenido]);
 
         return $tipoNivel;

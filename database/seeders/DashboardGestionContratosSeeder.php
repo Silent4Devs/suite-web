@@ -15,7 +15,7 @@ class DashboardGestionContratosSeeder extends Seeder
     public function run()
     {
         $permissions = [
-            //Dashboard Contratos
+            // Dashboard Contratos
             [
                 'title' => 'dashboard_gestion_contratos_acceder',
                 'name' => 'Permite acceder el dashboard de gestion de contratos',

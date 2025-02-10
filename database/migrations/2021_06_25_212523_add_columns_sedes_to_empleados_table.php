@@ -28,7 +28,7 @@ class AddColumnsSedesToEmpleadosTable extends Migration
     {
         Schema::table('empleados', function (Blueprint $table) {
             $table->dropForeign('empleados_sede_id_foreign');
-            //$table->dropColumn('sede_id');
+            // $table->dropColumn('sede_id');
         });
     }
 }

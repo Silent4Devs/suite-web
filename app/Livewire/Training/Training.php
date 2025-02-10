@@ -86,7 +86,7 @@ class Training extends Component
             );
         }
 
-        //Superaprobadores
+        // Superaprobadores
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 0) {
                 $emailSuperAprobador = $part->participante->empleado->email;
@@ -95,7 +95,7 @@ class Training extends Component
             }
         }
 
-        //Aprobadores normales
+        // Aprobadores normales
         // for ($i = 1; $i <= $no_niveles; $i++) {
         foreach ($proceso->participantes as $part) {
             if ($part->participante->nivel == 1) {

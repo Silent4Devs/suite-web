@@ -91,7 +91,7 @@ class Organizacion extends Model implements Auditable
         });
     }
 
-    //Redis methods
+    // Redis methods
     public static function getLogo()
     {
         return Cache::remember('Organizacion:getLogo_organizacion', 3600 * 12, function () {
@@ -99,7 +99,7 @@ class Organizacion extends Model implements Auditable
         });
     }
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Organizacion:organizacion_all', 3600 * 12, function () {
@@ -107,7 +107,7 @@ class Organizacion extends Model implements Auditable
         });
     }
 
-    //Redis methods
+    // Redis methods
     public static function getFirst()
     {
         return Cache::remember('Organizacion:organizacion_first', 3600 * 12, function () {

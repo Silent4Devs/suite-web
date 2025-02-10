@@ -257,7 +257,7 @@ class TimesheetService
     {
         $total = 0.0;
 
-        //funcion optimizada
+        // funcion optimizada
         foreach ($tareas as $tarea) {
             foreach ($tarea->horas as $horas) {
                 // Summing hours for each day directly

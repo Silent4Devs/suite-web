@@ -21,7 +21,7 @@ class EvaluacionesDesempenoEliminacionEvaluador extends Mailable
      */
     public function __construct($nombre_evaluacion, $evaluador)
     {
-        //$nombre_evaluacion
+        // $nombre_evaluacion
         $this->nombre_evaluacion = $nombre_evaluacion;
         $this->evaluador = $evaluador;
     }

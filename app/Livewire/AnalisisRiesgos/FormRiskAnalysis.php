@@ -289,7 +289,7 @@ class FormRiskAnalysis extends Component
 
             $this->createSheet();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             DB::rollBack();
         }
     }
@@ -408,17 +408,17 @@ class FormRiskAnalysis extends Component
 
     public function render()
     {
-        //get Scales and probability e impact
+        // get Scales and probability e impact
         $scalesMax = TBRiskAnalysis_ScalesArModel::where('risk_analysis_id', $this->riskAnalysisId)->first();
         $this->scales = TBRiskAnalysisScaleModel::where('min_max_id', $scalesMax->id)->orderBy('id', 'asc')->get();
         $probsMax = TBRiskAnalysis_ProbImpArModel::where('risk_analysis_id', $this->riskAnalysisId)->first();
         $this->probImpa = $probsMax;
-        //get Sections
+        // get Sections
         $sectionsRegisters = TBSectionRiskAnalysisModel::select('id', 'title', 'position', 'risk_analysis_id')
             ->where('risk_analysis_id', $this->riskAnalysisId)
             ->get();
 
-        //Header Settings Table
+        // Header Settings Table
         $this->questionSettigns = TBSettingsAr_QuestionsArModel::select('id', 'question_id', 'is_show')
             ->where('risk_analysis_id', $this->riskAnalysisId)
             ->where('is_show', true)
@@ -432,14 +432,14 @@ class FormRiskAnalysis extends Component
 
         // Questions Form
         $this->sections = $sectionsRegisters;
-        //Questions formulas
+        // Questions formulas
         $this->getIdsQuestionsFormulas();
         // period completed
         $verifyPeriod = TBPeriodRiskAnalysisModel::where('risk_analysis_id', $this->riskAnalysisId)
             ->where('status', 'completed')
             ->exists();
         $this->verifyPeriod = $verifyPeriod;
-        //verify period in progress
+        // verify period in progress
         $verifyPeriodProgress = TBPeriodRiskAnalysisModel::where('risk_analysis_id', $this->riskAnalysisId)
             ->where('status', 'in-progress')
             ->exists();
