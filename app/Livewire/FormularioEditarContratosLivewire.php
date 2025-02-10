@@ -343,6 +343,7 @@ class FormularioEditarContratosLivewire extends Component
     public function updateContrato()
     {
         ob_start();
+        ini_set('memory_limit', '512M');
         try {
             // Validar los campos
             if (!$this->validarCampos()) {
