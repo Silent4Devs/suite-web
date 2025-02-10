@@ -14,7 +14,7 @@ class Kernel extends HttpKernel
         \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\Tabantaj\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
-        \App\Http\Middleware\Cors::class,
+        \App\Http\Middleware\Tabantaj\Cors::class,
         // \App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
 
