@@ -225,6 +225,7 @@
                 <div class="form-group anima-focus">
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                               name="descripcion"
+                              maxlength="500"
                               id="descripcion">{{ old('descripcion') }}</textarea>
                     <label for="descripcion" class="asterisco">Descripción*</label>
                     @if ($errors->has('descripcion'))
@@ -289,6 +290,7 @@
                         <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}"
                                type="text"
                                name="unidadmedida"
+                               maxlength="255"
                                id="unidadmedida"
                                value="{{ old('unidadmedida', '') }}"
                                required>
@@ -305,6 +307,7 @@
                         <input class="form-control {{ $errors->has('meta') ? 'is-invalid' : '' }}"
                                type="text"
                                name="meta"
+                               maxlength="255"
                                id="meta"
                                value="{{ old('meta', '') }}"
                                required>
@@ -370,7 +373,7 @@
                 </div>
 
                 <h4 class="text-primary">Generación de fórmula</h4>
-                <input id="formula" name="formula" readonly class="form-control" type="text"
+                <input id="formula" name="formula" readonly   maxlength="255" class="form-control" type="text"
                     placeholder="Formula generada" required><br>
                 {{-- <button class="btn btn-info" id="abrir_generador">Abrir generador</button>&nbsp;&nbsp; --}}
                 <hr>

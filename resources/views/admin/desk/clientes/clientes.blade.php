@@ -629,38 +629,39 @@
                     createdRow: (row, data, dataIndex, cells) => {
                         let color = "green";
                         let texto = "white";
-                        if (data.prioridad == 'Alta') {
+
+                        if (data.prioridad == "Alta") {
                             color = "#FF417B";
                             texto = "white";
                         }
-                        if (data.prioridad == 'Media') {
+                        if (data.prioridad == "Media") {
                             color = "#FFCB63";
                             texto = "white";
                         }
-                        if (data.prioridad == 'Baja') {
+                        if (data.prioridad == "Baja") {
                             color = "#6DC866";
                             texto = "white";
                         }
 
                         let fondo = "green";
                         let letras = "white";
-                        if (data.estatus == 'Sin atender') {
+                        if (data.estatus == "Sin atender") {
                             fondo = "#FFCB63";
                             letras = "white";
                         }
-                        if (data.estatus == 'En curso') {
+                        if (data.estatus == "En curso") {
                             fondo = "#AC84FF";
                             letras = "white";
                         }
-                        if (data.estatus == 'En espera') {
+                        if (data.estatus == "En espera") {
                             fondo = "#6863FF";
                             letras = "white";
                         }
-                        if (data.estatus == 'Cerrado') {
+                        if (data.estatus == "Cerrado") {
                             fondo = "#6DC866";
                             letras = "white";
                         }
-                        if (data.estatus == 'No procedente') {
+                        if (data.estatus == "No procedente") {
                             fondo = "#FF417B";
                             letras = "white";
                         }
@@ -668,11 +669,7 @@
                             $(cells[14]).css('background-color', fondo)
                             $(cells[14]).css('color', letras)
                         }
-                        if (data.prioridad != null) {
-                            $(cells[15]).css('background-color', color)
-                            $(cells[15]).css('color', texto)
 
-                        }
                     },
 
                     order: [

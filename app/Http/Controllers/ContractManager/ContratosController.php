@@ -559,44 +559,44 @@ class ContratosController extends AppBaseController
         try {
             abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $contrato = $this->contratoRepository->find($id);
-            $areas = Area::getAll();
-            // dd($areas->count());
-            $formatoFecha = new FormatearFecha;
-            if (! $contrato) {
-                return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
-            }
-            $proveedor_id = $contrato->proveedor_id;
+            // $areas = Area::getAll();
+            // // dd($areas->count());
+            // $formatoFecha = new FormatearFecha;
+            // if (! $contrato) {
+            //     return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
+            // }
+            // $proveedor_id = $contrato->proveedor_id;
             $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
-            // dd($contratos);
-            $proveedores = TimesheetCliente::get();
-            if (! is_null($contrato->fecha_inicio)) {
-                $contrato->fecha_inicio = $contrato->fecha_inicio;
-            }
-            if (! is_null($contrato->fecha_fin)) {
-                $contrato->fecha_fin = $contrato->fecha_fin;
-            }
-            if (! is_null($contrato->fecha_firma)) {
-                $contrato->fecha_firma = $contrato->fecha_firma;
-            } else {
-                $fecha_firma = null;
-            }
+            // // dd($contratos);
+            // $proveedores = TimesheetCliente::get();
+            // if (! is_null($contrato->fecha_inicio)) {
+            //     $contrato->fecha_inicio = $contrato->fecha_inicio;
+            // }
+            // if (! is_null($contrato->fecha_fin)) {
+            //     $contrato->fecha_fin = $contrato->fecha_fin;
+            // }
+            // if (! is_null($contrato->fecha_firma)) {
+            //     $contrato->fecha_firma = $contrato->fecha_firma;
+            // } else {
+            //     $fecha_firma = null;
+            // }
 
-            $descargar_archivo = '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
+            // $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
 
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
-            // dd($convenios);
-            $dolares = DolaresContrato::where('contrato_id', $id)->first();
+            // // dd($convenios);
+            // $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
-            $organizacion = Organizacion::getFirst();
+            // $organizacion = Organizacion::getFirst();
 
-            $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+            // $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
-            $razones_sociales = Sucursal::getArchivoFalse();
+            // $razones_sociales = Sucursal::getArchivoFalse();
 
-            // firmas aprobadores
+            // // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
-            // dd($firma->aprobadores);
-            // $exampleVar = $firma->aprobadores[0];
+            // // dd($firma->aprobadores);
+            // // $exampleVar = $firma->aprobadores[0];
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
             $firmar = false;
             $firmado = false;
@@ -611,8 +611,8 @@ class ContratosController extends AppBaseController
                 }
             }
             $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
-
-            return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.edit', compact('contrato', 'convenios', 'aprobacionFirmaContrato', 'firma', 'firmar', 'firmado', 'contratos'));
+            // return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }

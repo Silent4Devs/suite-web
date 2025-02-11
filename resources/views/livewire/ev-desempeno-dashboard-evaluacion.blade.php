@@ -205,7 +205,7 @@
                             </td>
                             <td>
                                 <div class="img-person">
-                                    <img src="{{ $evaluacion->autor->avatar }}" alt="{{ $evaluacion->autor->name }}"
+                                    <img src="{{ $evaluacion->autor->avatar_ruta }}" alt="{{ $evaluacion->autor->name }}"
                                         title="{{ $evaluacion->autor->name }}">
                                 </div>
                             </td>
