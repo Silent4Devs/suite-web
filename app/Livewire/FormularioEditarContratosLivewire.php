@@ -22,9 +22,6 @@ use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\ConveniosModificatorios;
 use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 use Livewire\WithFileUploads;
-use App\Models\RazonSocial;
-use App\Models\Proveedor;
-use App\Models\Proyecto;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AprobadorFirmaContratoMail;
 use App\Events\ContratoEvent;
@@ -45,7 +42,9 @@ class FormularioEditarContratosLivewire extends Component
     public $dolares;
     public $organizacion;
     public $file_contrato;
+    public $uploadProgressFC = 0; // Para almacenar el progreso de la carga
     public $documento;
+    public $uploadProgressD = 0;
 
     // Propiedades del formulario
     public $no_contrato;
@@ -346,7 +345,6 @@ class FormularioEditarContratosLivewire extends Component
     // Función para actualizar el contrato
     public function updateContrato()
     {
-        ob_start();
         try {
             // Validar los campos
             if (!$this->validarCampos()) {
@@ -422,9 +420,6 @@ class FormularioEditarContratosLivewire extends Component
                 $output = ob_get_contents();
             }
 
-            // Limpiar el buffer sin enviar la salida al navegador
-            ob_end_clean();
-
             if ($this->documento) {
                 $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/penalizaciones';
                 $nombre_f = $this->contrato->id . $this->fecha_inicio . $this->documento->getClientOriginalName();
@@ -433,7 +428,7 @@ class FormularioEditarContratosLivewire extends Component
             }
 
             // Emitir evento de actualización
-            // event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
+            event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
 
             // Notificar éxito
             $this->alert('success', 'Contrato actualizado correctamente.', [
@@ -444,15 +439,14 @@ class FormularioEditarContratosLivewire extends Component
             ]);
         } catch (\Throwable $th) {
             //throw $th;
-            $output = ob_get_contents();
-
+            $error = json_encode($th->getMessage(), true);
             // Limpiar el buffer
-            ob_end_clean();
+
             $this->alert('error', 'Error al actualizar contrato', [
                 'position' => 'center',
                 'timer' => 5000,
                 'toast' => true,
-                'text' => $th,
+                'text' => $error,
             ]);
         }
     }
