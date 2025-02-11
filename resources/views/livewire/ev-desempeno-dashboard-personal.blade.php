@@ -19,7 +19,7 @@
                         <p>
                             <strong>Foto</strong> <br>
                         <div class="img-person">
-                            <img src="{{ $info_evaluado->empleado->avatar }}" alt="{{ $info_evaluado->empleado->name }}"
+                            <img src="{{ $info_evaluado->empleado->avatar_ruta }}" alt="{{ $info_evaluado->empleado->name }}"
                                 title="{{ $info_evaluado->empleado->name }}">
                         </div>
                         </p>
