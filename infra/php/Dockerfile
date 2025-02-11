@@ -1,4 +1,4 @@
-FROM php:8.3-fpm-alpine
+FROM php:8.2-fpm-alpine
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
@@ -59,11 +59,26 @@ RUN chmod +x /usr/local/bin/install-php-extensions && \
     amqp \
     ftp
 
+# Create log directory for PHP-FPM and set permissions
+RUN mkdir -p /var/log/php-fpm && \
+    chown -R www-data:www-data /var/log/php-fpm && \
+    chmod 755 /var/log/php-fpm
+
 # Enable phpredis extension
 #RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
 
+# Copy custom php.ini
+COPY php.ini /usr/local/etc/php/php.ini
+
+# Copy custom www.conf
+COPY www.conf /usr/local/etc/php-fpm.d/www.conf
+
+
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
+
+# Install npm
+# RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \

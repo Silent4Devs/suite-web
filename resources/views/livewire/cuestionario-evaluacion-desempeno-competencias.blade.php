@@ -62,7 +62,7 @@
                         <div class="row d-flex align-items-center" style="">
                             <div class="col-3 col-sm-2 col-md-1" style="margin-left:16px;">
                                 <div class="img-person" style="width: 69px; height:69px;">
-                                    <img src="{{ $evaluado->empleado->avatar }}" alt="{{ $evaluado->empleado->name }}">
+                                    <img src="{{ $evaluado->empleado->avatar_ruta }}" alt="{{ $evaluado->empleado->name }}">
                                 </div>
                             </div>
                             <div class="col-6 col-sm-3">
@@ -94,7 +94,7 @@
                                 <div class="row">
                                     <div class="col-6 col-sm-5 col-md-1" style="margin-left:16px;">
                                         <div class="img-person" style="width: 69px; height:69px;">
-                                            <img src="{{ $evaluado->empleado->avatar }}"
+                                            <img src="{{ $evaluado->empleado->avatar_ruta }}"
                                                 alt="{{ $evaluado->empleado->name }}">
                                         </div>
                                     </div>
@@ -110,7 +110,7 @@
                                 <div class="row">
                                     <div class="col-3 col-sm-5 col-md-1" style="margin-left:16px;">
                                         <div class="img-person" style="width: 69px; height:69px;">
-                                            <img src="{{ $evaluador->avatar }}" alt="{{ $evaluador->name }}">
+                                            <img src="{{ $evaluador->avatar_ruta }}" alt="{{ $evaluador->name }}">
                                         </div>
                                     </div>
                                     <div class="col-6 col-sm-7">

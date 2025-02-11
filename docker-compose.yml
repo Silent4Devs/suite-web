@@ -67,6 +67,8 @@ services:
     tty: true
     volumes:
       - .:/var/www/html
+      - ./infra/php/php.ini:/usr/local/etc/php/php.ini
+      - ./infra/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     ports:
       - 9000:80
     networks:
@@ -78,6 +80,8 @@ services:
       dockerfile: Dockerfile
     volumes:
       - .:/var/www/html
+      - ./infra/php/php.ini:/usr/local/etc/php/php.ini
+      - ./infra/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     command: php artisan queue:work --tries=6
     depends_on:
       - php
@@ -101,6 +105,8 @@ services:
     container_name: schedule-worker-tabantaj
     volumes:
       - .:/var/www/html
+      - ./infra/php/php.ini:/usr/local/etc/php/php.ini
+      - ./infra/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
     command: php artisan schedule:work
     environment:
       CONTAINER_ROLE: scheduler
