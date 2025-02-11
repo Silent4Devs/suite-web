@@ -288,21 +288,26 @@
                         </div>
                     </div>
                     @if (!is_null($organizacion))
-
                         <input id="fileInput" class="form-control" type="file" wire:model="file_contrato"
-                        accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff">
+                            accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff">
 
-                        <div class="mt-2">
-                            <progress id="uploadProgressFC" value="{{ $uploadProgressFC }}" max="100" style="width: 100%;"></progress>
-                            <div wire:loading wire:target="file_contrato">Subiendo archivo...</div>
+                            <div class="mt-2" x-data="{ progress: 0, uploaded: false, finished: false }"
+                                x-on:livewire-upload-progress.window="progress = $event.detail.progress; uploaded = false; finished = false"
+                                x-on:livewire-upload-finish.window="uploaded = true; finished = true; progress = 100">
 
-                            @if ($errors->has('file_contrato'))
-                                <div class="invalid-feedback red-text">
-                                    {{ $errors->first('file_contrato') }}
-                                </div>
-                            @endif
-                        </div>
+                                <progress x-bind:value="progress" max="100" style="width: 100%;" x-show="progress > 0 && !finished"></progress>
+                                <span x-show="progress > 0 && !finished" x-text="progress + '%'"></span>
+
+                                <div x-show="uploaded" class="text-success">✅ Archivo cargado</div>
+
+                                <div wire:loading wire:target="file_contrato">Subiendo archivo...</div>
+
+                                @error('file_contrato')
+                                    <div class="invalid-feedback red-text">{{ $message }}</div>
+                                @enderror
+                            </div>
                     @endif
+
 
                 @endif
 
@@ -563,12 +568,20 @@
                                 <input id="fileInputD" class="form-control" type="file" wire:model="documento" accept=".pdf"
                                     readonly>
 
-                                <div class="mt-2">
-                                    <progress id="uploadProgressD" value="{{ $uploadProgressD }}" max="100" style="width: 100%;"></progress>
+                                    <div class="mt-2" x-data="{ progress: 0, uploaded: false, finished: false }"
+                                    x-on:livewire-upload-progress.window="progress = $event.detail.progress; uploaded = false; finished = false"
+                                    x-on:livewire-upload-finish.window="uploaded = true; finished = true; progress = 100">
+
+                                    <progress x-bind:value="progress" max="100" style="width: 100%;" x-show="progress > 0 && !finished"></progress>
+                                    <span x-show="progress > 0 && !finished" x-text="progress + '%'"></span>
+
+                                    <div x-show="uploaded" class="text-success">✅ Archivo cargado</div>
+
                                     <div wire:loading wire:target="documento">Subiendo archivo...</div>
-                                    <div class="ml-4 display-flex">
-                                        <label class="red-text">{{ $errors->first('Type') }}</label>
-                                    </div>
+
+                                    @error('documento')
+                                        <div class="invalid-feedback red-text">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
 

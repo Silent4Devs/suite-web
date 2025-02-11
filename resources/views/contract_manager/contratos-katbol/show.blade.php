@@ -271,11 +271,13 @@
         </div>
     </div>
 
-    <div class="form-group col-12 text-right mt-4" style="margin-left: 10px; margin-right: 10px;">
-        <div class="col s12 m12 right-align btn-grd distancia">
+    <div class="form-group col-12 mt-4">
+        <div class="col s12 m12 btn-grd distancia" style="float: right;">
             <a href="{{ route('contract_manager.contratos-katbol.index') }}" class='btn btn-primary'>Salir</a>
         </div>
     </div>
+
+
 
     @if ($contrato->documento)
         <script type="text/javascript">

@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvidenciaObjCuestionarioEvDesempeno;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -67,6 +68,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $porcentajeCalificado;
 
+    public $colaboradores_evaluar = [];
+
     // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
@@ -84,7 +87,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
-        // $this->cuestionarioSecciones();
+
         if ($this->evaluacion->activar_objetivos == true) {
             $this->buscarObjetivos();
         }
@@ -92,6 +95,11 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         if ($this->evaluado->empleado->id == $this->evaluador->id) {
             $this->autoevaluacion = true;
         }
+
+        $this->colaboradores_evaluar = EvaluadoresEvaluacionObjetivosDesempeno::with('empleado')->where('periodo_id', $id_periodo)
+        ->where('evaluador_desempeno_id', $this->evaluador->id)
+        ->where('evaluado_desempeno_id', '!=', $this->evaluado->id)
+        ->get();
 
         $this->progresoEvaluacion();
     }
