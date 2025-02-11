@@ -219,13 +219,22 @@ class EntendimientoOrganizacionController extends Controller
 
     public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
+        // Verificación de permisos
         abort_if(Gate::denies('analisis_foda_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $entendimientoOrganizacion->delete();
+        try {
+            // Eliminar el análisis FODA
+            $entendimientoOrganizacion->delete();
 
-        event(new EntendimientoOrganizacionEvent($entendimientoOrganizacion, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
+            // Disparar el evento
+            event(new EntendimientoOrganizacionEvent($entendimientoOrganizacion, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+            // Devolver respuesta JSON exitosa
+            return response()->json(['message' => 'El análisis FODA ha sido eliminado correctamente'], 200);
+        } catch (\Exception $e) {
+            // En caso de error, devolver respuesta de error
+            return response()->json(['message' => 'Hubo un problema al intentar eliminar el análisis FODA.'], 500);
+        }
     }
 
     public function massDestroy(MassDestroyEntendimientoOrganizacionRequest $request)

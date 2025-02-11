@@ -284,7 +284,7 @@
                         data: 'id',
                         render: function(data, type, row, meta) {
                             let urlBtnEditar = `/admin/puestos/${data}/edit`;
-                            let urlBtnEliminar = `/admin/puestos/destroy/${data}`;
+                            let urlBtnEliminar = `/admin/puestos/${data}`;
 
                             let botones = `
                                 <a class="btn btn-sm btn-editar" title="Editar" href="${urlBtnEditar}"><i class="fas fa-edit"></i></a>

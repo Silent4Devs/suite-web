@@ -39,7 +39,7 @@
 
         .img-size {
             /* 	padding: 0;
-                                        margin: 0; */
+                                                margin: 0; */
             height: 450px;
             width: 700px;
             background-size: cover;
@@ -87,9 +87,9 @@
         /* se comento por que se descuadra la cabecera de la tabla y el registro */
         /* .table tr th:nth-child(6){
 
-                                        width:415px !important;
-                                        max-width:415px !important;
-                                    } */
+                                                width:415px !important;
+                                                max-width:415px !important;
+                                            } */
 
         .table tr td:nth-child(5) {
 
@@ -386,156 +386,116 @@
                     @endcan
 
                     let dtOverrideGlobals = {
-                            buttons: dtButtons,
-                            processing: true,
-                            serverSide: true,
-                            retrieve: true,
-                            aaSorting: [],
-                            ajax: "{{ route('admin.concientizacion-sgis.index') }}",
-                            columns: [{
-                                    data: 'id',
-                                    name: 'id'
-                                },
-                                {
-                                    data: 'objetivocomunicado',
-                                    name: 'objetivocomunicado'
-                                },
-                                {
-                                    data: 'personalobjetivo',
-                                    name: 'personalobjetivo'
-                                },
-                                {
-                                    data: 'arearesponsable_area',
-                                    name: 'arearesponsable.area'
-                                },
-                                {
-                                    data: 'medio_envio',
-                                    name: 'medio_envio'
-                                },
-                                {
-                                    data: 'fecha_publicacion',
-                                    name: 'fecha_publicacion'
-                                },
-                                {
-                                    data: 'archivo',
-                                    name: 'archivo',
-                                    render: function(data, type, row, meta) {
-                                        let archivo = "";
-                                        console.log(row);
-                                        let archivos = row.documentos_concientizacion;
-                                        archivo = ` <div class="container">
+                    buttons: dtButtons,
+                    processing: true,
+                    serverSide: true,
+                    retrieve: true,
+                    aaSorting: [],
+                    ajax: "{{ route('admin.concientizacion-sgis.index') }}",
+                    columns: [
+                        { data: 'id', name: 'id' },
+                        { data: 'objetivocomunicado', name: 'objetivocomunicado' },
+                        { data: 'personalobjetivo', name: 'personalobjetivo' },
+                        { data: 'arearesponsable_area', name: 'arearesponsable.area' },
+                        { data: 'medio_envio', name: 'medio_envio' },
+                        { data: 'fecha_publicacion', name: 'fecha_publicacion' },
+                        {
+                            data: 'archivo',
+                            name: 'archivo',
+                            render: function (data, type, row, meta) {
+                                let archivos = row.documentos_concientizacion || [];
+                                console.log("Datos de la fila:", row.documentos_concientizacion);
 
-                                    <div class="mb-4 row">
-                                    <div class="text-center col">
-                                        @can('concientizacion_sgsi_vinculos')
-                                        <a href="#" class="btn btn-sm tb-btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}"><i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias</a>
-                                        @endcan
-                                    </div>
-                                    </div>
-
-                                    <!-- modal -->
-                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
-                                    <div class="modal-dialog modal-lg">
-                                        <div class="modal-content">
-                                        <div class="modal-body">
-                                            <!-- carousel -->
-                                            <div
-                                                id='carouselExampleIndicators${row.id}'
-                                                class='carousel slide'
-                                                data-ride='carousel'
-                                                >
-                                            <ol class='carousel-indicators'>
-                                                    ${archivos?.map((archivo,idx)=>{
-                                                        return `
-                                                                                    <li
-                                                                                    data-target='#carouselExampleIndicators${row.id}'
-                                                                                    data-slide-to='${idx}'></li>`})}
-                                            </ol>
-                                            <div class='carousel-inner'>
-                                                    ${archivos?.map((archivo,idx)=>{
-                                                        const [extension, ...nameParts] = archivo.documento.split('.').reverse();
-                                                        if(extension == 'pdf'){
-                                                        return `
-                                                                                    <div class='carousel-item ${idx==0?"active":""}'>
-                                                                                        <iframe seamless class='img-size' src='{{ asset('storage/documentos_concientSgsi') }}/${archivo.documento}'></iframe>
-                                                                                    </div>`
-                                                }else{
-                                                    return ` <
-                                            div class = 'text-center my-5 carousel-item ${idx==0?"active":""}' >
-                                            <
-                                            a href =
-                                            '{{ asset('storage/documento_comunicado_SGI') }}/${archivo.documento}' >
-                                            <
-                                            i class = "fas fa-file-download mr-2"
-                                        style = "font-size:18px" > < /i> ${archivo.documento}</a >
-                                            <
-                                            /div>`
+                                if (!archivos.length) {
+                                    return '<p>No hay evidencias disponibles</p>';
                                 }
-                            })
-                    } <
-                    /div>
 
-                    <
-                    /div> < /
-                div > <
-                    div class = "modal-footer" >
-                    <
-                    button type = "button"
-                class = "btn btn-default"
-                data - dismiss = "modal" > Cerrar < /button> <
-                a
-                class = 'carousel-control-prev'
-                href = '#carouselExampleIndicators${row.id}'
-                role = 'button'
-                data - slide = 'prev' >
-                    <
-                    span class = 'carousel-control-prev-icon'
-                aria - hidden = 'true' >
-                    <
-                    /span> <
-                span class = 'sr-only' > Previous < /span> < /
-                a > <
-                    a
-                class = 'carousel-control-next'
-                href = '#carouselExampleIndicators${row.id}'
-                role = 'button'
-                data - slide = 'next' >
-                    <
-                    span
-                class = 'carousel-control-next-icon'
-                aria - hidden = 'true' >
-                    <
-                    /span> <
-                span class = 'sr-only' > Next < /span> < /
-                a > <
-                    /div> < /
-                div > <
-                    /div> < /
-                div > `
-                                        return archivo;
-                                    }
-                                    }, {
-                                    data: 'actions',
-                                    name: '{{ trans('global.actions') }}'
-                                    }],
-                                    orderCellsTop: true,
-                                        order: [
-                                            [0, 'desc']
-                                        ]
-                                    };
-                                    let table = $('.datatable-ConcientizacionSgi').DataTable(dtOverrideGlobals);
-                                    // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
-                                    //     $($.fn.dataTable.tables(true)).DataTable()
-                                    //         .columns.adjust();
-                                    // });
-                                    // $('.datatable thead').on('input', '.search', function() {
-                                    //     let strict = $(this).attr('strict') || false
-                                    //     let value = strict && this.value ? "^" + this.value + "$" : this.value
-                                    //     table
-                                    //         .column($(this).parent().index())
-                                    //         .search(value, strict)
-                                    //         .draw()
-                                    // });
-                                    });
+                                return `
+                                <div class="container">
+                                    <div class="mb-4 row">
+                                        <div class="text-center col">
+                                            @can('concientizacion_sgsi_vinculos')
+                                            <a href="#" class="btn btn-sm tb-btn-primary tamaño" data-toggle="modal" data-target="#largeModal${row.id}">
+                                                <i class="mr-2 text-white fas fa-file" style="font-size:13pt"></i>Visualizar&nbsp;evidencias
+                                            </a>
+                                            @endcan
+                                        </div>
+                                    </div>
+
+                                    <!-- Modal -->
+                                    <div class="modal fade" id="largeModal${row.id}" tabindex="-1" role="dialog" aria-labelledby="basicModal" aria-hidden="true">
+                                        <div class="modal-dialog modal-lg">
+                                            <div class="modal-content">
+                                                <div class="modal-body">
+                                                    <!-- Carousel -->
+                                                    <div id="carouselExampleIndicators${row.id}" class="carousel slide" data-ride="carousel">
+                                                        <ol class="carousel-indicators">
+                                                            ${archivos.map((archivo, idx) => `
+                                                                <li data-target="#carouselExampleIndicators${row.id}" data-slide-to="${idx}" class="${idx === 0 ? 'active' : ''}"></li>
+                                                            `).join('')}
+                                                        </ol>
+                                                        <div class="carousel-inner">
+                                                            ${archivos.map((archivo, idx) => {
+                                                                const extension = archivo.documento.split('.').pop().toLowerCase();
+                                                                if (extension === 'pdf') {
+                                                                    return `
+                                                                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                                                                        <iframe seamless class="img-size" src="{{ asset('storage/documentos_concientSgsi') }}/${archivo.documento}" style="width: 100%; height: 400px;"></iframe>
+                                                                    </div>`;
+                                                                } else {
+                                                                    return `
+                                                                    <div class="carousel-item ${idx === 0 ? 'active' : ''}">
+                                                                        <div class="text-center my-5">
+                                                                            <a href="{{ asset('storage/documento_comunicado_SGI') }}/${archivo.documento}" target="_blank">
+                                                                                <i class="fas fa-file-download mr-2" style="font-size:18px"></i>${archivo.documento}
+                                                                            </a>
+                                                                        </div>
+                                                                    </div>`;
+                                                                }
+                                                            }).join('')}
+                                                        </div>
+                                                        <a class="carousel-control-prev" href="#carouselExampleIndicators${row.id}" role="button" data-slide="prev">
+                                                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Previous</span>
+                                                        </a>
+                                                        <a class="carousel-control-next" href="#carouselExampleIndicators${row.id}" role="button" data-slide="next">
+                                                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                                            <span class="sr-only">Next</span>
+                                                        </a>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>`;
+                            }
+                        },
+                        {
+                            data: 'actions',
+                            name: '{{ trans('global.actions') }}'
+                        }
+                    ],
+                    orderCellsTop: true,
+                    order: [[0, 'desc']]
+                };
+
+                let table = $('.datatable-ConcientizacionSgi').DataTable(dtOverrideGlobals);
+
+                                            // $('a[data-toggle="tab"]').on('shown.bs.tab click', function(e) {
+                                            //     $($.fn.dataTable.tables(true)).DataTable()
+                                            //         .columns.adjust();
+                                            // });
+                                            // $('.datatable thead').on('input', '.search', function() {
+                                            //     let strict = $(this).attr('strict') || false
+                                            //     let value = strict && this.value ? "^" + this.value + "$" : this.value
+                                            //     table
+                                            //         .column($(this).parent().index())
+                                            //         .search(value, strict)
+                                            //         .draw()
+                                            // });
+                                            });
     </script>
 @endsection

@@ -12,7 +12,7 @@
                 @method('PATCH')
                 <div class="col-md-12 col-sm-12">
                     <div class="card vrd-agua">
-                        <p class="mb-1 text-center text-white">Editar macroproceso</p>
+                        <p class="mb-1 text-center" style="color: #0000">Editar macroproceso</p>
                     </div>
                 </div>
                 <div class="form-group col-sm-4">

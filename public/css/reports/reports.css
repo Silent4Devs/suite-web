@@ -22,18 +22,22 @@
 	h1{
 		width: 100%;
 		padding: 2pt 0;
-		margin-top: 50pt;
+		/* margin-top: 50pt; */
 		text-align: center;
 		font-size: 15pt;
-		background: linear-gradient(104deg, rgba(0,188,214,1) 38%, rgba(0,214,194,1) 100%);
+		/* background: linear-gradient(104deg, rgba(0,188,214,1) 38%, rgba(0,214,194,1) 100%); */
 		border-radius: 100pt;
-		color: #fff;
+		/* color: var(--color-tbj); */
 	}
 	.arriba_derecha{
 		width: 100%;
 		text-align: right;
 	}
-
+    .header-doc .flex-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
 
 	.line_dato{
 		width: 100%;
@@ -56,10 +60,8 @@
 	}
 	.line_dato td{
 		padding: 0pt 10pt;
-		color: #3C3C3C;
 	}
 	.line_dato td div{
-		border-bottom: 1pt solid #ddd;
 		width: 100%;
 	}
 
@@ -76,20 +78,57 @@
 		padding: 2pt;
 		border: 1pt solid #ccc;
 	}
+    /* -- */
+    .flex {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .caja-blue {
+        background-color: var(--color-tbj);
+        color: #fff;
+        display: flex;
+        align-items: center;
+        gap: 5px;
+        display: flex;
+        align-items: center;
+        flex-direction: row;
+        gap: 70px;
+        padding-block: 20px;
+        border-radius: 15px;
+    }
+    .flex-item {
+        width: 100%;
+        max-height: 100%;
+        padding: 30px;
+        box-sizing: border-box;
+        align-self: stretch;
+    }
+    .header-doc .flex-item {
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+    }
+    .item-header-doc-info {
+        background-color: #EEFCFF;
+    }
+    .item-doc-img {
+        border-left: 20px var(--color-tbj) solid;
+        max-width: 200px;
+    }
+    .img-doc {
+        width: 130px;
+    }
+    .doc-blue {
+        border-right: 20px var(--color-tbj) solid;
+        background-color: var(--color-tbj);
+        color: #fff !important;
+    }
 
-    @media print
-	{
-		@page {
-		margin-top: 0;
-		margin-bottom: 0;
-		}
-		body  {
-		padding-top: 72px;
-		padding-bottom: 72px ;
-		}
-	}
-
-
+    .doc-blue strong,
+    .doc-blue .flex-item {
+        color: #fff !important;
+    }
 
 
 
