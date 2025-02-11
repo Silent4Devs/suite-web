@@ -45,7 +45,9 @@ class FormularioEditarContratosLivewire extends Component
     public $dolares;
     public $organizacion;
     public $file_contrato;
+    public $uploadProgressFC = 0; // Para almacenar el progreso de la carga
     public $documento;
+    public $uploadProgressD = 0;
 
     // Propiedades del formulario
     public $no_contrato;
@@ -444,15 +446,14 @@ class FormularioEditarContratosLivewire extends Component
             ]);
         } catch (\Throwable $th) {
             //throw $th;
-            $output = ob_get_contents();
-
+            $error = json_encode($th->getMessage(), true);
             // Limpiar el buffer
-            ob_end_clean();
+
             $this->alert('error', 'Error al actualizar contrato', [
                 'position' => 'center',
                 'timer' => 5000,
                 'toast' => true,
-                'text' => $th,
+                'text' => $error,
             ]);
         }
     }
