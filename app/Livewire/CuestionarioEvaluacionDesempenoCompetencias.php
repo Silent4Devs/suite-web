@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\User;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -45,6 +46,8 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $porcentajeCalificado = 0;
 
+    public $colaboradores_evaluar = [];
+
     // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
@@ -70,6 +73,11 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
         if ($this->evaluado->empleado->id == $this->evaluador->id) {
             $this->autoevaluacion = true;
         }
+
+        $this->colaboradores_evaluar = EvaluadoresEvaluacionCompetenciasDesempeno::with('empleado')->where('periodo_id', $id_periodo)
+        ->where('evaluador_desempeno_id', $this->evaluador->id)
+        ->where('evaluado_desempeno_id', '!=', $this->evaluado->id)
+        ->get();
 
         $this->progresoEvaluacion();
     }
