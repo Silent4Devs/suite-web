@@ -76,7 +76,7 @@ class Proceso extends Model implements Auditable
         }
     }
 
-    //Redis methods
+    // Redis methods
     public static function getAll($columns = ['id', 'codigo', 'nombre', 'id_macroproceso', 'descripcion'])
     {
         return Cache::remember('Procesos:procesos_all', 3600 * 7, function () use ($columns) {

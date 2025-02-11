@@ -4,6 +4,7 @@ namespace App\Livewire;
 
 use App\Models\CuestionarioCompetenciaEvDesempeno;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadoresEvaluacionCompetenciasDesempeno;
 use App\Models\User;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
@@ -12,7 +13,7 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 {
     use LivewireAlert;
 
-    //Basicos
+    // Basicos
     public $evaluador;
 
     public $id_evaluacion;
@@ -27,7 +28,7 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $array_periodos;
 
-    //Traer datos de la evaluación
+    // Traer datos de la evaluación
     public $evaluacion;
 
     public $evaluado;
@@ -36,7 +37,7 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $competencias_autoevaluado;
 
-    //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
+    // Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_competencias_evaluador;
 
     public $escalas;
@@ -45,10 +46,12 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
 
     public $porcentajeCalificado = 0;
 
-    //Se emite un evento que el livewire principal va a escuchar gracias a listeners
+    public $colaboradores_evaluar = [];
+
+    // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
-        //Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
+        // Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
         $this->dispatch('dataFromChild2', dataFromChild2: $this->porcentajeCalificado);
     }
 
@@ -70,6 +73,11 @@ class CuestionarioEvaluacionDesempenoCompetencias extends Component
         if ($this->evaluado->empleado->id == $this->evaluador->id) {
             $this->autoevaluacion = true;
         }
+
+        $this->colaboradores_evaluar = EvaluadoresEvaluacionCompetenciasDesempeno::with('empleado')->where('periodo_id', $id_periodo)
+        ->where('evaluador_desempeno_id', $this->evaluador->id)
+        ->where('evaluado_desempeno_id', '!=', $this->evaluado->id)
+        ->get();
 
         $this->progresoEvaluacion();
     }

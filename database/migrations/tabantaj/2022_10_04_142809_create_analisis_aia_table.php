@@ -56,7 +56,7 @@ class CreateAnalisisAiaTable extends Migration
             $table->string('flujo_q_2')->nullable();
             $table->string('flujo_q_5')->nullable();
 
-            //INFRAESTRUCTURA TECNOLÓGICA
+            // INFRAESTRUCTURA TECNOLÓGICA
             $table->string('app_ip')->nullable();
             $table->string('bd_ip')->nullable();
             $table->string('otro_ip')->nullable();

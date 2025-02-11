@@ -48,7 +48,7 @@ class TareasComponent extends Component
     {
         $this->view = 'no-leidas';
 
-        //$this->getUnreadTasks();
+        // $this->getUnreadTasks();
         return response()->noContent();
     }
 
@@ -56,7 +56,7 @@ class TareasComponent extends Component
     {
         $this->view = 'leidas';
 
-        //$this->getReadedTasks();
+        // $this->getReadedTasks();
         return response()->noContent();
     }
 

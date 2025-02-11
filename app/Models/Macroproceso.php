@@ -50,7 +50,7 @@ class Macroproceso extends Model implements Auditable
         'descripcion',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Macroprocesos:Macroprocesos_all', 3600 * 7, function () {

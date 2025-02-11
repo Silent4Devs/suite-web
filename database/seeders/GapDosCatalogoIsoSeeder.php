@@ -243,7 +243,7 @@ class GapDosCatalogoIsoSeeder extends Seeder
                 'id_clasificacion' => $organizacional,
             ],
 
-            //personas
+            // personas
 
             [
                 'control_iso' => '6.1',
@@ -294,7 +294,7 @@ class GapDosCatalogoIsoSeeder extends Seeder
                 'id_clasificacion' => $personal,
             ],
 
-            //fisico
+            // fisico
             [
                 'control_iso' => '7.1',
                 'anexo_politica' => 'Perímetros físicos de seguridad',
@@ -380,7 +380,7 @@ class GapDosCatalogoIsoSeeder extends Seeder
                 'id_clasificacion' => $Fisico,
             ],
 
-            //tecnologicos
+            // tecnologicos
 
             [
                 'control_iso' => '8.1',

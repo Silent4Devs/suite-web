@@ -9,7 +9,7 @@ class ReporteContextoController extends Controller
 {
     public function index()
     {
-        //$control_documentos = ControlDocumento::get();
+        // $control_documentos = ControlDocumento::get();
         return view('admin.reporteContexto.index');
     }
 }

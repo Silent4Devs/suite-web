@@ -95,7 +95,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\Mobile', 'mi
         Route::get('/{id}/showArchivo', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionShowArchivo']);
         Route::delete('/{id}/destroy', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionDestroy']);
     });
-    //No funciona correctamente con /
+    // No funciona correctamente con /
     Route::get('solicitud-dayoff-vistaGlobal', [tbApiMobileControllerSolicitudDayOff::class, 'tbFunctionVistaGlobal']);
 
     Route::prefix('solicitud-vacaciones')->group(function () {
@@ -111,7 +111,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\Mobile', 'mi
         Route::get('/{id}/archivoShow', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionArchivoShow']);
         Route::get('/{id}/showVistaGlobal', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionShowVistaGlobal']);
     });
-    //No funciona correctamente con /
+    // No funciona correctamente con /
     Route::get('solicitud-vacaciones-vistaGlobal', [tbApiMobileControllerSolicitudVacaciones::class, 'tbFunctionVistaGlobal']);
 
     Route::prefix('solicitud-permisos')->group(function () {
@@ -127,7 +127,7 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\Mobile', 'mi
         Route::get('/{id}/archivoShow', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'archivoShow']);
         Route::delete('/{id}/destroy', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'destroy']);
     });
-    //No funciona correctamente con /
+    // No funciona correctamente con /
     // Route::get('solicitud-permisos-vistaGlobal', [tbApiMobileControllerSolicitudPermisoGoceSueldo::class, 'vistaGlobal']);
 
     Route::prefix('timesheet')->group(function () {

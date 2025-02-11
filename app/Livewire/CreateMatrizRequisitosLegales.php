@@ -96,7 +96,7 @@ class CreateMatrizRequisitosLegales extends Component
         $proceso = ProcesosListaDistribucion::updateOrCreate(
             [
                 'modulo_id' => $lista->id,
-                'proceso_id' => $requisito->id, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
+                'proceso_id' => $requisito->id, // Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
             ],
             [
                 'estatus' => 'Pendiente',
@@ -128,7 +128,7 @@ class CreateMatrizRequisitosLegales extends Component
             $proceso = ProcesosListaDistribucion::updateOrCreate(
                 [
                     'modulo_id' => $lista->id,
-                    'proceso_id' => $requisito->id, //Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
+                    'proceso_id' => $requisito->id, // Este es solo el numero del id del respectivo FODA, no esta relacionado a nada, pero se necesita el valor
                 ],
                 [
                     'estatus' => 'Pendiente',
@@ -162,7 +162,7 @@ class CreateMatrizRequisitosLegales extends Component
     {
         foreach ($proceso->participantes as $part) {
             try {
-                //code...
+                // code...
                 $emailAprobador = $part->participante->empleado->email;
                 Mail::to(removeUnicodeCharacters($emailAprobador))->queue(new MatrizEmail($requisito->id));
                 $this->alert('success', 'Correo enviado', [
@@ -172,7 +172,7 @@ class CreateMatrizRequisitosLegales extends Component
                     'text' => 'Se ha notificado a los miembros encargados, la creacion de la Matriz.',
                 ]);
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 $this->alert('error', 'Error al enviar correo', [
                     'position' => 'top-end',
                     'timer' => 3000,

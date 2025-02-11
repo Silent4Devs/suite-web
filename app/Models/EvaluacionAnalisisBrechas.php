@@ -22,7 +22,7 @@ class EvaluacionAnalisisBrechas extends Model implements Auditable
         'no_secciones',
     ];
 
-    //Relaciones
+    // Relaciones
 
     public function secciones()
     {

@@ -43,7 +43,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
     public function render()
     {
         $proyecto_id = $this->proyecto_id;
-        //Se usa find para buscar dentro y obtener dentro de la coleccion
+        // Se usa find para buscar dentro y obtener dentro de la coleccion
         $this->proyecto = TimesheetProyecto::getIdNameAll()->where('id', '=', $proyecto_id)->first();
 
         $areasempleado = DB::table('timesheet_proyectos_areas')
@@ -54,7 +54,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
         $empleados_Area = [];
 
         foreach ($areasempleado as $area) {
-            //Se usa find para buscar dentro y obtener dentro de la coleccion
+            // Se usa find para buscar dentro y obtener dentro de la coleccion
             $emps = Area::with('empleadosBasico')->where('id', '=', $area->area_id)->first();
 
             foreach ($emps->empleadosBasico as $empleado) {
@@ -70,7 +70,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
 
         $this->proyecto_empleados = TimesheetProyectoEmpleado::getProyectosEmpleadosTimesheetProyectosEmpleados()->where('proyecto_id', $proyecto_id);
 
-        //No viable ya que se necesitan usar appends para esta consulta
+        // No viable ya que se necesitan usar appends para esta consulta
         // $this->proyecto_empleados = DB::table('timesheet_proyectos_empleados')
         //     ->select(
         //         'timesheet_proyectos_empleados.id',
@@ -250,7 +250,7 @@ class TimesheetProyectoEmpleadosComponent extends Component
                     'costo_hora' => $datos['costo_edit'],
                 ]);
             }
-        } else { //Internos
+        } else { // Internos
             $emp_upd_proyecto = Empleado::getAltaEmpleados()->find($datos['empleado_editado']);
             $empleado_edit_proyecto = TimesheetProyectoEmpleado::find($id);
             $empleado_edit_proyecto->update([

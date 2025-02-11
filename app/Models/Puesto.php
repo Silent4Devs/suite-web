@@ -64,7 +64,7 @@ class Puesto extends Model implements Auditable
 
     protected $appends = ['utilizada'];
 
-    //Redis methods
+    // Redis methods
     public static function getExists()
     {
         return Cache::remember('Puestos:Puestos_exists', 3600 * 12, function () {

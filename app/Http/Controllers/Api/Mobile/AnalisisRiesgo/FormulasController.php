@@ -80,7 +80,7 @@ class FormulasController extends Controller
                 ]);
                 DB::commit();
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 DB::rollback();
 
                 continue;
@@ -205,7 +205,7 @@ class FormulasController extends Controller
             ]);
             DB::commit();
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             dd($th);
             DB::rollback();
             // continue;
@@ -222,7 +222,7 @@ class FormulasController extends Controller
 
             return json_encode(['data' => ['sections' => $sections]], 200);
         } catch (\Throwable $th) {
-            //throw $th;
+            // throw $th;
             return response()->json(['message' => 'No encontrado'], 404);
         }
     }

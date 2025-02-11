@@ -55,7 +55,7 @@ return [
         //     'level' => 'debug',
         //     'days' => 14,
         // ],
-        //Logging to logstash
+        // Logging to logstash
 
         'daily' => [
             'driver' => 'daily',
@@ -63,7 +63,7 @@ return [
             'level' => env('LOG_LEVEL', 'debug'),
             'days' => 14,
             'replace_placeholders' => true,
-            'formatter' => CustomFormatter::class, //The only change needed here
+            'formatter' => CustomFormatter::class, // The only change needed here
         ],
 
         'slack' => [

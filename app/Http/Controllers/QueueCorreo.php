@@ -19,7 +19,7 @@ class QueueCorreo extends Controller
      */
     public function index()
     {
-        //Benchmark::dd(fn () => DB::query("plan_implementacions")->select("id","tasks")->where("id",15)->toArray());//find(15));
+        // Benchmark::dd(fn () => DB::query("plan_implementacions")->select("id","tasks")->where("id",15)->toArray());//find(15));
         // Benchmark::dd(fn () => PlanImplementacion::find(15));
         // Send welcome email
         // for ($i = 0; $i < 1; $i++) {
@@ -73,16 +73,16 @@ class QueueCorreo extends Controller
             ['requisicion_id' => 100, 'id_usuario' => $lou],
             ['requisicion_id' => 101, 'id_usuario' => $lou],
             ['requisicion_id' => 102, 'id_usuario' => $lou],
-            ['requisicion_id' => 103, 'id_usuario' => $lou], //posible lay
+            ['requisicion_id' => 103, 'id_usuario' => $lou], // posible lay
             ['requisicion_id' => 104, 'id_usuario' => $lou],
             ['requisicion_id' => 105, 'id_usuario' => $lou],
             ['requisicion_id' => 108, 'id_usuario' => $lou],
             ['requisicion_id' => 109, 'id_usuario' => $lou],
-            ['requisicion_id' => 110, 'id_usuario' => $lou], //posible lay
+            ['requisicion_id' => 110, 'id_usuario' => $lou], // posible lay
             ['requisicion_id' => 111, 'id_usuario' => $lou],
-            ['requisicion_id' => 113, 'id_usuario' => $lou], //posible lay
+            ['requisicion_id' => 113, 'id_usuario' => $lou], // posible lay
             ['requisicion_id' => 114, 'id_usuario' => $lou],
-            ['requisicion_id' => 116, 'id_usuario' => $lou], //posible lay
+            ['requisicion_id' => 116, 'id_usuario' => $lou], // posible lay
             ['requisicion_id' => 117, 'id_usuario' => $lou],
             ['requisicion_id' => 119, 'id_usuario' => $lou],
             ['requisicion_id' => 127, 'id_usuario' => $lou],
@@ -109,10 +109,10 @@ class QueueCorreo extends Controller
             ['requisicion_id' => 189, 'id_usuario' => $lou],
             ['requisicion_id' => 190, 'id_usuario' => $lou],
             ['requisicion_id' => 191, 'id_usuario' => $lou],
-            ['requisicion_id' => 195, 'id_usuario' => $lay], //posible lay
-            ['requisicion_id' => 196, 'id_usuario' => $lay], //posible lay
-            ['requisicion_id' => 199, 'id_usuario' => $lay], //posible lay
-            ['requisicion_id' => 200, 'id_usuario' => $lay], //posible lay
+            ['requisicion_id' => 195, 'id_usuario' => $lay], // posible lay
+            ['requisicion_id' => 196, 'id_usuario' => $lay], // posible lay
+            ['requisicion_id' => 199, 'id_usuario' => $lay], // posible lay
+            ['requisicion_id' => 200, 'id_usuario' => $lay], // posible lay
             ['requisicion_id' => 203, 'id_usuario' => $lou],
             ['requisicion_id' => 204, 'id_usuario' => $lou],
             ['requisicion_id' => 205, 'id_usuario' => $lou],

@@ -37,7 +37,7 @@ class TimesheetProyecto extends Model implements Auditable
         'Externo' => 'Externo',
     ];
 
-    //Redis methods
+    // Redis methods
     public static function getAll($proyecto_id = null)
     {
         if (is_null($proyecto_id)) {

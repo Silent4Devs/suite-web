@@ -16,7 +16,7 @@
                             <h6 class="title-nombre">Autoevaluacion</h6>
                             <div class="img-person d-flex justify-content-center align-items-center"
                                 style="width: 69px; height:69px;">
-                                <img src="" alt="">
+                                <img src="{{ $evaluado->empleado->avatar_ruta }}" alt="{{ $evaluado->empleado->name }}">
                             </div>
                             <div class="title-status status-procces">
                                 En proceso
@@ -25,36 +25,58 @@
                         <div class="col-1 col-sm-1">
                             <div class="vertical-line"></div>
                         </div>
+                        @foreach ($colaboradores_evaluar as $key => $colabev)
+                            <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="title-nombre">Evaluar a:</h6>
+                                <div class="img-person d-flex justify-content-center align-items-center"
+                                    style="width: 69px; height:69px;">
+                                    <img src="{{ $colabev->empleado->avatar_ruta }}" alt="{{ $colabev->empleado->name }}">
+                                </div>
+                                @if ($colabev->finalizada)
+                                    <div class="title-status status-confirm">
+                                        Evaluado
+                                    </div>
+                                @else
+                                    <div class="title-status status-pendding">
+                                        Pendiente
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="row d-flex justify-content-center align-items-center">
                         <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
-                            <h6 class="title-nombre">Evaluar a:</h6>
+                            <h6 class="title-nombre">Evaluado:</h6>
                             <div class="img-person d-flex justify-content-center align-items-center"
                                 style="width: 69px; height:69px;">
-                                <img src="" alt="">
+                                <img src="{{ $evaluado->empleado->avatar_ruta }}" alt="{{ $evaluado->empleado->name }}">
                             </div>
-                            <div class="title-status status-pendding">
-                                Pendiente
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
-                            <h6 class="title-nombre">Evaluar a:</h6>
-                            <div class="img-person d-flex justify-content-center align-items-center"
-                                style="width: 69px; height:69px;">
-                                <img src="" alt="">
-                            </div>
-                            <div class="title-status status-pendding">
-                                Pendiente
+                            <div class="title-status status-procces">
+                                En proceso
                             </div>
                         </div>
-                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
-                            <h6 class="title-nombre">Evaluar a:</h6>
-                            <div class="img-person d-flex justify-content-center align-items-center"
-                                style="width: 69px; height:69px;">
-                                <img src="" alt="">
-                            </div>
-                            <div class="title-status status-confirm">
-                                Evaluado
-                            </div>
+                        <div class="col-1 col-sm-1">
+                            <div class="vertical-line"></div>
                         </div>
+                        @foreach ($colaboradores_evaluar as $key => $colabev)
+                            <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="title-nombre">Evaluar a:</h6>
+                                <div class="img-person d-flex justify-content-center align-items-center"
+                                    style="width: 69px; height:69px;">
+                                    <img src="{{ $colabev->empleado->avatar_ruta }}" alt="{{ $colabev->empleado->name }}">
+                                </div>
+                                @if ($colabev->finalizada)
+                                    <div class="title-status status-confirm">
+                                        Evaluado
+                                    </div>
+                                @else
+                                    <div class="title-status status-pendding">
+                                        Pendiente
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 @endif
                 <hr>
@@ -62,7 +84,7 @@
                     <div class="row d-flex align-items-center" style="">
                         <div class="col-3 col-sm-2 col-md-1" style="margin-left:16px;">
                             <div class="img-person" style="width: 69px; height:69px;">
-                                <img src="{{ $evaluado->empleado->avatar }}" alt="{{ $evaluado->empleado->name }}">
+                                <img src="{{ $evaluado->empleado->avatar_ruta }}" alt="{{ $evaluado->empleado->name }}">
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
@@ -91,9 +113,24 @@
                     <div class="row d-flex align-items-center" style="">
                         <div class="col-6">
                             <div class="row">
+                                <div class="col-3 col-sm-5 col-md-1" style="margin-left:16px;">
+                                    <div class="img-person" style="width: 69px; height:69px;">
+                                        <img src="{{ $evaluador->avatar_ruta }}" alt="{{ $evaluador->name }}">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-7">
+                                    <div style="margin-left: 30px;">
+                                        <h6 class="title-nombre">Evaluador: {{ $evaluador->name }}</h6>
+                                        <p class="title-puesto m-0">{{ $evaluador->puesto }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
                                 <div class="col-6 col-sm-5 col-md-1" style="margin-left:16px;">
                                     <div class="img-person" style="width: 69px; height:69px;">
-                                        <img src="{{ $evaluado->empleado->avatar }}"
+                                        <img src="{{ $evaluado->empleado->avatar_ruta }}"
                                             alt="{{ $evaluado->empleado->name }}">
                                     </div>
                                 </div>
@@ -101,21 +138,6 @@
                                     <div style="margin-left: 30px;">
                                         <h6 class="title-nombre">Evaluado: {{ $evaluado->empleado->name }}</h6>
                                         <p class="title-puesto m-0">{{ $evaluado->empleado->puesto }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-3 col-sm-5 col-md-1" style="margin-left:16px;">
-                                    <div class="img-person" style="width: 69px; height:69px;">
-                                        <img src="{{ $evaluador->avatar }}" alt="{{ $evaluador->name }}">
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-7">
-                                    <div style="margin-left: 30px;">
-                                        <h6 class="title-nombre">Evaluador: {{ $evaluador->name }}</h6>
-                                        <p class="title-puesto m-0">{{ $evaluador->puesto }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -266,11 +288,6 @@
                                                         wire:model.live="file"
                                                         wire:change="asignarObjArchivo({{ $obj_evld->id }})">
                                                 </div>
-                                                {{-- <div class="row">
-                                                        <input type="file" id="file" name="file"
-                                                            wire:model.live="file"
-                                                            wire:change="asignarObjArchivo({{ $obj_evld->id }})">
-                                                    </div> --}}
 
                                                 @if (!empty($obj_evidencias[$key]))
                                                     @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
@@ -302,18 +319,23 @@
                             </td>
                             <td>
                                 <div class="p-3">
-                                    <div class="form-group">
-                                        <input class="form-control" id="pregunta_n{{ $key }}"
-                                            style="width: 97px;"
-                                            value="{{ $obj_evld->calificacion_objetivo ?? null }}"
-                                            wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
-                                            type="number" placeholder="Calificación">
-                                    </div>
+                                    @if (!empty($obj_evidencias[$key]))
+                                        <div class="form-group">
+                                            <input class="form-control" id="pregunta_n{{ $key }}"
+                                                style="width: 97px;"
+                                                value="{{ $obj_evld->calificacion_objetivo ?? null }}"
+                                                wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
+                                                type="number" placeholder="Calificación">
+                                        </div>
 
-                                    <p
-                                        style="color: {{ $evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] }};">
-                                        {{ $calificacion_escala[$obj_evld->infoObjetivo->id] }}
-                                    </p>
+                                        <p style="color: {{ $evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] }};">
+                                            {{ $calificacion_escala[$obj_evld->infoObjetivo->id] }}
+                                        </p>
+                                    @else
+                                        <p>
+                                            Proporcione evidencias en el objetivo antes de calificarlo.
+                                        </p>
+                                    @endif
                                 </div>
                             </td>
                             <td></td>

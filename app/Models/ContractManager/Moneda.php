@@ -17,7 +17,7 @@ class Moneda extends Model implements Auditable
 
     protected $fillable = ['nombre'];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Moneda:all', 3600 * 12, function () {

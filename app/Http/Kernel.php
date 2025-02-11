@@ -11,11 +11,11 @@ class Kernel extends HttpKernel
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\Tabantaj\TrustProxies::class,
         \App\Http\Middleware\Tabantaj\PreventRequestsDuringMaintenance::class,
-        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        // \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\Tabantaj\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Tabantaj\Cors::class,
-        //\App\Http\Middleware\XFrameHeadersMiddleware::class,
+        // \App\Http\Middleware\XFrameHeadersMiddleware::class,
     ];
 
     protected $middlewareGroups = [
@@ -33,7 +33,7 @@ class Kernel extends HttpKernel
             //laravel-page-speed
             // \RenatoMarinho\LaravelPageSpeed\Middleware\InlineCss::class,
             // //\RenatoMarinho\LaravelPageSpeed\Middleware\ElideAttributes::class,
-            //\RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
+            // \RenatoMarinho\LaravelPageSpeed\Middleware\InsertDNSPrefetch::class,
             // \RenatoMarinho\LaravelPageSpeed\Middleware\RemoveComments::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
@@ -72,6 +72,7 @@ class Kernel extends HttpKernel
         'version_iso_2022' => \App\Http\Middleware\Tabantaj\VersionIso2022::class,
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
+        'password.expired' => \App\Http\Middleware\PasswordExpired::class,
         'course' => \App\Http\Middleware\Tabantaj\CourseMiddleware::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
         //milddleware control accesos tenant

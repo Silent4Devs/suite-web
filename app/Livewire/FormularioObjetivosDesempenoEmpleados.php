@@ -270,7 +270,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             try {
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoAprobado($empleado, $est_obj));
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 $this->alert('error', 'Error al Enviar Correo', [
                     'position' => 'center',
                     'timer' => 6000,
@@ -311,7 +311,7 @@ class FormularioObjetivosDesempenoEmpleados extends Component
             try {
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new CorreoObjetivoRechazado($empleado, $est_obj));
             } catch (\Throwable $th) {
-                //throw $th;
+                // throw $th;
                 $this->alert('error', 'Error al Enviar Correo', [
                     'position' => 'center',
                     'timer' => 6000,

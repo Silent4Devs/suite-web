@@ -323,7 +323,7 @@ class Requsicion extends Model implements Auditable
         return $this->hasMany(HistorialEdicionesOC::class, 'requisicion_id');
     }
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('Requisiciones:all', 3600 * 8, function () {
@@ -1122,49 +1122,49 @@ class Requsicion extends Model implements Auditable
         return $coleccion;
     }
 
-    //relacion-contrato
+    // relacion-contrato
     public function contrato()
     {
         return $this->hasOne(Contrato::class, 'id', 'contrato_id');
     }
 
-    //relacion-comprador
+    // relacion-comprador
     public function userSolicitante()
     {
         return $this->hasOne(User::class, 'id', 'id_user');
     }
 
-    //relacion-comprador
+    // relacion-comprador
     public function comprador()
     {
         return $this->hasOne(Comprador::class, 'id', 'comprador_id');
     }
 
-    //relacion-sucursal
+    // relacion-sucursal
     public function sucursal()
     {
         return $this->hasOne(Sucursal::class, 'id', 'sucursal_id');
     }
 
-    //relacion-productos_requisiciones
+    // relacion-productos_requisiciones
     public function productos_requisiciones()
     {
         return $this->hasMany(ProductoRequisicion::class, 'requisiciones_id', 'id')->orderBy('id');
     }
 
-    //relacion-provedores_requisiciones
+    // relacion-provedores_requisiciones
     public function provedores_requisiciones()
     {
         return $this->hasMany(ProveedorRequisicion::class, 'requisiciones_id', 'id')->orderBy('id');
     }
 
-    //relacion-provedores_requisiciones
+    // relacion-provedores_requisiciones
     public function provedores_indistintos_requisiciones()
     {
         return $this->hasMany(ProveedorIndistinto::class, 'requisicion_id', 'id')->orderBy('id');
     }
 
-    //relacion-provedores_requisiciones
+    // relacion-provedores_requisiciones
     public function provedores_requisiciones_catalogo()
     {
         return $this->hasMany(ProvedorRequisicionCatalogo::class, 'requisicion_id', 'id')->orderBy('id');

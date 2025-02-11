@@ -22,7 +22,7 @@ class Description extends Model implements Auditable
 
     ];
 
-    //relacion uno a uno inversa
+    // relacion uno a uno inversa
 
     public function lesson()
     {

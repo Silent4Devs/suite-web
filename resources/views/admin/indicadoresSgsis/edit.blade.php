@@ -135,6 +135,7 @@
                         <input class="form-control {{ $errors->has('nombre') ? 'is-invalid' : '' }}"
                                type="text"
                                name="nombre"
+                               maxlength="255"
                                id="nombre"
                                value="{{ old('nombre', $indicadoresSgsi->nombre) }}"
                                required>
@@ -232,6 +233,7 @@
                     <textarea class="form-control {{ $errors->has('descripcion') ? 'is-invalid' : '' }}"
                               name="descripcion"
                               id="descripcion"
+                              maxlength="500"
                               required>{{ old('descripcion', $indicadoresSgsi->descripcion) }}</textarea>
                     <label for="descripcion" class="asterisco">Descripción*</label>
                     @if ($errors->has('descripcion'))
@@ -298,6 +300,7 @@
                         <input class="form-control {{ $errors->has('unidadmedida') ? 'is-invalid' : '' }}"
                                type="text"
                                name="unidadmedida"
+                               maxlength="255"
                                id="unidadmedida"
                                value="{{ old('unidadmedida', $indicadoresSgsi->unidadmedida) }}"
                                required>

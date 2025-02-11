@@ -163,7 +163,7 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
                     // dd('error');
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
@@ -173,7 +173,7 @@ class CoursesLesson extends Component
                     $this->validateOnly('name');
                     $this->validateOnly('platform_id');
                     $this->validateOnly('url');
-                    //code...
+                    // code...
                     if ($this->formatType == 'Vimeo') {
                         $rules['url'] = ['required', 'regex:/\/\/(www\.)?vimeo.com\/(\d+)($|\/)/'];
                     }
@@ -204,7 +204,7 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
                     // dd('error');
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
 
                 break;
@@ -232,7 +232,7 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
 
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
@@ -280,7 +280,7 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
 
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
@@ -323,7 +323,7 @@ class CoursesLesson extends Component
                     if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
                         $this->lesson->resource->delete();
                     }
-                    //code...
+                    // code...
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
                     $this->validateOnly('formUrl');
@@ -349,7 +349,7 @@ class CoursesLesson extends Component
                     $this->render_alerta('success', 'Registro actualizado exitosamente');
                     // redirect()->route('admin.courses.edit', $this->course);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     $this->render_alerta('error', 'Completa los campos obligatorios');
                 }
 
@@ -361,7 +361,7 @@ class CoursesLesson extends Component
                     if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
                         $this->lesson->resource->delete();
                     }
-                    //code...
+                    // code...
                     $this->validateOnly('formName');
                     $this->validateOnly('formPlatformId');
                     $this->validateOnly('formUrl');
@@ -387,7 +387,7 @@ class CoursesLesson extends Component
                     $this->render_alerta('success', 'Registro actualizado exitosamente');
                     // redirect()->route('admin.courses.edit', $this->course);
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     $this->render_alerta('error', 'Completa los campos obligatorios');
                 }
 
@@ -420,7 +420,7 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
                     // dd('error');
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 
@@ -455,7 +455,7 @@ class CoursesLesson extends Component
                 } catch (\Throwable $th) {
 
                     $this->render_alerta('error', 'Completa los campos obligatorios');
-                    //throw $th;
+                    // throw $th;
                 }
                 break;
 

@@ -474,7 +474,7 @@ class RequisicionesCreateComponent extends Component
                     'fecha_fin' => $proveedor['fechaFin'],
                 ]);
 
-                //Agregar cuando se cree la requisicion (Para que sirve?, cambia por cada proveedor registrado)
+                // Agregar cuando se cree la requisicion (Para que sirve?, cambia por cada proveedor registrado)
                 // $this->nueva_requisicion->update([
                 //     'proveedor_catalogo' => $this->proveedores_catalogo->nombre,
                 //     'proveedoroc_id' => $this->proveedores_catalogo->id,
@@ -614,22 +614,22 @@ class RequisicionesCreateComponent extends Component
         $responsable = null;
 
         $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-        //Traemos participantes
+        // Traemos participantes
         $listaPart = $listaReq->participantes;
 
         $jefe = $this->user->empleado->supervisor;
-        //Buscamos al supervisor por su id
+        // Buscamos al supervisor por su id
         $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
-        //Buscamos en que nivel se encuentra el supervisor
+        // Buscamos en que nivel se encuentra el supervisor
         $nivel = $supList->nivel;
 
-        //traemos a todos los participantes correspondientes a ese nivel
+        // traemos a todos los participantes correspondientes a ese nivel
         $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-        //Buscamos 1 por 1 los participantes del nivel (area)
+        // Buscamos 1 por 1 los participantes del nivel (area)
         foreach ($participantesNivel as $key => $partNiv) {
-            //Si su estado esta activo se le manda el correo
+            // Si su estado esta activo se le manda el correo
             if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
 
                 $responsable = $partNiv->empleado;
@@ -669,22 +669,22 @@ class RequisicionesCreateComponent extends Component
             $organizacion = Organizacion::first();
 
             $listaReq = ListaDistribucion::where('modelo', 'Empleado')->first();
-            //Traemos participantes
+            // Traemos participantes
             $listaPart = $listaReq->participantes;
 
             $jefe = $this->user->empleado->supervisor;
-            //Buscamos al supervisor por su id
+            // Buscamos al supervisor por su id
             $supList = $listaPart->where('empleado_id', $jefe->id)->where('numero_orden', 1)->first();
 
-            //Buscamos en que nivel se encuentra el supervisor
+            // Buscamos en que nivel se encuentra el supervisor
             $nivel = $supList->nivel;
 
-            //traemos a todos los participantes correspondientes a ese nivel
+            // traemos a todos los participantes correspondientes a ese nivel
             $participantesNivel = $listaPart->where('nivel', $nivel)->sortBy('numero_orden');
 
-            //Buscamos 1 por 1 los participantes del nivel (area)
+            // Buscamos 1 por 1 los participantes del nivel (area)
             foreach ($participantesNivel as $key => $partNiv) {
-                //Si su estado esta activo se le manda el correo
+                // Si su estado esta activo se le manda el correo
                 if ($partNiv->empleado->disponibilidad->disponibilidad == 1) {
 
                     $responsable = $partNiv->empleado;

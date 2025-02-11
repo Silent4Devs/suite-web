@@ -1,6 +1,6 @@
 <?php
 
-//original
+// original
 // return [
 //     'currency' => [
 //         'format' => [
@@ -11,7 +11,7 @@
 //     ],
 // ];
 
-//modificado
+// modificado
 return [
     'currency' => [
         'format' => [

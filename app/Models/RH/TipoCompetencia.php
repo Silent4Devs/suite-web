@@ -18,7 +18,7 @@ class TipoCompetencia extends Model implements Auditable
 
     protected $guarded = ['id'];
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('TipoCompetencia:Tipocompetencias_all', 3600 * 4, function () {

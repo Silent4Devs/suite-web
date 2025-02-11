@@ -76,7 +76,7 @@ class MacroprocesoController extends Controller
     {
         abort_if(Gate::denies('macroprocesos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
-        //dd("teasdas". $organizaciones);
+        // dd("teasdas". $organizaciones);
 
         return view('admin.macroprocesos.create')->with('grupos', $grupos);
     }

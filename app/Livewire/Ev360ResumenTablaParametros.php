@@ -350,7 +350,7 @@ class Ev360ResumenTablaParametros extends Component
                 $calificacion_final += $evaluacion->peso_general_competencias;
             }
         } else {
-            //Logica para cuando no se evaluan competencias
+            // Logica para cuando no se evaluan competencias
         }
 
         $promedio_objetivos = 0;

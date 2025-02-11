@@ -146,9 +146,9 @@ class ContratosController extends AppBaseController
             'identificador' => 'required_if:creacion_proyecto,true|string|max:255',
             'tipo' => 'required_if:creacion_proyecto,true|string|max:255',
             'proyecto_name' => 'required_if:creacion_proyecto,true|string|max:255',
-            'sede_id' => 'nullable|integer|exists:sedes,id', //required_if:creacion_proyecto,true|
-            'fecha_inicio_proyecto' => 'nullable|date', //required_if:creacion_proyecto,true|
-            'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', //required_if:creacion_proyecto,true|
+            'sede_id' => 'nullable|integer|exists:sedes,id', // required_if:creacion_proyecto,true|
+            'fecha_inicio_proyecto' => 'nullable|date', // required_if:creacion_proyecto,true|
+            'fecha_fin_proyecto' => 'nullable|date|after_or_equal:fecha_inicio_proyecto', // required_if:creacion_proyecto,true|
             'horas_proyecto' => 'nullable|integer|min:0',
             'razon_soc_id' => 'required|integer',
         ], [
@@ -302,7 +302,7 @@ class ContratosController extends AppBaseController
             'valor_dolar' => $resultado8,
         ]);
 
-        //########## SE CREAN DIRECTORIOS VACÍOS ###################
+        // ########## SE CREAN DIRECTORIOS VACÍOS ###################
 
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio')) {
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/niveles servicio');
@@ -322,7 +322,7 @@ class ContratosController extends AppBaseController
             Storage::makeDirectory('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/facturas/xml');
         }
 
-        //############# GESTIÓN ARCHIVOS ##################
+        // ############# GESTIÓN ARCHIVOS ##################
 
         $file = $request->file('documento');
         if (! Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
@@ -383,7 +383,7 @@ class ContratosController extends AppBaseController
             'file_contrato' => $nombre_f,
         ]);
 
-        //############# FIN REESTRUCTURACION DE ARCHIVOS ##################
+        // ############# FIN REESTRUCTURACION DE ARCHIVOS ##################
 
         // $dataEnt = new EntregablesData();
         // $res = $dataEnt->TraerDatos($contrato->id);
@@ -559,44 +559,44 @@ class ContratosController extends AppBaseController
         try {
             abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $contrato = $this->contratoRepository->find($id);
-            $areas = Area::getAll();
-            // dd($areas->count());
-            $formatoFecha = new FormatearFecha;
-            if (! $contrato) {
-                return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
-            }
-            $proveedor_id = $contrato->proveedor_id;
+            // $areas = Area::getAll();
+            // // dd($areas->count());
+            // $formatoFecha = new FormatearFecha;
+            // if (! $contrato) {
+            //     return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
+            // }
+            // $proveedor_id = $contrato->proveedor_id;
             $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
-            // dd($contratos);
-            $proveedores = TimesheetCliente::get();
-            if (! is_null($contrato->fecha_inicio)) {
-                $contrato->fecha_inicio = $contrato->fecha_inicio;
-            }
-            if (! is_null($contrato->fecha_fin)) {
-                $contrato->fecha_fin = $contrato->fecha_fin;
-            }
-            if (! is_null($contrato->fecha_firma)) {
-                $contrato->fecha_firma = $contrato->fecha_firma;
-            } else {
-                $fecha_firma = null;
-            }
+            // // dd($contratos);
+            // $proveedores = TimesheetCliente::get();
+            // if (! is_null($contrato->fecha_inicio)) {
+            //     $contrato->fecha_inicio = $contrato->fecha_inicio;
+            // }
+            // if (! is_null($contrato->fecha_fin)) {
+            //     $contrato->fecha_fin = $contrato->fecha_fin;
+            // }
+            // if (! is_null($contrato->fecha_firma)) {
+            //     $contrato->fecha_firma = $contrato->fecha_firma;
+            // } else {
+            //     $fecha_firma = null;
+            // }
 
-            $descargar_archivo = '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
+            // $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
 
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
-            // dd($convenios);
-            $dolares = DolaresContrato::where('contrato_id', $id)->first();
+            // // dd($convenios);
+            // $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
-            $organizacion = Organizacion::getFirst();
+            // $organizacion = Organizacion::getFirst();
 
-            $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+            // $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
-            $razones_sociales = Sucursal::getArchivoFalse();
+            // $razones_sociales = Sucursal::getArchivoFalse();
 
-            // firmas aprobadores
+            // // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
-            // dd($firma->aprobadores);
-            // $exampleVar = $firma->aprobadores[0];
+            // // dd($firma->aprobadores);
+            // // $exampleVar = $firma->aprobadores[0];
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
             $firmar = false;
             $firmado = false;
@@ -611,8 +611,8 @@ class ContratosController extends AppBaseController
                 }
             }
             $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
-
-            return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.edit', compact('contrato', 'convenios', 'aprobacionFirmaContrato', 'firma', 'firmar', 'firmado', 'contratos'));
+            // return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -737,14 +737,14 @@ class ContratosController extends AppBaseController
             $fecha_firma = null;
         }
 
-        //#Cambiar nombre de carpeta
+        // #Cambiar nombre de carpeta
         if ($contrato->no_contrato != $request->no_contrato) {
             if (Storage::exists('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato)) {
-                Storage::move('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato, 'public/contratos/'.$contrato->id.'_contrato_'.$request->no_contrato); //rename folder
+                Storage::move('public/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato, 'public/contratos/'.$contrato->id.'_contrato_'.$request->no_contrato); // rename folder
             }
         }
         $no_contrato_sin_slashes = preg_replace('[/]', '-', $request->no_contrato);
-        //### RESTRUCTURACION DE CARPETAS UPDATE #############
+        // ### RESTRUCTURACION DE CARPETAS UPDATE #############
 
         $areas = Area::getIdNameAll();
 

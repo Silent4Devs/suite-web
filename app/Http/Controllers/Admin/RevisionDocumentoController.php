@@ -100,7 +100,7 @@ class RevisionDocumentoController extends Controller
 
     // public function obtenerDocumentosMeDebenAprobarArchivo()
     // {
-    //$usuario = User::getCurrentUser();
+    // $usuario = User::getCurrentUser();
     //     if ($usuario->empleado) {
     //         $revisiones = RevisionDocumento::with(['documento' => function ($query) {
     //             $query->with('revisor', 'macroproceso', 'elaborador', 'aprobador', 'responsable', 'proceso');
@@ -548,7 +548,7 @@ class RevisionDocumentoController extends Controller
 
         $ruta_publicacion_documento_anterior = $path_documentos_publicados.'/'.$documento->codigo.'-'.$documento->nombre.'-v'.intval($documento->version - 1).'-publicado.'.$extension;
 
-        //dd($ruta_publicacion);
+        // dd($ruta_publicacion);
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
             if (Storage::exists($ruta_publicacion_documento_anterior)) {
                 $this->moveBeforeVersionOfDirectory($ruta_publicacion_documento_anterior, $documento);

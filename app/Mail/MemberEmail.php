@@ -21,7 +21,7 @@ class MemberEmail extends Mailable
      * @return void
      */
 
-    //prueba
+    // prueba
     public function __construct($empleado, $comite)
     {
         $this->empleado_name = $empleado;

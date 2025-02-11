@@ -115,9 +115,9 @@ class FinanzasDashboard extends Component
             $horas_trabajadas[] = $horasTotales;
             $horas_por_usuario[$emp_p->empleado_id] = $horasTotales;
         }
-        //dd($nombres, $horas_trabajadas,$horas_por_usuario,$horasCosto,$totalhoras);
+        // dd($nombres, $horas_trabajadas,$horas_por_usuario,$horasCosto,$totalhoras);
 
-        //dd($ids_emp, $data, $this->nombre = $nombres, $this->horastrabajada = $horas_trabajadas, $usuarios,$this->horaTotal = $horasTotales,$this->horaCosto = $horasCosto,$this->proyectos = TimesheetProyecto::select('proyecto')->find(10));
+        // dd($ids_emp, $data, $this->nombre = $nombres, $this->horastrabajada = $horas_trabajadas, $usuarios,$this->horaTotal = $horasTotales,$this->horaCosto = $horasCosto,$this->proyectos = TimesheetProyecto::select('proyecto')->find(10));
         $this->dispatch('datosActualizados', nombre: $this->nombre = $nombres, horastrabajada: $this->horastrabajada = $horas_trabajadas, horaTotal: $this->horaTotal = $totalhoras, horaCosto: $this->horaCosto = $horasCosto, proyectos: $this->proyectos = TimesheetProyecto::select('proyecto')->find($id));
     }
 }

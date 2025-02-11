@@ -55,7 +55,7 @@ class PlanImplementacion extends Model implements Auditable
     //     return $this->hasMany(PlanImplementacionTask::class, 'plan_implementacion_id', 'id')->with('assigs');
     // }
 
-    //Redis methods
+    // Redis methods
     public static function getAll()
     {
         return Cache::remember('PlanImplementacion:implementaciones', 3600 * 8, function () {

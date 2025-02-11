@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvidenciaObjCuestionarioEvDesempeno;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -17,7 +18,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
     use LivewireAlert;
     use WithFileUploads;
 
-    //Basicos
+    // Basicos
     public $evaluador;
 
     public $id_evaluacion;
@@ -31,7 +32,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $autoevaluacion = false;
 
-    //Traer datos de la evaluación
+    // Traer datos de la evaluación
     public $evaluacion;
 
     public $evaluado;
@@ -50,7 +51,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $evaluacion_colors = [];
 
-    //Campos para validación dependiendo de lo que el evaluador vaya a evaluar
+    // Campos para validación dependiendo de lo que el evaluador vaya a evaluar
     public $validacion_objetivos_evaluador;
 
     public $escalas;
@@ -67,10 +68,12 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $porcentajeCalificado;
 
-    //Se emite un evento que el livewire principal va a escuchar gracias a listeners
+    public $colaboradores_evaluar = [];
+
+    // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
-        //Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
+        // Enviamos el progreso para que el livewire principal haga la validación para terminar la evaluación
         $this->dispatch('dataFromChild1', dataFromChild1: $this->porcentajeCalificado);
     }
 
@@ -84,7 +87,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
-        // $this->cuestionarioSecciones();
+
         if ($this->evaluacion->activar_objetivos == true) {
             $this->buscarObjetivos();
         }
@@ -92,6 +95,11 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         if ($this->evaluado->empleado->id == $this->evaluador->id) {
             $this->autoevaluacion = true;
         }
+
+        $this->colaboradores_evaluar = EvaluadoresEvaluacionObjetivosDesempeno::with('empleado')->where('periodo_id', $id_periodo)
+        ->where('evaluador_desempeno_id', $this->evaluador->id)
+        ->where('evaluado_desempeno_id', '!=', $this->evaluado->id)
+        ->get();
 
         $this->progresoEvaluacion();
     }
@@ -149,10 +157,12 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                         // If the condition is met, update the assigned condition and values
                         $currentCondition = $obj_esc;
                         $this->setValues($infoObjetivo->id, $obj_esc->parametro, $obj_esc->color);
+                        break;
                     } elseif ($currentCondition !== null && $currentCondition->valor === $obj_esc->valor) {
                         // If a subsequent condition matches the current condition's value, update the assigned condition and values
                         $currentCondition = $obj_esc;
                         $this->setValues($infoObjetivo->id, $obj_esc->parametro, $obj_esc->color);
+                        break;
                     }
                 }
             }
@@ -179,7 +189,6 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
                                 $this->calificacion_autoescala[$obj_evld->id] = $obj_esc->parametro;
                                 $this->autoevaluacion_colors[$obj_evld->id.'-bg-color'] = $this->hexToRgba($obj_esc->color);
                                 $this->autoevaluacion_colors[$obj_evld->id.'-tx-color'] = $obj_esc->color;
-                                // dd($this->calificacion_autoescala);
                             }
                             break;
                         case '3':
@@ -429,7 +438,6 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
         $this->sendDataToParent();
     }
-
 
     public function cambiarSeccion($llave)
     {

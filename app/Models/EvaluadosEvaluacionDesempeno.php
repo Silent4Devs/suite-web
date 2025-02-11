@@ -72,7 +72,7 @@ class EvaluadosEvaluacionDesempeno extends Model
             $nombres = $this->evaluadoresObjetivos->pluck('evaluador_desempeno_id')->unique()->toArray();
         }
 
-        //Enviamos los ids, para que sea mas facil de manejar
+        // Enviamos los ids, para que sea mas facil de manejar
         return $nombres;
     }
 
@@ -168,7 +168,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 ];
 
                 // Agrupar por objetivo_id
-                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
                     $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
                 }
 
@@ -221,7 +221,7 @@ class EvaluadosEvaluacionDesempeno extends Model
 
                     $calificacionesAgrupadas[$pregunta->competencia_id][] = $calificacion;
                 } catch (\Throwable $th) {
-                    //throw $th;
+                    // throw $th;
                     dd($pregunta, $pregunta->calificacion_competencia, $pregunta->infoCompetencia->nivel_esperado, $evlrs->porcentaje_competencias);
                 }
             }
@@ -300,7 +300,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 ];
 
                 // Agrupar por objetivo_id
-                if (!isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
+                if (! isset($calificacionesAgrupadas[$pregunta->objetivo_id])) {
                     $calificacionesAgrupadas[$pregunta->objetivo_id] = [];
                 }
 
@@ -330,7 +330,6 @@ class EvaluadosEvaluacionDesempeno extends Model
             'promedio_total' => round($promedio, 2),
         ];
     }
-
 
     public function calificacionesCompetenciasEvaluadoPeriodo($periodo)
     {
@@ -427,7 +426,7 @@ class EvaluadosEvaluacionDesempeno extends Model
                 }
 
                 // Asegurar que el array esté inicializado
-                if (!isset($calificacionesAgrupadas[$objetivoId])) {
+                if (! isset($calificacionesAgrupadas[$objetivoId])) {
                     $calificacionesAgrupadas[$objetivoId] = [
                         'objetivo_id' => $objetivoId,
                         'calificacion_total' => 0,

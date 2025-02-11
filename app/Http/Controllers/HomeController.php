@@ -21,7 +21,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        //return view('/admin/organizacions');
+        // return view('/admin/organizacions');
         return view('/admin/organizacions');
     }
 }
