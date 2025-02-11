@@ -343,36 +343,6 @@ class FormularioEditarContratosLivewire extends Component
         return true;
     }
 
-    public function updated($propertyName)
-{
-    if ($propertyName === 'file_contrato') {
-        try {
-            $this->error_message = null;
-            $this->success_message = null;
-
-            // Verificar si el archivo está presente
-            if (!$this->file_contrato) {
-                $this->error_message = "No se ha seleccionado ningún archivo.";
-                return;
-            }
-
-            // Verificar si el archivo es válido
-            if ($this->file_contrato->getError()) {
-                $this->error_message = "Hubo un problema al cargar el archivo. Inténtalo nuevamente.";
-                return;
-            }
-
-            // Si todo está bien, mostrar mensaje de éxito
-            $this->success_message = "Archivo válido y listo para subir.";
-        } catch (\Illuminate\Validation\ValidationException $e) {
-
-            // Captura el error de validación
-            $this->error_message = "El archivo no cumple con los requisitos: máximo 50MB y formatos permitidos.";
-            dd($e);
-        }
-    }
-}
-
     // Función para actualizar el contrato
     public function updateContrato()
     {

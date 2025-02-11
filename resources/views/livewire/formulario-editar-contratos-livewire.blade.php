@@ -289,14 +289,13 @@
                     </div>
                     @if (!is_null($organizacion))
 
-                        <input class="form-control" type="file" wire:model="file_contrato"
-                        accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff">
-                        @if ($error_message)
-                        <p class="text-danger">{{ $error_message }}</p>
-                        @endif
-                        @if ($success_message)
-                        <p class="text-danger">{{ $success_message }}</p>
-                        @endif
+                    <input id="fileInput" class="form-control" type="file" wire:model="file_contrato"
+                    accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff"
+                    onchange="validateFile(event)">
+
+                    <!-- Mensaje de error -->
+                    <p id="error-message" class="text-danger" style="display: none;"></p>
+
 
                         <div wire:loading wire:target="file_contrato">
                             <div class="spinner-grow text-primary" role="status">
@@ -725,3 +724,33 @@
 <!-- Submit Field -->
 {{-- </form> --}}
 </div>
+
+<script>
+    function validateFile(event) {
+        const file = event.target.files[0]; // Obtiene el archivo seleccionado
+        const errorMessage = document.getElementById("error-message");
+
+        // Resetear el mensaje de error
+        errorMessage.style.display = "none";
+        errorMessage.textContent = "";
+
+        if (!file) {
+            errorMessage.textContent = "No se seleccionó ningún archivo.";
+            errorMessage.style.display = "block";
+            event.target.value = ""; // Limpiar el input
+            return;
+        }
+
+        // Validar tamaño máximo (50MB)
+        const maxSize = 50 * 1024 * 1024; // 50MB en bytes
+        if (file.size > maxSize) {
+            errorMessage.textContent = "El archivo es demasiado grande (máx. 50MB).";
+            errorMessage.style.display = "block";
+            event.target.value = ""; // Limpiar el input
+            return;
+        }
+
+        // Si todo está bien, no mostrar errores
+        errorMessage.style.display = "none";
+    }
+</script>
