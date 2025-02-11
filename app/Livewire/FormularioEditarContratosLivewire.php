@@ -22,9 +22,6 @@ use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\ConveniosModificatorios;
 use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 use Livewire\WithFileUploads;
-use App\Models\RazonSocial;
-use App\Models\Proveedor;
-use App\Models\Proyecto;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AprobadorFirmaContratoMail;
 use App\Events\ContratoEvent;
@@ -348,7 +345,6 @@ class FormularioEditarContratosLivewire extends Component
     // Función para actualizar el contrato
     public function updateContrato()
     {
-        ob_start();
         try {
             // Validar los campos
             if (!$this->validarCampos()) {
@@ -424,9 +420,6 @@ class FormularioEditarContratosLivewire extends Component
                 $output = ob_get_contents();
             }
 
-            // Limpiar el buffer sin enviar la salida al navegador
-            ob_end_clean();
-
             if ($this->documento) {
                 $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/penalizaciones';
                 $nombre_f = $this->contrato->id . $this->fecha_inicio . $this->documento->getClientOriginalName();
@@ -435,7 +428,7 @@ class FormularioEditarContratosLivewire extends Component
             }
 
             // Emitir evento de actualización
-            // event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
+            event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
 
             // Notificar éxito
             $this->alert('success', 'Contrato actualizado correctamente.', [
