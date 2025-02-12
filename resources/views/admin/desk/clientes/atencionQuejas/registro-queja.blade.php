@@ -459,12 +459,12 @@
             progress: 0,
             uploaded: false,
             hasFile: false,
-    
+
             handleFileChange(event) {
                 this.hasFile = event.target.files.length > 0;
                 this.progress = 0;
                 this.uploaded = false;
-    
+
                 // Simular carga de archivos con progreso
                 if (this.hasFile) {
                     let interval = setInterval(() => {
