@@ -504,20 +504,7 @@
                 { data: 'fecha_de_cierre' },
                 { data: 'proceso_quejado' },
                 { data: 'ubicacion' },
-                {
-                    data: 'estatus',
-                    render: function(row, data, dataIndex, cells) {
-            let fondo = "#6DC866", letras = "white";
-            if (data.estatus == "Sin atender") { fondo = "#FFCB63"; }
-            if (data.estatus == "En curso") { fondo = "#AC84FF"; }
-            if (data.estatus == "En espera") { fondo = "#6863FF"; }
-            if (data.estatus == "Cerrado") { fondo = "#6DC866"; }
-            if (data.estatus == "No procedente") { fondo = "#FF417B"; }
-
-            $(cells[9]).css('background-color', fondo).css('color', letras); // Ajustado al índice correcto
-
-            }
-                },
+                { data: 'estatus' },
                 {
                     data: 'id',
                     orderable: false,
@@ -536,6 +523,24 @@
                     }
                 }
             ],
+            columnDefs: [{
+                targets: 9, // Índice de la columna 'estatus'
+                createdCell: function(td, cellData) {
+                    let colores = {
+                        "Sin atender": "#FFCB63",
+                        "En curso": "#AC84FF",
+                        "En espera": "#6863FF",
+                        "Cerrado": "#6DC866",
+                        "No procedente": "#FF417B"
+                    };
+                    $(td).css({
+                        'background-color': colores[cellData] || '#6DC866',
+                        'color': 'white',
+                        'text-align': 'center',
+                        'font-weight': 'bold'
+                    }).text(cellData);
+                }
+            }],
             order: [[0, 'desc']],
             paging: true,  // Activa paginación
             searching: true,  // Activa el buscador
@@ -544,6 +549,7 @@
         });
     }
 });
+
 
 
             window.ArchivarQuejaCliente = function(url) {
