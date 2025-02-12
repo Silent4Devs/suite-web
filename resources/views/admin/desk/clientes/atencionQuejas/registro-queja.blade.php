@@ -310,7 +310,19 @@
                     evidencia(s) de la
                     queja</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                     title="Información que soporta la queja que se esta presentando."></i>
-                <input type="file" name="evidencia[]" class="form-control" multiple="multiple">
+                    <div class="mt-2" x-data="fileUpload()">
+                        <input type="file" name="evidencia[]" class="form-control" multiple
+                               x-ref="fileInput" @change="handleFileChange">
+
+                        <template x-if="hasFile">
+                            <div>
+                                <progress x-bind:value="progress" max="100%" style="width: 100%;" x-show="progress > 0 && progress < 100"></progress>
+                                <span x-show="progress > 0 && progress < 100" x-text="progress + '%'"></span>
+                            </div>
+                        </template>
+
+                        <div x-show="uploaded" class="text-success mt-2">✅ Archivo cargado</div>
+                    </div>
             </div>
             <div class="form-group col-md-4">
                 <a href="{{ url('admin/desk/descargar-evidencia/' . $quejasClientes->id) }}" class="btn btn-link mt-5">
@@ -440,6 +452,35 @@
         </div>
     </div>
 </div>
+
+<script>
+    function fileUpload() {
+        return {
+            progress: 0,
+            uploaded: false,
+            hasFile: false,
+
+            handleFileChange(event) {
+                this.hasFile = event.target.files.length > 0;
+                this.progress = 0;
+                this.uploaded = false;
+
+                // Simular carga de archivos con progreso
+                if (this.hasFile) {
+                    let interval = setInterval(() => {
+                        if (this.progress >= 100) {
+                            clearInterval(interval);
+                            this.uploaded = true;
+                        } else {
+                            this.progress += 10; // Incremento simulado
+                        }
+                    }, 300);
+                }
+            }
+        };
+    }
+    </script>
+
 
 <script>
     document.addEventListener('DOMContentLoaded', function () {
