@@ -297,18 +297,18 @@ class QuejasClienteController extends Controller
             }
         }
 
-        // if ($queja_procedente == false) {
-        //     $quejasClientes->update([
-        //         'estatus' => 'No procedente',
-        //     ]);
-        // }
+        if ($queja_procedente == false) {
+            $quejasClientes->update([
+                'estatus' => 'No procedente',
+            ]);
+        }
 
-        // if ($cerrar_ticket) {
-        //     $quejasClientes->update([
-        //         'estatus' => 'Cerrado',
-        //         'fecha_cierre' => now(),
-        //     ]);
-        // }
+        if ($cerrar_ticket) {
+            $quejasClientes->update([
+                'estatus' => 'Cerrado',
+                'fecha_cierre' => now(),
+            ]);
+        }
 
         if ($notificar_atencion_queja_no_aprobada) {
             if ($cerrar_ticket == false) {
