@@ -40,9 +40,6 @@
 
     {{ Breadcrumbs::render('admin.plan-auditoria.index') }}
 
-    @can('plan_auditorium_create')
-    @endcan
-
     <h5 class="col-12 titulo_general_funcion">Plan de Auditoría</h5>
     <div class="card card-body" style="background-color: #5397D5; color: #fff;">
         <div class="d-flex" style="gap: 25px;">
@@ -85,7 +82,7 @@
                         <th style="min-width: 600px;">
                             Objetivo&nbsp;de&nbsp;la&nbsp;auditoría
                         </th>
-                        <th style="min-width: 600px;">
+                         <th style="min-width: 600px;">
                             {{ trans('cruds.planAuditorium.fields.alcance') }}
                         </th>
                         <th style="min-width: 600px;">
@@ -94,9 +91,9 @@
                         <th style="min-width: 600px;">
                             Procesos&nbsp;y&nbsp;documentos&nbsp;a&nbsp;auditar
                         </th>
-                        <th>
+                                             {{--  <th>
                             Equipo&nbsp;auditor
-                        </th>
+                        </th> --}}
                         <th>
                             Opciones
                         </th>
@@ -201,21 +198,6 @@
 
             ];
 
-            @can('plan_de_auditoria_agregar')
-                // let btnAgregar = {
-                //     text: '<i class="pl-2 pr-3 fas fa-plus"></i> Agregar',
-                //     titleAttr: 'Agregar plan de auditoría',
-                //     url: "{{ route('admin.plan-auditoria.create') }}",
-                //     className: "btn-xs btn-outline-success rounded ml-2 pr-3",
-                //     action: function(e, dt, node, config) {
-                //         let {
-                //             url
-                //         } = config;
-                //         window.location.href = url;
-                //     }
-                // };
-                // dtButtons.push(btnAgregar);
-            @endcan
             @can('plan_auditorium_delete')
                 let deleteButtonTrans = '{{ trans('global.datatables.delete') }}';
                 let deleteButton = {
@@ -304,31 +286,31 @@
                             return row.documento_auditar_html;
                         }
                     },
-                    {
-                        data: 'equipo_auditor',
-                        render: function(data, type, row, meta) {
-                            let equipos = JSON.parse(data);
-                            if (type === "empleadoText") {
-                                let equiposTexto = "";
-                                equipos.forEach(equipo => {
-                                    equiposTexto += `
-                            ${equipo.name},
-                            `;
-                                });
-                                return equiposTexto.trim();
-                            }
-                            let html = '<div class="d-flex" style="flex-wrap:wrap">';
-                            equipos.forEach(empleado => {
-                                html += `
-                                   <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
+                    // {
+                    //     data: 'equipo_auditor',
+                    //     render: function(data, type, row, meta) {
+                    //         let equipos = JSON.parse(data);
+                    //         if (type === "empleadoText") {
+                    //             let equiposTexto = "";
+                    //             equipos.forEach(equipo => {
+                    //                 equiposTexto += `
+                    //         ${equipo.name},
+                    //         `;
+                    //             });
+                    //             return equiposTexto.trim();
+                    //         }
+                    //         let html = '<div class="d-flex" style="flex-wrap:wrap">';
+                    //         equipos.forEach(empleado => {
+                    //             html += `
+                    //                <img src="{{ asset('storage/empleados/imagenes') }}/${empleado.avatar}" title="${empleado.name}" class="rounded-circle" style="clip-path: circle(15px at 50% 50%);height: 30px;" />
 
-                                `;
-                            })
-                            html += '</div>'
-                            return html
-                        },
-                        width: '20%'
-                    },
+                    //             `;
+                    //         })
+                    //         html += '</div>'
+                    //         return html
+                    //     },
+                    //     width: '20%'
+                    // },
                     {
                         data: 'actions',
                         name: '{{ trans('global.actions') }}'
