@@ -1,4 +1,4 @@
-services:
+doservices:
   nginx-tabantaj:
     image: nginx:stable-alpine
     container_name: nginx-tabantaj
@@ -150,7 +150,6 @@ services:
     ports:
       - 5672:5672
       - 15672:15672
-    restart: unless-stopped
     tty: true
     networks:
       - tabantajnetwork
