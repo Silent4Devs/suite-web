@@ -78,10 +78,8 @@ return [
                     'password' => env('RABBITMQ_PASSWORD', 'Password123.'),
                     'vhost' => env('RABBITMQ_VHOST', 'desarrollo'),
                 ],
-                // ...
             ],
-
-            // ...
+            'queue' => env('RABBITMQ_QUEUE', 'default'),
         ],
 
     ],
