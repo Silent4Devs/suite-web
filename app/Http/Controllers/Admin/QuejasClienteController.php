@@ -219,7 +219,7 @@ class QuejasClienteController extends Controller
             'fecha_cierre' => $request->fecha_cierre ? $request->fecha_cierre : $quejasClientes->fecha_cierre,
             'ubicacion' => $request->ubicacion ? $request->ubicacion : $quejasClientes->ubicacion,
             'descripcion' => $request->descripcion ? $request->descripcion : $quejasClientes->descripcion,
-            'estatus' => 'En curso' ? 'En curso' : $request->estatus,
+            'estatus' => $request->estatus,
             'comentarios' => $request->comentarios ? $request->comentarios : $quejasClientes->comentarios,
             'canal' => $request->canal ? $request->canal : $quejasClientes->canal,
             'otro_canal' => $request->otro_canal ? $request->otro_canal : $quejasClientes->otro_canal,
