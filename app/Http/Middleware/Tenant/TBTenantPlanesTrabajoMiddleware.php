@@ -30,7 +30,6 @@ class TBTenantPlanesTrabajoMiddleware
         $tbModulosValidos = ['Centro de Atención', 'Planes de Trabajo'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
-
         if ($tbEstado) {
             return $tbNext($tbRequest);
         } else {
