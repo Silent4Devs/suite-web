@@ -71,6 +71,9 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
         Route::get('/', [PortalComunicacionController::class, 'index']);
         Route::get('/home', [InicioUsuarioController::class, 'index'])->name('home');
+
+        Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
+
         //log-viewer
         //Route::get('log-viewer', '\Rap2hpoutre\LaravelLogViewer\LogViewerController@index')->name('log-viewer');
 
@@ -224,6 +227,23 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('users/list/get', 'UsersController@getUsersIndex')->name('users.getUsersIndex');
         Route::resource('users', 'UsersController');
 
+        //No se utiliza
+        // User Alerts
+        Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
+        Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
+        Route::get('user-alerts/read', 'UserAlertsController@read');
+
+        //No se utiliza, funcional
+        Route::get('envio-documentos/atencion', 'EnvioDocumentosController@atencion')->name('envio-documentos.atencion');
+        Route::get('envio-documentos/atencion/{id}/seguimiento', 'EnvioDocumentosController@seguimiento')->name('envio-documentos.seguimiento');
+        Route::put('envio-documentos/{id}/seguimientoUpdate', 'EnvioDocumentosController@seguimientoUpdate')->name('envio-documentos.seguimientoUpdate');
+        Route::get('ajustes-envio-documentos', 'EnvioDocumentosController@ajustes')->name('ajustes-envio-documentos');
+        Route::put('ajustes-envio-documentos/{id}/update', 'EnvioDocumentosController@ajustesUpdate')->name('ajustes-envio-documentos-update');
+        Route::resource('envio-documentos', 'EnvioDocumentosController');
+
+        Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
+        Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
+
         Route::group(['middleware' => 'primeros.pasos'], function () {
             // Organizaciones
             Route::delete('organizaciones/destroy', 'OrganizacionesController@massDestroy')->name('organizaciones.massDestroy');
@@ -240,6 +260,15 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
             Route::post('inicioUsuario/estado-disponibilidad', [InicioUsuarioController::class, 'cambiarEstadoDisponibilidad'])->name('estado-disponibilidad');
             Route::post('inicioUsuario/versioniso', [InicioUsuarioController::class, 'updateVersionIso'])->name('inicio-Usuario.updateVersionIso');
+
+            //No utilizado, funcional?
+            // Faq Categories
+            Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
+            Route::resource('faq-categories', 'FaqCategoryController');
+
+            // Faq Questions
+            Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
+            Route::resource('faq-questions', 'FaqQuestionController');
 
             // // Visitantes
             Route::group(['middleware' => 'visitantes'], function () {
@@ -406,6 +435,18 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
             //Se puso aqui debido a problema de cross-origin
             Route::get('ExportEmpleadosGeneral', 'EmpleadoController@exportExcel')->name('descarga-empleados-general');
+
+            Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
+            Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
+            Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
+            Route::get('activosInformacion/create/{matriz}', 'ActivosInformacionController@create')->name('activosInformacion.create');
+            Route::get('activosInformacion/{matriz}', 'ActivosInformacionController@index')->name('activosInformacion.index');
+            Route::get('activosInformacion/{matriz}/{activo}/edit', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
+            Route::resource('activosInformacion', 'ActivosInformacionController')->names([
+                'store' => 'activosInformacion.store',
+                'show' => 'activosInformacion.show',
+                'update' => 'activosInformacion.update',
+            ])->except(['edit', 'create', 'index']);
 
             Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
             Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
@@ -812,6 +853,11 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                     }
                 })->name('iso27001.inicio-guia');
 
+                //Utilizado?, no existen registros, sin permisos necesarios
+                // Incidentes De Seguridads
+                Route::delete('incidentes-de-seguridads/destroy', 'IncidentesDeSeguridadController@massDestroy')->name('incidentes-de-seguridads.massDestroy');
+                Route::resource('incidentes-de-seguridads', 'IncidentesDeSeguridadController');
+
                 // Implementacions
                 Route::resource('implementacions', 'ImplementacionController');
 
@@ -1107,6 +1153,64 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                     Route::resource('servicios', 'ServiciosController')->except('destroy');
                 });
 
+                //Activos información
+                Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
+                Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
+                Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
+                Route::get('activosInformacion/create/{matriz}', 'ActivosInformacionController@create')->name('activosInformacion.create');
+                Route::get('activosInformacion/{matriz}', 'ActivosInformacionController@index')->name('activosInformacion.index');
+                Route::get('activosInformacion/{matriz}/{activo}/edit', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
+                Route::resource('activosInformacion', 'ActivosInformacionController')->names([
+                    'store' => 'activosInformacion.store',
+                    'show' => 'activosInformacion.show',
+                    'update' => 'activosInformacion.update',
+                ])->except(['edit', 'create', 'index']);
+
+                //Contenedores
+                Route::post('contenedores/escenarios/{contenedor}/agregar', 'ContenedorMatrizOctaveController@agregarEscenarios')->name('contenedores.escenarios.store');
+                Route::get('contenedores/escenarios/{contenedor}/listar', 'ContenedorMatrizOctaveController@escenarios')->name('contenedores.escenarios.get');
+                Route::delete('contenedores/destroy', 'ContenedorMatrizOctaveController@massDestroy')->name('contenedores.massDestroy');
+                Route::post('contenedores/escenarios/eliminar', 'ContenedorMatrizOctaveController@eliminarEscenario')->name('contenedores.escenarios.destroy');
+
+                Route::get('octave/arbol-riesgos/{matriz}', 'ArbolRiesgosOctaveController@index')->name('octave.arbol-riesgos.index');
+                Route::post('octave/arbol-riesgos', 'ArbolRiesgosOctaveController@obtenerArbol')->name('octave.arbol-riesgos.obtener');
+                Route::get('contenedores/{matriz}', 'ContenedorMatrizOctaveController@index')->name('contenedores.index');
+                Route::get('contenedores/create/{matriz}', 'ContenedorMatrizOctaveController@create')->name('contenedores.create');
+                Route::get('contenedores/{contenedor}/edit/{matriz}', 'ContenedorMatrizOctaveController@edit')->name('contenedores.edit');
+                Route::delete('contenedores/{contenedor}', 'ContenedorMatrizOctaveController@destroy')->name('contenedores.destroy');
+                Route::resource('contenedores', 'ContenedorMatrizOctaveController')->except(['index', 'create', 'edit', 'destroy']);
+
+                // Indicadores Sgsis
+                Route::get('evaluaciones-sgsisInsertar', 'IndicadoresSgsiController@evaluacionesInsert')->name('evaluacionesInsert');
+                Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
+                Route::resource('indicadores-sgsis', 'IndicadoresSgsiController');
+                Route::get('indicadores-sgsisInsertar', 'IndicadoresSgsiController@IndicadorInsert')->name('indicadores-sgsisInsertar');
+                Route::get('indicadores-sgsisUpdate', 'IndicadoresSgsiController@IndicadorUpdate')->name('indicadores-sgsisUpdate');
+                Route::get('evaluaciones-sgsisUpdate', 'IndicadoresSgsiController@evaluacionesUpdate')->name('evaluacionesUpdate');
+                Route::get('indicadores/dashboard', 'IndicadoresSgsiController@indicadoresDashboard')->name('indicadores-dashboard');
+                Route::post('indicadores/porcentaje-dashboard', 'IndicadoresSgsiController@indicadoresDashboardPorcentaje')->name('indicadores-porcentaje-dashboard');
+
+                //Utilizado?, solo registros de prueba
+                // Planificacion Controls
+                Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
+                Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
+                Route::resource('planificacion-controls', 'PlanificacionControlController');
+
+                // Informacion Documetadas
+                Route::delete('informacion-documetadas/destroy', 'InformacionDocumetadaController@massDestroy')->name('informacion-documetadas.massDestroy');
+                Route::post('informacion-documetadas/media', 'InformacionDocumetadaController@storeMedia')->name('informacion-documetadas.storeMedia');
+                Route::post('informacion-documetadas/ckmedia', 'InformacionDocumetadaController@storeCKEditorImages')->name('informacion-documetadas.storeCKEditorImages');
+                Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
+
+                // Control Accesos
+                Route::delete('control-accesos/destroy', 'ControlAccesoController@massDestroy')->name('control-accesos.massDestroy');
+                Route::post('control-accesos/media', 'ControlAccesoController@storeMedia')->name('control-accesos.storeMedia');
+                Route::post('control-accesos/ckmedia', 'ControlAccesoController@storeCKEditorImages')->name('control-accesos.storeCKEditorImages');
+                Route::resource('control-accesos', 'ControlAccesoController');
+
+                // Politica Del Sgsi Soportes
+                Route::resource('politica-del-sgsi-soportes', 'PoliticaDelSgsiSoporteController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
+
                 //Amenazas
                 Route::resource('amenazas', 'AmenazaController');
                 Route::delete('amenazas/destroy', 'AmenazaController@massDestroy')->name('amenazas.massDestroy');
@@ -1138,6 +1242,10 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
                 // Route::get('template-analisis-riesgo/create', 'TBTemplateAnalisisRiesgosController@create')->name('template-create-analisis-riesgos');
                 Route::resource('template-analisis-riesgo', 'TBTemplateAnalisisRiesgosController');
+
+                //Utilizado?, no existen registros, sin permisos necesarios
+                //Tabla de impactos
+                Route::resource('tabla-impacto', 'TablaImpactoController');
 
                 Route::middleware('cacheResponse')->get('analisis-impacto-menu', 'AnalisisdeImpactoController@menu')->name('analisis-impacto.menu');
                 Route::get('analisis-impacto-menu-BIA', 'AnalisisdeImpactoController@menuBIA')->name('analisis-impacto.menu-BIA');
@@ -1274,127 +1382,67 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::get('evaluaciones-objetivosShow', 'ObjetivosseguridadController@evaluacionesShow')->name('evaluacionesobjetivosShow');
             });
 
-            Route::get('envio-documentos/atencion', 'EnvioDocumentosController@atencion')->name('envio-documentos.atencion');
-            Route::get('envio-documentos/atencion/{id}/seguimiento', 'EnvioDocumentosController@seguimiento')->name('envio-documentos.seguimiento');
-            Route::put('envio-documentos/{id}/seguimientoUpdate', 'EnvioDocumentosController@seguimientoUpdate')->name('envio-documentos.seguimientoUpdate');
-            Route::get('ajustes-envio-documentos', 'EnvioDocumentosController@ajustes')->name('ajustes-envio-documentos');
-            Route::put('ajustes-envio-documentos/{id}/update', 'EnvioDocumentosController@ajustesUpdate')->name('ajustes-envio-documentos-update');
-            Route::resource('envio-documentos', 'EnvioDocumentosController');
-
+            //Desconocido
             // Plan Base Actividades
             Route::delete('plan-base-actividades/destroy', 'PlanBaseActividadesController@massDestroy')->name('plan-base-actividades.massDestroy');
             Route::post('plan-base-actividades/media', 'PlanBaseActividadesController@storeMedia')->name('plan-base-actividades.storeMedia');
             Route::post('plan-base-actividades/ckmedia', 'PlanBaseActividadesController@storeCKEditorImages')->name('plan-base-actividades.storeCKEditorImages');
             Route::resource('plan-base-actividades', 'PlanBaseActividadesController');
 
-            // User Alerts
-            Route::delete('user-alerts/destroy', 'UserAlertsController@massDestroy')->name('user-alerts.massDestroy');
-            Route::resource('user-alerts', 'UserAlertsController', ['except' => ['edit', 'update']]);
-
-            // Politica Del Sgsi Soportes
-            Route::resource('politica-del-sgsi-soportes', 'PoliticaDelSgsiSoporteController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
-
-            // Control Accesos
-            Route::delete('control-accesos/destroy', 'ControlAccesoController@massDestroy')->name('control-accesos.massDestroy');
-            Route::post('control-accesos/media', 'ControlAccesoController@storeMedia')->name('control-accesos.storeMedia');
-            Route::post('control-accesos/ckmedia', 'ControlAccesoController@storeCKEditorImages')->name('control-accesos.storeCKEditorImages');
-            Route::resource('control-accesos', 'ControlAccesoController');
-
-            // Informacion Documetadas
-            Route::delete('informacion-documetadas/destroy', 'InformacionDocumetadaController@massDestroy')->name('informacion-documetadas.massDestroy');
-            Route::post('informacion-documetadas/media', 'InformacionDocumetadaController@storeMedia')->name('informacion-documetadas.storeMedia');
-            Route::post('informacion-documetadas/ckmedia', 'InformacionDocumetadaController@storeCKEditorImages')->name('informacion-documetadas.storeCKEditorImages');
-            Route::resource('informacion-documetadas', 'InformacionDocumetadaController');
-
-            // Planificacion Controls
-            Route::post('planificacion-controls/firma', 'PlanificacionControlController@guardarFirmaAprobacion')->name('planificacion-controls.firma-aprobacion');
-            Route::delete('planificacion-controls/destroy', 'PlanificacionControlController@massDestroy')->name('planificacion-controls.massDestroy');
-            Route::resource('planificacion-controls', 'PlanificacionControlController');
-
-            Route::post('activosInformacion/validacion', 'ActivosInformacionController@validacion')->name('activosInformacion.validacion');
-            Route::get('activosInformacion/descargar', 'ActivosInformacionController@DescargaFormato')->name('activosInformacion.descargar');
-            Route::delete('activosInformacion/destroy', 'ActivosInformacionController@massDestroy')->name('activosInformacion.massDestroy');
-            Route::get('activosInformacion/create/{matriz}', 'ActivosInformacionController@create')->name('activosInformacion.create');
-            Route::get('activosInformacion/{matriz}', 'ActivosInformacionController@index')->name('activosInformacion.index');
-            Route::get('activosInformacion/{matriz}/{activo}/edit', 'ActivosInformacionController@edit')->name('activosInformacion.edit');
-            Route::resource('activosInformacion', 'ActivosInformacionController')->names([
-                'store' => 'activosInformacion.store',
-                'show' => 'activosInformacion.show',
-                'update' => 'activosInformacion.update',
-            ])->except(['edit', 'create', 'index']);
-
+            //Borrar? No hay vista index
             // Marca
             Route::get('marcas/get-marcas', 'MarcaController@getMarcas')->name('marcas.getMarcas');
             Route::resource('marcas', 'MarcaController');
 
+            //Borrar
             // Modelo
             Route::get('modelos/get-modelos/{id?}', 'ModeloController@getModelos')->name('modelos.getModelos');
             Route::resource('modelos', 'ModeloController');
 
             // Route::resource('consulta-puesto', 'ConsultaPuestoController');
 
-            // Indicadores Sgsis
-            Route::get('evaluaciones-sgsisInsertar', 'IndicadoresSgsiController@evaluacionesInsert')->name('evaluacionesInsert');
-            Route::delete('indicadores-sgsis/destroy', 'IndicadoresSgsiController@massDestroy')->name('indicadores-sgsis.massDestroy');
-            Route::resource('indicadores-sgsis', 'IndicadoresSgsiController');
-            Route::get('indicadores-sgsisInsertar', 'IndicadoresSgsiController@IndicadorInsert')->name('indicadores-sgsisInsertar');
-            Route::get('indicadores-sgsisUpdate', 'IndicadoresSgsiController@IndicadorUpdate')->name('indicadores-sgsisUpdate');
-            Route::get('evaluaciones-sgsisUpdate', 'IndicadoresSgsiController@evaluacionesUpdate')->name('evaluacionesUpdate');
-            Route::get('indicadores/dashboard', 'IndicadoresSgsiController@indicadoresDashboard')->name('indicadores-dashboard');
-            Route::post('indicadores/porcentaje-dashboard', 'IndicadoresSgsiController@indicadoresDashboardPorcentaje')->name('indicadores-porcentaje-dashboard');
+            //Borrar
             // Indicadorincidentessis
             Route::resource('indicadorincidentessis', 'IndicadorincidentessiController', ['except' => ['create', 'store', 'edit', 'update', 'show', 'destroy']]);
 
+            //Utilizado?, no existen registros, sin permisos necesarios
             // Dmaics
             Route::delete('dmaics/destroy', 'DmaicController@massDestroy')->name('dmaics.massDestroy');
             Route::resource('dmaics', 'DmaicController');
 
+            //Utilizado?, no existen registros, sin permisos necesarios
             // Enlaces Ejecutars
             Route::delete('enlaces-ejecutars/destroy', 'EnlacesEjecutarController@massDestroy')->name('enlaces-ejecutars.massDestroy');
             Route::resource('enlaces-ejecutars', 'EnlacesEjecutarController');
 
+            //Utilizado?, existen registros de prueba, sin permisos necesarios
             // Teams
             Route::delete('teams/destroy', 'TeamController@massDestroy')->name('teams.massDestroy');
             Route::resource('teams', 'TeamController');
 
-            // Incidentes De Seguridads
-            Route::delete('incidentes-de-seguridads/destroy', 'IncidentesDeSeguridadController@massDestroy')->name('incidentes-de-seguridads.massDestroy');
-            Route::resource('incidentes-de-seguridads', 'IncidentesDeSeguridadController');
-
+            //Utilizado?, existen registros antiguos, sin permisos necesarios
             // Estado Incidentes
             Route::delete('estado-incidentes/destroy', 'EstadoIncidentesController@massDestroy')->name('estado-incidentes.massDestroy');
             Route::resource('estado-incidentes', 'EstadoIncidentesController');
 
-            // Carpeta
-            Route::delete('carpeta/destroy', 'CarpetasController@massDestroy')->name('carpeta.massDestroy');
-            Route::resource('carpeta', 'CarpetasController');
+            //Utilizado?, existen registros antiguos, sin permisos necesarios
+            //Carta de Aceptación
+            // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
+            Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
+            Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
+            Route::post('carta-aceptacion/aprobacion', 'CartaAceptacionRiesgosController@aprobacionAutoridad')->name('cartaaceptacion.aprobacion');
 
+            //Utilizado?, no existen registros, sin permisos necesarios
             // Archivos
             Route::delete('archivos/destroy', 'ArchivosController@massDestroy')->name('archivos.massDestroy');
             Route::post('archivos/media', 'ArchivosController@storeMedia')->name('archivos.storeMedia');
             Route::post('archivos/ckmedia', 'ArchivosController@storeCKEditorImages')->name('archivos.storeCKEditorImages');
             Route::resource('archivos', 'ArchivosController');
 
-            // Faq Categories
-            Route::delete('faq-categories/destroy', 'FaqCategoryController@massDestroy')->name('faq-categories.massDestroy');
-            Route::resource('faq-categories', 'FaqCategoryController');
-
-            // Faq Questions
-            Route::delete('faq-questions/destroy', 'FaqQuestionController@massDestroy')->name('faq-questions.massDestroy');
-            Route::resource('faq-questions', 'FaqQuestionController');
-
-            //Carta de Aceptación
-            // Route::get('carta-aceptacion/riesgos', 'CartadeAceptacionController@ISO31000')->name('matriz-seguridad.ISO31000');
-            Route::delete('carta-aceptacion/destroy', 'CartaAceptacionRiesgosController@destroy')->name('carta-aceptacion.destroy');
-            Route::resource('carta-aceptacion', 'CartaAceptacionRiesgosController')->except('destroy');
-            Route::post('carta-aceptacion/aprobacion', 'CartaAceptacionRiesgosController@aprobacionAutoridad')->name('cartaaceptacion.aprobacion');
-            //Tabla de impactos
-            Route::resource('tabla-impacto', 'TablaImpactoController');
-
-            Route::get('global-search', 'GlobalSearchController@search')->name('globalSearch');
-            Route::get('user-alerts/read', 'UserAlertsController@read');
-            Route::get('team-members', 'TeamMembersController@index')->name('team-members.index');
-            Route::post('team-members', 'TeamMembersController@invite')->name('team-members.invite');
+            //Utilizado?, no existen registros
+            // Carpeta
+            Route::delete('carpeta/destroy', 'CarpetasController@massDestroy')->name('carpeta.massDestroy');
+            Route::resource('carpeta', 'CarpetasController');
 
             Route::group(['middleware' => ['silent_4_university']], function () {
                 //Escuela cursos instructor
