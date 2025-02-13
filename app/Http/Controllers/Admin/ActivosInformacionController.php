@@ -21,7 +21,7 @@ class ActivosInformacionController extends Controller
     {
         $activos = ActivoInformacion::where('matriz_id', '=', $matriz)->get();
 
-        return view('admin.activosInformacion.index', compact('activos', 'matriz'));
+        return view('admin.activeInformation.index', compact('activos', 'matriz'));
     }
 
     public function create($matriz)
@@ -36,7 +36,7 @@ class ActivosInformacionController extends Controller
         $contenedores = MatrizOctaveContenedor::get();
         $grupos = Grupo::get();
 
-        return view('admin.activosInformacion.create', compact('grupos', 'empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores', 'matriz'));
+        return view('admin.activeInformation.create', compact('grupos', 'empleados', 'area', 'duenos', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores', 'matriz'));
     }
 
     public function store(Request $request)
@@ -65,7 +65,7 @@ class ActivosInformacionController extends Controller
         $disponibilidads = activoDisponibilidad::get();
         $contenedores = MatrizOctaveContenedor::get();
 
-        return view('admin.activosInformacion.edit', compact('activos', 'empleados', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores', 'matriz'));
+        return view('admin.activeInformation.edit', compact('activos', 'empleados', 'procesos', 'confidencials', 'integridads', 'disponibilidads', 'contenedores', 'matriz'));
     }
 
     public function update(Request $request, $activos)
@@ -84,7 +84,7 @@ class ActivosInformacionController extends Controller
         $activo->delete();
         $activos = ActivoInformacion::get();
 
-        return view('admin.activosInformacion.index', compact('activos'));
+        return view('admin.activeInformation.index', compact('activos'));
     }
 
     public function validacion(Request $request)
