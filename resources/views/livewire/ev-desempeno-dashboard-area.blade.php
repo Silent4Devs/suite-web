@@ -19,7 +19,7 @@
     </p>
 
     <div class="row mt-4">
-        <div class="col-md-3">
+        <div class="col-md-6">
             <a wire:click.prevent="enviarRecordatorio">
                 <div class="w-100 p-3 text-center text-white rounded-lg"
                     style="background-color: #2C9E7F;cursor: pointer;">
@@ -27,7 +27,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-3">
+        {{-- <div class="col-md-4">
             <a wire:click.prevent="cerrarEvaluacion">
                 <div class="w-100 p-3 text-center text-white rounded-lg"
                     style="background-color: #DF5050; cursor: pointer;">
@@ -39,8 +39,8 @@
             <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #A650DF;">
                 Modificar periodo de evaluación
             </div>
-        </div>
-        <div class="col-md-3">
+        </div> --}}
+        <div class="col-md-6">
             <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #507BDF;">
                 Generar Reporte
             </div>
@@ -416,7 +416,7 @@
                                 <td>Estatus</td>
                                 <td>
                                     <a href="{{ route('admin.rh.evaluaciones-desempeno.dashboard-evaluado', [$evaluacion->id, $evaluado->id]) }}"
-                                        class="btn btn-evaluacion">Evaluacion</a>
+                                        class="btn btn-evaluacion">Dashboard</a>
                                 </td>
                             </tr>
                         @endforeach
