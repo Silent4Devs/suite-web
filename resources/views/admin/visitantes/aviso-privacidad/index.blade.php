@@ -9,10 +9,7 @@
                 <strong>{{ \Carbon\Carbon::parse($aviso_privacidad->updated_at)->format('d-m-Y H:i:s') }}</strong>
             </p>
             <form action="{{ route('admin.visitantes.aviso-privacidad.store') }}">
-                <textarea name="aviso-privacidad" id="aviso-privacidad" cols="30" rows="10">
-                    {!! $aviso_privacidad->aviso_privacidad !!}
-                </textarea>
-
+                <textarea name="aviso-privacidad" id="aviso-privacidad" cols="30" rows="10" style="width: 100%;">{{ str_replace('&nbsp;', ' ', strip_tags($aviso_privacidad->aviso_privacidad)) }}</textarea>
             </form>
             {{-- Regresar al menu --}}
             <a href="{{ route('admin.visitantes.menu') }}" class="mt-4 btn btn-primary float-right">
