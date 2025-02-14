@@ -14,8 +14,11 @@ class TeamMembersController extends Controller
     public function index()
     {
         $team = Team::where('owner_id', User::getCurrentUser()->id)->first();
-        $users = User::getAll()->where('team_id', $team->id);
-
+        if(!empty($team)){
+            $users = User::getAll()->where('team_id', $team->id);
+        }else{
+            $users = [];
+        }
         return view('admin.team-members.index', compact('team', 'users'));
     }
 
