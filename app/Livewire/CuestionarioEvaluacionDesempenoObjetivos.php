@@ -70,6 +70,8 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $colaboradores_evaluar = [];
 
+    public $tiposObjetivo;
+
     // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
@@ -109,6 +111,18 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
         return view('livewire.cuestionario-evaluacion-desempeno-objetivos');
     }
 
+    public function obtenerIniciales($texto)
+    {
+        $palabras = explode(' ', $texto);
+        $iniciales = '';
+
+        foreach ($palabras as $palabra) {
+            $iniciales .= strtoupper(substr($palabra, 0, 1));
+        }
+
+        return $iniciales;
+    }
+
     public function buscarObjetivos()
     {
         $this->escalas = EscalasMedicionObjetivos::get();
@@ -123,6 +137,26 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
             if ($busqueda_evaluador) {
                 $this->objetivos_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
+
+                $TO = $busqueda_evaluador->preguntasCuestionario
+                ->where('periodo_id', $this->id_periodo)
+                ->map(function ($pregunta) {
+                    return $pregunta->infoObjetivo->tipo_objetivo;
+                })
+                ->unique()
+                ->values()
+                ->toArray();
+
+                foreach ($TO as $keyTO => $tipo) {
+                    # code...
+                    $iniciales = $this->obtenerIniciales($tipo);
+                    $this->tiposObjetivo[$keyTO] =
+                        [
+                            "tipo" => $tipo,
+                            "iniciales" => $iniciales
+                        ];
+                }
+                // dd($this->tiposObjetivo);
             }
 
             if ($busqueda_autoevaluador) {
