@@ -142,14 +142,16 @@
                                 data-contrato-id="{{ $contrato->id }}">Archivos</button>
                         </td>
                         <td class="botones_accion" style="min-width: 100px;">
-                            <form action="{{ route('contract_manager.contratos-katbol.destroy', $contrato->id) }}" method="POST" style="display:inline;">
+                            <form id="delete-form-{{ $contrato->id }}" action="{{ route('contract_manager.contratos-katbol.destroy', $contrato->id) }}" method="POST" style="display:inline;">
                                 @csrf
                                 @method('DELETE')
                                 <div class='btn-group'>
+                                    <!-- Ver contrato -->
                                     <a href="{{ route('contract_manager.contratos-katbol.show', [$contrato->id]) }}" style="color:#2395AA;">
                                         <i class="fa-solid fa-eye" title="Mostrar"></i>
                                     </a>
                                     &nbsp;&nbsp;&nbsp;
+
                                     @can('katbol_contratos_modificar')
                                         @if ($areas->count() > 0)
                                             <a href="{{ route('contract_manager.contratos-katbol.edit', [$contrato->id]) }}" style="color:#2395AA;">
@@ -158,10 +160,11 @@
                                         @endif
                                     @endcan
                                     &nbsp;&nbsp;&nbsp;
+
                                     @can('katbol_contratos_eliminar')
-                                        <a href="#" onclick="confirmDelete('{{ route('contract_manager.contratos-katbol.destroy', [$contrato->id]) }}')" style="color:#e5760e;">
+                                        <button type="button" onclick="confirmDelete(event, 'delete-form-{{ $contrato->id }}')" style="border: none; background: none; color:#e5760e; cursor: pointer;">
                                             <i class="fas fa-trash" title="Eliminar"></i>
-                                        </a>
+                                        </button>
                                     @endcan
                                 </div>
                             </form>
@@ -180,7 +183,8 @@
 </div>
 
 <script>
-    function confirmDelete(url) {
+    function confirmDelete(event, formId) {
+        event.preventDefault(); // Evita que el formulario se envíe directamente
         Swal.fire({
             title: '¿Estás seguro?',
             text: 'No podrás recuperar este ítem después de eliminarlo.',
@@ -192,11 +196,12 @@
             cancelButtonText: 'Cancelar'
         }).then((result) => {
             if (result.isConfirmed) {
-                // Redirigir a la URL de eliminación
-                window.location.href = url;
+                document.getElementById(formId).submit(); // Envía el formulario si el usuario confirma
             }
         });
     }
+</script>
+<script>
     document.addEventListener("DOMContentLoaded", () => {
         document.getElementById("contratos-table").addEventListener("click", (e) => {
             let url = "{{ route('contract_manager.contratos-katbol.obtenerArchivos') }}"
