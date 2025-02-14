@@ -26,7 +26,7 @@ class PlanAuditoriaController extends Controller
         abort_if(Gate::denies('plan_de_auditoria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PlanAuditorium::select('id', 'nombre_auditoria', 'fecha_inicio_auditoria', 'objetivo', 'alcance')->get();
+            $query = PlanAuditorium::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -71,16 +71,16 @@ class PlanAuditoriaController extends Controller
             $table->editColumn('documentoauditar', function ($row) {
                 return $row->documentoauditar ? $row->documentoauditar : '';
             });
-            $table->editColumn('equipo_auditor', function ($row) {
-                return $row->auditados ? $row->auditados : '';
-            });
+            // $table->editColumn('equipo_auditor', function ($row) {
+            //     return $row->auditados ? $row->auditados : '';
+            // });
 
             $table->rawColumns(['actions', 'placeholder', 'auditados']);
 
             return $table->make(true);
         }
 
-        $auditoria_anuals = AuditoriaAnual::getAll();
+        $auditoria_anuals = AuditoriaAnual::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;

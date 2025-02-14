@@ -288,48 +288,26 @@
                         </div>
                     </div>
                     @if (!is_null($organizacion))
+                        <input id="fileInput" class="form-control" type="file" wire:model="file_contrato"
+                            accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff">
 
-                        <input class="form-control" type="file" wire:model="file_contrato"
-                        accept=".docx,.pdf,.doc,.xlsx,.pptx,.txt,.jpg,.jpeg,.png,.tiff">
-                        @if ($error_message)
-                        <p class="text-danger">{{ $error_message }}</p>
-                        @endif
-                        @if ($success_message)
-                        <p class="text-danger">{{ $success_message }}</p>
-                        @endif
+                            <div class="mt-2" x-data="{ progress: 0, uploaded: false, finished: false }"
+                                x-on:livewire-upload-progress.window="progress = $event.detail.progress; uploaded = false; finished = false"
+                                x-on:livewire-upload-finish.window="uploaded = true; finished = true; progress = 100">
 
-                        <div wire:loading wire:target="file_contrato">
-                            <div class="spinner-grow text-primary" role="status">
-                                <span class="sr-only"></span>
+                                <progress x-bind:value="progress" max="100" style="width: 100%;" x-show="progress > 0 && !finished"></progress>
+                                <span x-show="progress > 0 && !finished" x-text="progress + '%'"></span>
+
+                                <div x-show="uploaded" class="text-success">✅ Archivo cargado</div>
+
+                                <div wire:loading wire:target="file_contrato">Subiendo archivo...</div>
+
+                                @error('file_contrato')
+                                    <div class="invalid-feedback red-text">{{ $message }}</div>
+                                @enderror
                             </div>
-                            <div class="spinner-grow text-secondary" role="status">
-                                <span class="sr-only"></span>
-                            </div>
-                            <div class="spinner-grow text-success" role="status">
-                                <span class="sr-only"></span>
-                            </div>
-                            <div class="spinner-grow text-danger" role="status">
-                                <span class="sr-only"></span>
-                            </div>
-                            <div class="spinner-grow text-warning" role="status">
-                                <span class="sr-only"></span>
-                            </div>
-                            <div class="spinner-grow text-info" role="status">
-                                <span class="sr-only"></span>
-                            </div>
-                            <div class="spinner-grow text-light" role="status">
-                                <span class="sr-only"></span>
-                            </div>
-                            <div class="spinner-grow text-dark" role="status">
-                                <span class="sr-only"></span>
-                            </div>
-                        </div>
-                        @if ($errors->has('file_contrato'))
-                            <div class="invalid-feedback red-text">
-                                {{ $errors->first('file_contrato') }}
-                            </div>
-                        @endif
                     @endif
+
 
                 @endif
 
@@ -587,42 +565,30 @@
                         </td>
                         <td>
                             <div class="td_fianza">
-                                <input class="form-control" type="file" wire:model="documento" accept=".pdf"
+                                <input id="fileInputD" class="form-control" type="file" wire:model="documento" accept=".pdf"
                                     readonly>
-                            </div>
-                            <div wire:loading wire:target="documento">
-                                <div class="spinner-grow text-primary" role="status">
-                                    <span class="sr-only"></span>
-                                </div>
-                                <div class="spinner-grow text-secondary" role="status">
-                                    <span class="sr-only"></span>
-                                </div>
-                                <div class="spinner-grow text-success" role="status">
-                                    <span class="sr-only"></span>
-                                </div>
-                                <div class="spinner-grow text-danger" role="status">
-                                    <span class="sr-only"></span>
-                                </div>
-                                <div class="spinner-grow text-warning" role="status">
-                                    <span class="sr-only"></span>
-                                </div>
-                                <div class="spinner-grow text-info" role="status">
-                                    <span class="sr-only"></span>
-                                </div>
-                                <div class="spinner-grow text-light" role="status">
-                                    <span class="sr-only"></span>
-                                </div>
-                                <div class="spinner-grow text-dark" role="status">
-                                    <span class="sr-only"></span>
+
+                                    <div class="mt-2" x-data="{ progress: 0, uploaded: false, finished: false }"
+                                    x-on:livewire-upload-progress.window="progress = $event.detail.progress; uploaded = false; finished = false"
+                                    x-on:livewire-upload-finish.window="uploaded = true; finished = true; progress = 100">
+
+                                    <progress x-bind:value="progress" max="100" style="width: 100%;" x-show="progress > 0 && !finished"></progress>
+                                    <span x-show="progress > 0 && !finished" x-text="progress + '%'"></span>
+
+                                    <div x-show="uploaded" class="text-success">✅ Archivo cargado</div>
+
+                                    <div wire:loading wire:target="documento">Subiendo archivo...</div>
+
+                                    @error('documento')
+                                        <div class="invalid-feedback red-text">{{ $message }}</div>
+                                    @enderror
                                 </div>
                             </div>
-                            <div class="ml-4 display-flex">
-                                <label class="red-text">{{ $errors->first('Type') }}</label>
-                            </div>
+
                             @if ($contrato->documento != null)
                                 <a href="{{ asset(trim('storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/penalizaciones/' . $contrato->documento)) }}"
                                     target="_blank" class="descarga_archivo" style="margin-left:20px;">
-                                    Descargar
+                                    Descargar Archivo: {{ $contrato->documento }}
                                 </a>
                             @endif
                             <div class="ml-4 display-flex">
@@ -725,3 +691,65 @@
 <!-- Submit Field -->
 {{-- </form> --}}
 </div>
+
+<script>
+    document.addEventListener('livewire:init', () => {
+        const fileInput = document.getElementById('fileInput');
+        const progressBar = document.getElementById('uploadProgressFC');
+
+        fileInput.addEventListener('change', function (e) {
+            @this.set('uploadProgressFC', 0);
+            const file = e.target.files[0];
+            if (file) {
+
+                const reader = new FileReader();
+
+                reader.onprogress = function (event) {
+                    if (event.lengthComputable) {
+                        const percent = (event.loaded / event.total) * 100;
+                        // Usa $wire para actualizar la propiedad del componente
+                        @this.set('uploadProgressFC', percent);
+                    }
+                };
+
+                reader.onloadend = function () {
+                    // Finaliza el progreso
+                    @this.set('uploadProgressFC', 100);
+                };
+
+                reader.readAsDataURL(file); // Lee el archivo como Data URL
+            }
+        });
+    });
+</script>
+
+<script>
+    document.addEventListener('livewire:init', () => {
+        const fileInputD = document.getElementById('fileInputD');
+        const progressBar = document.getElementById('uploadProgressD');
+
+        fileInputD.addEventListener('change', function (e) {
+            @this.set('uploadProgressD', 0);
+            const file = e.target.files[0];
+            if (file) {
+
+                const reader = new FileReader();
+
+                reader.onprogress = function (event) {
+                    if (event.lengthComputable) {
+                        const percent = (event.loaded / event.total) * 100;
+                        // Usa $wire para actualizar la propiedad del componente
+                        @this.set('uploadProgressD', percent);
+                    }
+                };
+
+                reader.onloadend = function () {
+                    // Finaliza el progreso
+                    @this.set('uploadProgressD', 100);
+                };
+
+                reader.readAsDataURL(file); // Lee el archivo como Data URL
+            }
+        });
+    });
+</script>

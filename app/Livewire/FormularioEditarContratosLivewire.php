@@ -22,9 +22,6 @@ use App\Models\ContractManager\DolaresContrato;
 use App\Models\ContractManager\ConveniosModificatorios;
 use Mgcodeur\CurrencyConverter\Facades\CurrencyConverter;
 use Livewire\WithFileUploads;
-use App\Models\RazonSocial;
-use App\Models\Proveedor;
-use App\Models\Proyecto;
 use Illuminate\Support\Facades\Mail;
 use App\Mail\AprobadorFirmaContratoMail;
 use App\Events\ContratoEvent;
@@ -45,7 +42,9 @@ class FormularioEditarContratosLivewire extends Component
     public $dolares;
     public $organizacion;
     public $file_contrato;
+    public $uploadProgressFC = 0; // Para almacenar el progreso de la carga
     public $documento;
+    public $uploadProgressD = 0;
 
     // Propiedades del formulario
     public $no_contrato;
@@ -343,52 +342,9 @@ class FormularioEditarContratosLivewire extends Component
         return true;
     }
 
-    public function updated($propertyName)
-{
-    if ($propertyName === 'file_contrato') {
-        try {
-            $this->error_message = null;
-            $this->success_message = null;
-
-            // Asegurar que la variable existe antes de validarla
-            if (!isset($this->file_contrato) || empty($this->file_contrato)) {
-                $this->error_message = "Error: No se ha recibido ningún archivo.";
-                return;
-            }
-
-            // Verificar si el archivo no es válido
-            if ($this->file_contrato->getError()) {
-                $this->error_message = "Hubo un problema al cargar el archivo. Inténtalo nuevamente.";
-                return;
-            }
-
-            // Validaciones estándar
-            try {
-                $this->validate([
-                    'file_contrato' => 'required|file|max:51200|mimes:docx,pdf,doc,xlsx,pptx,txt,jpg,jpeg,png,tiff',
-                ]);
-
-                $this->success_message = "Archivo válido y listo para subir.";
-            } catch (\Illuminate\Validation\ValidationException $e) {
-                $this->error_message = "El archivo no cumple con los requisitos.";
-                dd($e);
-            }
-
-            // Si todo está bien, mostrar mensaje de éxito
-            $this->success_message = "Archivo válido y listo para subir.";
-        } catch (\Illuminate\Validation\ValidationException $e) {
-
-            // Captura el error de validación
-            $this->error_message = "El archivo no cumple con los requisitos: máximo 50MB y formatos permitidos.";
-            dd($e);
-        }
-    }
-}
-
     // Función para actualizar el contrato
     public function updateContrato()
     {
-        ob_start();
         try {
             // Validar los campos
             if (!$this->validarCampos()) {
@@ -464,9 +420,6 @@ class FormularioEditarContratosLivewire extends Component
                 $output = ob_get_contents();
             }
 
-            // Limpiar el buffer sin enviar la salida al navegador
-            ob_end_clean();
-
             if ($this->documento) {
                 $storagePath = 'public/contratos/' . $this->contrato->id . '_contrato_' . $this->contrato->no_contrato . '/penalizaciones';
                 $nombre_f = $this->contrato->id . $this->fecha_inicio . $this->documento->getClientOriginalName();
@@ -475,7 +428,7 @@ class FormularioEditarContratosLivewire extends Component
             }
 
             // Emitir evento de actualización
-            // event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
+            event(new ContratoEvent($this->contrato, 'update', 'contratos', 'Contratos'));
 
             // Notificar éxito
             $this->alert('success', 'Contrato actualizado correctamente.', [
@@ -486,15 +439,14 @@ class FormularioEditarContratosLivewire extends Component
             ]);
         } catch (\Throwable $th) {
             //throw $th;
-            $output = ob_get_contents();
-
+            $error = json_encode($th->getMessage(), true);
             // Limpiar el buffer
-            ob_end_clean();
+
             $this->alert('error', 'Error al actualizar contrato', [
                 'position' => 'center',
                 'timer' => 5000,
                 'toast' => true,
-                'text' => $th,
+                'text' => $error,
             ]);
         }
     }

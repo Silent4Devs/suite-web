@@ -16,7 +16,7 @@
                             <h6 class="title-nombre">Autoevaluacion</h6>
                             <div class="img-person d-flex justify-content-center align-items-center"
                                 style="width: 69px; height:69px;">
-                                <img src="" alt="">
+                                <img src="{{ $evaluado->empleado->avatar_ruta }}" alt="{{ $evaluado->empleado->name }}">
                             </div>
                             <div class="title-status status-procces">
                                 En proceso
@@ -25,36 +25,58 @@
                         <div class="col-1 col-sm-1">
                             <div class="vertical-line"></div>
                         </div>
+                        @foreach ($colaboradores_evaluar as $key => $colabev)
+                            <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="title-nombre">Evaluar a:</h6>
+                                <div class="img-person d-flex justify-content-center align-items-center"
+                                    style="width: 69px; height:69px;">
+                                    <img src="{{ $colabev->empleado->avatar_ruta }}" alt="{{ $colabev->empleado->name }}">
+                                </div>
+                                @if ($colabev->finalizada)
+                                    <div class="title-status status-confirm">
+                                        Evaluado
+                                    </div>
+                                @else
+                                    <div class="title-status status-pendding">
+                                        Pendiente
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
+                    </div>
+                @else
+                    <div class="row d-flex justify-content-center align-items-center">
                         <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
-                            <h6 class="title-nombre">Evaluar a:</h6>
+                            <h6 class="title-nombre">Evaluado:</h6>
                             <div class="img-person d-flex justify-content-center align-items-center"
                                 style="width: 69px; height:69px;">
-                                <img src="" alt="">
+                                <img src="{{ $evaluado->empleado->avatar_ruta }}" alt="{{ $evaluado->empleado->name }}">
                             </div>
-                            <div class="title-status status-pendding">
-                                Pendiente
-                            </div>
-                        </div>
-                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
-                            <h6 class="title-nombre">Evaluar a:</h6>
-                            <div class="img-person d-flex justify-content-center align-items-center"
-                                style="width: 69px; height:69px;">
-                                <img src="" alt="">
-                            </div>
-                            <div class="title-status status-pendding">
-                                Pendiente
+                            <div class="title-status status-procces">
+                                En proceso
                             </div>
                         </div>
-                        <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
-                            <h6 class="title-nombre">Evaluar a:</h6>
-                            <div class="img-person d-flex justify-content-center align-items-center"
-                                style="width: 69px; height:69px;">
-                                <img src="" alt="">
-                            </div>
-                            <div class="title-status status-confirm">
-                                Evaluado
-                            </div>
+                        <div class="col-1 col-sm-1">
+                            <div class="vertical-line"></div>
                         </div>
+                        @foreach ($colaboradores_evaluar as $key => $colabev)
+                            <div class="col-12 col-sm-2 d-flex flex-column justify-content-center align-items-center">
+                                <h6 class="title-nombre">Evaluar a:</h6>
+                                <div class="img-person d-flex justify-content-center align-items-center"
+                                    style="width: 69px; height:69px;">
+                                    <img src="{{ $colabev->empleado->avatar_ruta }}" alt="{{ $colabev->empleado->name }}">
+                                </div>
+                                @if ($colabev->finalizada)
+                                    <div class="title-status status-confirm">
+                                        Evaluado
+                                    </div>
+                                @else
+                                    <div class="title-status status-pendding">
+                                        Pendiente
+                                    </div>
+                                @endif
+                            </div>
+                        @endforeach
                     </div>
                 @endif
                 <hr>
@@ -62,7 +84,7 @@
                     <div class="row d-flex align-items-center" style="">
                         <div class="col-3 col-sm-2 col-md-1" style="margin-left:16px;">
                             <div class="img-person" style="width: 69px; height:69px;">
-                                <img src="{{ $evaluado->empleado->avatar }}" alt="{{ $evaluado->empleado->name }}">
+                                <img src="{{ $evaluado->empleado->avatar_ruta }}" alt="{{ $evaluado->empleado->name }}">
                             </div>
                         </div>
                         <div class="col-6 col-sm-3">
@@ -91,9 +113,24 @@
                     <div class="row d-flex align-items-center" style="">
                         <div class="col-6">
                             <div class="row">
+                                <div class="col-3 col-sm-5 col-md-1" style="margin-left:16px;">
+                                    <div class="img-person" style="width: 69px; height:69px;">
+                                        <img src="{{ $evaluador->avatar_ruta }}" alt="{{ $evaluador->name }}">
+                                    </div>
+                                </div>
+                                <div class="col-6 col-sm-7">
+                                    <div style="margin-left: 30px;">
+                                        <h6 class="title-nombre">Evaluador: {{ $evaluador->name }}</h6>
+                                        <p class="title-puesto m-0">{{ $evaluador->puesto }}</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-6">
+                            <div class="row">
                                 <div class="col-6 col-sm-5 col-md-1" style="margin-left:16px;">
                                     <div class="img-person" style="width: 69px; height:69px;">
-                                        <img src="{{ $evaluado->empleado->avatar }}"
+                                        <img src="{{ $evaluado->empleado->avatar_ruta }}"
                                             alt="{{ $evaluado->empleado->name }}">
                                     </div>
                                 </div>
@@ -101,21 +138,6 @@
                                     <div style="margin-left: 30px;">
                                         <h6 class="title-nombre">Evaluado: {{ $evaluado->empleado->name }}</h6>
                                         <p class="title-puesto m-0">{{ $evaluado->empleado->puesto }}</p>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-6">
-                            <div class="row">
-                                <div class="col-3 col-sm-5 col-md-1" style="margin-left:16px;">
-                                    <div class="img-person" style="width: 69px; height:69px;">
-                                        <img src="{{ $evaluador->avatar }}" alt="{{ $evaluador->name }}">
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-7">
-                                    <div style="margin-left: 30px;">
-                                        <h6 class="title-nombre">Evaluador: {{ $evaluador->name }}</h6>
-                                        <p class="title-puesto m-0">{{ $evaluador->puesto }}</p>
                                     </div>
                                 </div>
                             </div>
@@ -175,149 +197,159 @@
 
 
                 <tbody>
-                    @foreach ($objetivos_evaluado as $key => $obj_evld)
+                    @foreach ($tiposObjetivo as $keyTO => $to)
                         <tr class="tr-sections">
                             <td colspan="{{ count($escalas) + 7 }}">
                                 <h6>
-                                    Financiero
+                                    {{$to['tipo']}}
                                 </h6>
                             </td>
                         </tr>
-                        <tr style="text-align: center;">
-                            <td class="td-f1">F1</td>
-                            <td style="text-align: left;">{{ $obj_evld->infoObjetivo->objetivo }}</td>
-                            <td>
-                                <div class="form-group">
-                                    <select class="form-control" name="aplica" id="aplica"
-                                        wire:change="aplicaObjetivo({{ $obj_evld->id }}, $event.target.value)">
-                                        <option value="true" @if ($obj_evld->aplicabilidad == true) selected @endif>Aplica
-                                        </option>
-                                        <option value="false" @if ($obj_evld->aplicabilidad == false) selected @endif>No
-                                            Aplica
-                                        </option>
-                                    </select>
-                                </div>
-                            </td>
-                            @foreach ($obj_evld->infoObjetivo->escalas as $obj_esc)
-                                <td>
-                                    {{ $obj_esc->condicion_signo }}{{ $obj_esc->valor }}&nbsp;{{ $obj_evld->infoObjetivo->unidad_objetivo }}
-                                </td>
-                            @endforeach
-                            @if ($evaluador->id != $id_evaluado->evaluador_desempeno_id)
-                                @if ($objetivos_autoevaluado[$key]->estatus_calificado)
-                                    <td
-                                        style="background-color: {{ $autoevaluacion_colors[$objetivos_autoevaluado[$key]->id . '-bg-color'] }}; ">
-                                        <div class="">
-                                            {{ $objetivos_autoevaluado[$key]->calificacion_objetivo ?? null }}
-                                        </div>
-                                        {{-- <div class=""> --}}
-                                        <p
-                                            style="color: {{ $autoevaluacion_colors[$objetivos_autoevaluado[$key]->id . '-tx-color'] }};">
-                                            <b>
-                                                {{ $calificacion_autoescala[$objetivos_autoevaluado[$key]->id] }}
-                                            </b>
-                                        </p>
-                                        {{-- </div> --}}
-                                        <div>
-
+                        @php
+                            $contador = 0;
+                        @endphp
+                        @foreach ($objetivos_evaluado as $key => $obj_evld)
+                            @if ($to["tipo"] == $obj_evld->infoObjetivo->tipo_objetivo)
+                                @php
+                                    $contador++;
+                                @endphp
+                                <tr style="text-align: center;">
+                                    <td class="td-f1">{{$to['iniciales'] . $contador}}</td>
+                                    <td style="text-align: left;">{{ $obj_evld->infoObjetivo->objetivo }}</td>
+                                    <td>
+                                        <div class="form-group">
+                                            <select class="form-control" name="aplica" id="aplica"
+                                                wire:change="aplicaObjetivo({{ $obj_evld->id }}, $event.target.value)">
+                                                <option value="true" @if ($obj_evld->aplicabilidad == true) selected @endif>Aplica
+                                                </option>
+                                                <option value="false" @if ($obj_evld->aplicabilidad == false) selected @endif>No
+                                                    Aplica
+                                                </option>
+                                            </select>
                                         </div>
                                     </td>
-                                @else
-                                    <td>Sin Evaluar</td>
-                                @endif
-                            @endif
-
-                            <td>
-                                <button type="button" class="btn btn-evidencia" data-toggle="modal"
-                                    data-target="#evidenciaObjetivo{{ $obj_evld->id }}">
-                                    Evidencia
-                                </button>
-
-                                <!-- Modal -->
-                                <div wire:ignore.self class="modal fade" id="evidenciaObjetivo{{ $obj_evld->id }}"
-                                    tabindex="-1" aria-labelledby="evidenciaObjetivo{{ $obj_evld->id }}Label"
-                                    aria-hidden="true">
-                                    <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"
-                                        style="margin:50px 0px 10px 1030px; background:none; border: none;"><i
-                                            class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
-                                    </button>
-                                    <div class="modal-dialog  modal-lg">
-                                        <div class="modal-content">
-                                            {{-- <div class="modal-header">
-                                                    <h5 class="modal-title" id="evidenciaObjetivo{{ $obj_evld->id }}Label">Carga de Evidencias</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                        aria-label="Close">
-                                                        <span aria-hidden="true">&times;</span>
-                                                    </button>
-                                                </div> --}}
-                                            <div class="modal-body">
-                                                <div class="d-flex  justify-content-center">
-                                                    <h5 class="modal-title"
-                                                        id="evidenciaObjetivo{{ $obj_evld->id }}Label">Carga de
-                                                        Evidencias</h5>
+                                    @foreach ($obj_evld->infoObjetivo->escalas as $obj_esc)
+                                        <td>
+                                            {{ $obj_esc->condicion_signo }}{{ $obj_esc->valor }}&nbsp;{{ $obj_evld->infoObjetivo->unidad_objetivo }}
+                                        </td>
+                                    @endforeach
+                                    @if ($evaluador->id != $id_evaluado->evaluador_desempeno_id)
+                                        @if ($objetivos_autoevaluado[$key]->estatus_calificado)
+                                            <td
+                                                style="background-color: {{ $autoevaluacion_colors[$objetivos_autoevaluado[$key]->id . '-bg-color'] }}; ">
+                                                <div class="">
+                                                    {{ $objetivos_autoevaluado[$key]->calificacion_objetivo ?? null }}
                                                 </div>
-                                                <div class="d-flex justify-content-start">
-                                                    <p>
-                                                        Carga un archivo, documento o evidencia
-                                                    </p>
+                                                {{-- <div class=""> --}}
+                                                <p
+                                                    style="color: {{ $autoevaluacion_colors[$objetivos_autoevaluado[$key]->id . '-tx-color'] }};">
+                                                    <b>
+                                                        {{ $calificacion_autoescala[$objetivos_autoevaluado[$key]->id] }}
+                                                    </b>
+                                                </p>
+                                                {{-- </div> --}}
+                                                <div>
+
                                                 </div>
-                                                <div class="drag-area">
-                                                    <input type="file" id="file" name="file"
-                                                        wire:model.live="file"
-                                                        wire:change="asignarObjArchivo({{ $obj_evld->id }})">
-                                                </div>
-
-                                                @if (!empty($obj_evidencias[$key]))
-                                                    @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
-                                                        <div class="row align-items-center">
-                                                            <div class="col-1">
-                                                                Evidencia {{$key_evidencia + 1}}
-                                                            </div>
-                                                            <div class="col-3">
-                                                                <a class="btn-link" data-toggle="modal"
-                                                                    data-target="#modalArchivo"
-                                                                    wire:click="mostrarArchivo({{ $evidencia['id_objetivo'] }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
-                                                            </div>
-                                                            <div class="col-8">
-                                                                <div class="form-group">
-                                                                    <textarea class="form-control" style="min-height: 83px;" name="comentario_{{ $key_evidencia }}"
-                                                                        id="comentario_{{ $key_evidencia }}" style="min-width: 100%"
-                                                                        wire:change="comentarioObjetivo({{ $evidencia['id'] }}, $event.target.value)" placeholder="Comentario">{{ $evidencia->comentarios ?? null }}</textarea>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    @endforeach
-                                                @endif
-
-                                            </div>
-
-                                        </div>
-                                    </div>
-                                </div>
-                            </td>
-                            <td>
-                                <div class="p-3">
-                                    @if (!empty($obj_evidencias[$key]))
-                                        <div class="form-group">
-                                            <input class="form-control" id="pregunta_n{{ $key }}"
-                                                style="width: 97px;"
-                                                value="{{ $obj_evld->calificacion_objetivo ?? null }}"
-                                                wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
-                                                type="number" placeholder="Calificación">
-                                        </div>
-
-                                        <p style="color: {{ $evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] }};">
-                                            {{ $calificacion_escala[$obj_evld->infoObjetivo->id] }}
-                                        </p>
-                                    @else
-                                        <p>
-                                            Proporcione evidencias en el objetivo antes de calificarlo.
-                                        </p>
+                                            </td>
+                                        @else
+                                            <td>Sin Evaluar</td>
+                                        @endif
                                     @endif
-                                </div>
-                            </td>
-                            <td></td>
-                        </tr>
+
+                                    <td>
+                                        <button type="button" class="btn btn-evidencia" data-toggle="modal"
+                                            data-target="#evidenciaObjetivo{{ $obj_evld->id }}">
+                                            Evidencia
+                                        </button>
+
+                                        <!-- Modal -->
+                                        <div wire:ignore.self class="modal fade" id="evidenciaObjetivo{{ $obj_evld->id }}"
+                                            tabindex="-1" aria-labelledby="evidenciaObjetivo{{ $obj_evld->id }}Label"
+                                            aria-hidden="true">
+                                            <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"
+                                                style="margin:50px 0px 10px 1030px; background:none; border: none;"><i
+                                                    class="fa-solid fa-x fa-2xl" style="color: #ffffff;"></i>
+                                            </button>
+                                            <div class="modal-dialog  modal-lg">
+                                                <div class="modal-content">
+                                                    {{-- <div class="modal-header">
+                                                            <h5 class="modal-title" id="evidenciaObjetivo{{ $obj_evld->id }}Label">Carga de Evidencias</h5>
+                                                            <button type="button" class="close" data-dismiss="modal"
+                                                                aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div> --}}
+                                                    <div class="modal-body">
+                                                        <div class="d-flex  justify-content-center">
+                                                            <h5 class="modal-title"
+                                                                id="evidenciaObjetivo{{ $obj_evld->id }}Label">Carga de
+                                                                Evidencias</h5>
+                                                        </div>
+                                                        <div class="d-flex justify-content-start">
+                                                            <p>
+                                                                Carga un archivo, documento o evidencia
+                                                            </p>
+                                                        </div>
+                                                        <div class="drag-area">
+                                                            <input type="file" id="file" name="file"
+                                                                wire:model.live="file"
+                                                                wire:change="asignarObjArchivo({{ $obj_evld->id }})">
+                                                        </div>
+
+                                                        @if (!empty($obj_evidencias[$key]))
+                                                            @foreach ($obj_evidencias[$key] as $key_evidencia => $evidencia)
+                                                                <div class="row align-items-center">
+                                                                    <div class="col-1">
+                                                                        Evidencia {{$key_evidencia + 1}}
+                                                                    </div>
+                                                                    <div class="col-3">
+                                                                        <a class="btn-link" data-toggle="modal"
+                                                                            data-target="#modalArchivo"
+                                                                            wire:click="mostrarArchivo({{ $evidencia['id_objetivo'] }},{{ $evidencia['id'] }})">{{ $evidencia['nombre_archivo'] }}</a>
+                                                                    </div>
+                                                                    <div class="col-8">
+                                                                        <div class="form-group">
+                                                                            <textarea class="form-control" style="min-height: 83px;" name="comentario_{{ $key_evidencia }}"
+                                                                                id="comentario_{{ $key_evidencia }}" style="min-width: 100%"
+                                                                                wire:change="comentarioObjetivo({{ $evidencia['id'] }}, $event.target.value)" placeholder="Comentario">{{ $evidencia->comentarios ?? null }}</textarea>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            @endforeach
+                                                        @endif
+
+                                                    </div>
+
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                    <td>
+                                        <div class="p-3">
+                                            @if (!empty($obj_evidencias[$key]))
+                                                <div class="form-group">
+                                                    <input class="form-control" id="pregunta_n{{ $key }}"
+                                                        style="width: 97px;"
+                                                        value="{{ $obj_evld->calificacion_objetivo ?? null }}"
+                                                        wire:change="evaluarObjetivo({{ $obj_evld->id }}, $event.target.value)"
+                                                        type="number" placeholder="Calificación">
+                                                </div>
+
+                                                <p style="color: {{ $evaluacion_colors[$obj_evld->infoObjetivo->id . '-tx-color'] }};">
+                                                    {{ $calificacion_escala[$obj_evld->infoObjetivo->id] }}
+                                                </p>
+                                            @else
+                                                <p>
+                                                    Proporcione evidencias en el objetivo antes de calificarlo.
+                                                </p>
+                                            @endif
+                                        </div>
+                                    </td>
+                                    <td></td>
+                                </tr>
+                                @endif
+                            @endforeach
                     @endforeach
                 </tbody>
             </table>
