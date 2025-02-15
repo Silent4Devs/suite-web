@@ -299,60 +299,73 @@ class tbApiMobileControllerCapacitaciones extends Controller
         ];
 
         foreach ($course->sections_order as $keySections => $section) {
+            // Datos de la sección
             $json_progreso_curso['course']['section'][$keySections] = [
                 'id_section' => $section->id,
-                'name_section' => $section->name
+                'name_section' => $section->name,
             ];
 
+            // Contar lecciones completadas en la sección
+            $totalLessons = $section->lessons->count();
+            $completedLessonsCount = $section->lessons
+                ->filter(function ($lesson) {
+                    return $lesson->completed;
+                })
+                ->count();
+
+            // Procesar lecciones
             foreach ($section->lessons as $keyLesson => $lesson) {
-                if ($current->id == $lesson->id) {
-                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
-                        'id_lesson' => $lesson->id,
-                        'name_lesson' => $lesson->name,
-                        'url_evaluation' => $lesson->url,
-                        'lesson_completed' => $lesson->completed,
-                        'current_lesson' => true,
-                    ];
-                } else {
-                    $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = [
-                        'id_lesson' => $lesson->id,
-                        'name_lesson' => $lesson->name,
-                        'url_evaluation' => $lesson->url,
-                        'lesson_completed' => $lesson->completed,
-                        'current_lesson' => false,
-                    ];
+                $isCurrentLesson = ($current->id == $lesson->id);
+
+                // Datos comunes para todas las lecciones
+                $lessonData = [
+                    'id_lesson' => $lesson->id,
+                    'name_lesson' => $lesson->name,
+                    'platform_lesson' => $lesson->platform_format,
+                    'lesson_completed' => $lesson->completed,
+                    'current_lesson' => $isCurrentLesson,
+                    'resource_lesson' => null, // Valor por defecto
+                ];
+
+                // Asignar el valor de data_lesson y resource_lesson según el formato de la plataforma
+                switch ($lesson->platform_format) {
+                    case 'Vimeo':
+                    case 'Youtube':
+                        $lessonData['data_lesson'] = $lesson->url;
+                        if ($lesson->resource) {
+                            $lessonData['resource_lesson'] = asset('storage/' . $lesson->resource->url);
+                        }
+                        break;
+                    case 'Documento':
+                        $lessonData['data_lesson'] = asset('storage/' . $lesson->resource->url);
+                        break;
+                    case 'Texto':
+                        $lessonData['data_lesson'] = $lesson->text_lesson;
+                        break;
+                    default:
+                        continue 2; // Saltar al siguiente ciclo del foreach
                 }
+
+                // Agregar la lección al arreglo de progreso del curso
+                $json_progreso_curso['course']['section'][$keySections]['lesson'][$keyLesson] = $lessonData;
             }
 
-
+            // Procesar evaluaciones
             foreach ($section->evaluations as $keyEvaluation => $evaluation) {
+                dd($evaluation);
+                $evaluationData = [
+                    'id_evaluation' => $evaluation->id,
+                    'name_evaluation' => $evaluation->name,
+                    'evaluation_blocked' => ($totalLessons != $completedLessonsCount),
+                ];
 
-                $totalLectionSection = $section->lessons->count();
-                $completedLectionSection = $section->lessons;
-                $completedLessonsCount = $section->lessons
-                    ->filter(function ($lesson) {
-                        return $lesson->completed;
-                    })
-                    ->count();
-
-                if ($totalLectionSection != $completedLessonsCount) {
-                    $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
-                        'id_evaluation' => $evaluation->id,
-                        'name_evaluation' => $evaluation->name,
-                        'evaluation_blocked' => true,
-                    ];
-                } else {
-                    if ($evaluation->questions->count() > 0) {
-                        $completed = in_array($evaluation->id, $evaluationsUser);
-
-                        $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
-                            'id_evaluation' => $evaluation->id,
-                            'name_evaluation' => $evaluation->name,
-                            'evaluation_completed' => $completed,
-                            'evaluation_blocked' => false,
-                        ];
-                    }
+                // Si la evaluación no está bloqueada, agregar datos adicionales
+                if (!$evaluationData['evaluation_blocked'] && $evaluation->questions->count() > 0) {
+                    $evaluationData['evaluation_completed'] = in_array($evaluation->id, $evaluationsUser);
                 }
+
+                // Agregar la evaluación al arreglo de progreso del curso
+                $json_progreso_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = $evaluationData;
             }
         }
 
