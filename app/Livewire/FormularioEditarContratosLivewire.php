@@ -291,9 +291,9 @@ class FormularioEditarContratosLivewire extends Component
             $errores[] = 'El campo Número de Pagos es obligatorio, debe ser numérico y menor o igual a 500,000.';
         }
 
-        if (empty($this->tipo_cambio)) {
-            $errores[] = 'El campo Tipo de Cambio es obligatorio.';
-        }
+        // if (empty($this->tipo_cambio)) {
+        //     $errores[] = 'El campo Tipo de Cambio es obligatorio.';
+        // }
 
         if (empty($this->monto_pago) || !is_numeric($this->monto_pago) || $this->monto_pago < 0 || $this->monto_pago > 99999999999.99) {
             $errores[] = 'El campo Monto de Pago es obligatorio, debe ser numérico y estar entre 0 y 99,999,999,999.99.';
@@ -381,7 +381,7 @@ class FormularioEditarContratosLivewire extends Component
                 'area_id' => $this->area_id,
                 'fecha_firma' => $this->fecha_firma,
                 'no_pagos' => $this->no_pagos,
-                'tipo_cambio' => $this->tipo_cambio,
+                'tipo_cambio' => $this->tipo_cambio ?? '',
                 'monto_pago' => $monto_pago,
                 'minimo' => $minimo,
                 'maximo' => $maximo,
