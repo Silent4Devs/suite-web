@@ -1796,7 +1796,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
         Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
         Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
-        Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
+        Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo-inventario');
         Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
         // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 
