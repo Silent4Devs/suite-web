@@ -17,7 +17,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- * @property int|null $team_id
  * @property int|null $responsable_id
  * @property character varying|null $formula
  * @property character varying|null $verde
@@ -49,7 +48,6 @@ class Objetivosseguridad extends Model implements Auditable
     protected $casts = [
         'objetivoseguridad' => 'string',
         'indicador' => 'string',
-        'team_id' => 'int',
         'responsable_id' => 'int',
         'formula' => 'string',
         'verde' => 'string',
@@ -64,7 +62,6 @@ class Objetivosseguridad extends Model implements Auditable
     protected $fillable = [
         'objetivoseguridad',
         'indicador',
-        'team_id',
         'responsable_id',
         'formula',
         'verde',

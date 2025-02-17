@@ -28,8 +28,7 @@ class GapTre extends Model implements Auditable
         'recomendacion',
         'created_at',
         'updated_at',
-        'deleted_at',
-        'team_id',
+        'deleted_at'
     ];
 
     const VALORACION_SELECT = [

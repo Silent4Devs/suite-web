@@ -20,8 +20,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property Carbon|null $created_at
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
- * @property int|null $created_by
- * @property int|null $updated_by
  * @property Contrato|null $contrato
  */
 class AmpliacionContrato extends Model implements Auditable
@@ -33,9 +31,7 @@ class AmpliacionContrato extends Model implements Auditable
     protected $casts = [
         'contrato_id' => 'int',
         'importe' => 'float',
-        'monto_total_ampliado' => 'float',
-        'created_by' => 'int',
-        'updated_by' => 'int',
+        'monto_total_ampliado' => 'float'
     ];
 
     protected $dates = [
@@ -48,9 +44,7 @@ class AmpliacionContrato extends Model implements Auditable
         'importe',
         'monto_total_ampliado',
         'fecha_inicio',
-        'fecha_fin',
-        'created_by',
-        'updated_by',
+        'fecha_fin'
     ];
 
     public function contrato()

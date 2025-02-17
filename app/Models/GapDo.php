@@ -37,8 +37,7 @@ class GapDo extends Model implements Auditable
         'evidencia',
         'recomendacion',
         'created_at',
-        'updated_at',
-        'team_id',
+        'updated_at'
     ];
 
     protected function serializeDate(DateTimeInterface $date)
@@ -62,8 +61,4 @@ class GapDo extends Model implements Auditable
         $this->save();
     }
 
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
 }

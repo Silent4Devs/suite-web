@@ -81,8 +81,7 @@ class MatrizRequisitoLegale extends Model implements Auditable
         'cumplimiento_organizacion',
         'created_at',
         'updated_at',
-        'deleted_at',
-        'team_id',
+        'deleted_at'
     ];
 
     public static function getAll()
@@ -126,11 +125,6 @@ class MatrizRequisitoLegale extends Model implements Auditable
     // {
     //     $this->attributes['fechaverificacion'] = $value ? Carbon::createFromFormat(config('panel.date_format'), $value)->format('Y-m-d') : null;
     // }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
-    }
 
     public function empleado()
     {
