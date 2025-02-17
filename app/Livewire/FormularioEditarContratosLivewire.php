@@ -351,13 +351,15 @@ class FormularioEditarContratosLivewire extends Component
                 return;
             }
 
-            // Limpiar valores monetarios
-            $monto_pago = str_replace(['$', ','], '', $this->monto_pago);
-            $minimo = str_replace(['$', ','], '', $this->minimo);
-            $maximo = str_replace(['$', ','], '', $this->maximo);
-            $monto_dolares = str_replace(['$', ','], '', $this->monto_dolares);
-            $maximo_dolares = str_replace(['$', ','], '', $this->maximo_dolares);
-            $minimo_dolares = str_replace(['$', ','], '', $this->minimo_dolares);
+
+            // Limpiar valores monetarios y asegurarse de que sean numéricos con 0 por defecto
+            $monto_pago = is_numeric(str_replace(['$', ','], '', $this->monto_pago)) ? (float) str_replace(['$', ','], '', $this->monto_pago) : 0;
+            $minimo = is_numeric(str_replace(['$', ','], '', $this->minimo)) ? (float) str_replace(['$', ','], '', $this->minimo) : 0;
+            $maximo = is_numeric(str_replace(['$', ','], '', $this->maximo)) ? (float) str_replace(['$', ','], '', $this->maximo) : 0;
+            $monto_dolares = is_numeric(str_replace(['$', ','], '', $this->monto_dolares)) ? (float) str_replace(['$', ','], '', $this->monto_dolares) : 0;
+            $maximo_dolares = is_numeric(str_replace(['$', ','], '', $this->maximo_dolares)) ? (float) str_replace(['$', ','], '', $this->maximo_dolares) : 0;
+            $minimo_dolares = is_numeric(str_replace(['$', ','], '', $this->minimo_dolares)) ? (float) str_replace(['$', ','], '', $this->minimo_dolares) : 0;
+
 
             // Actualizar el contrato
             $this->contrato->update([
