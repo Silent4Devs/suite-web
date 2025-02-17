@@ -569,14 +569,14 @@
                     <i class="fa-fw fas fa-laptop iconos-crear"></i>
                     <label for="activo_inventario">Activos/Inventario</label>
                     <div class="caja_btn_input">
-                        <form action="{{ route('carga-activo_inventario') }}" method="post" enctype="multipart/form-data">
+                        <form action="{{ route('carga-activo-inventario') }}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input class="btn btn-sm" type="file" id="activo_inventario" name="activo_inventario" required>
                             <button id="btn_importar" class="btn btn_importar btn_cargar" title="Cargar documento">
                                 <i class="fas fa-file-upload"></i>
                             </button>
                         </form>
-                        <form action="{{ route('descarga-activo_inventario') }}" method="get" enctype="multipart/form-data">
+                        <form action="{{ route('descarga-inventario-activos') }}" method="get" enctype="multipart/form-data">
                             @csrf
                             <button id="btn_exportar" class="btn btn_importar btn_cargar" title="Descargar documento">
                                 <i class="fas fa-download"></i>
