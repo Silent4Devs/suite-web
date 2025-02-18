@@ -4,7 +4,6 @@
 @endsection
 @section('content')
     <div>
-        Hola  mauricio
         @if ($user->empleado)
             <div class="d-flex justify-content-center align-items-center" style="gap: 25px;">
                 <div class="img-person" style="width: 100px; height: 100px;">
