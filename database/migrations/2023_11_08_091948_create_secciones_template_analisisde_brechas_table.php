@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('secciones_template_analisisde_brechas', function (Blueprint $table) {
             $table->id();
-            $table->unsignedBigInteger('template_id');
+            $table->bigInteger('template_id');
             $table->integer('numero_seccion');
             $table->longText('descripcion');
-            $table->unsignedDecimal('porcentaje_seccion');
+            $table->decimal('porcentaje_seccion');
             $table->foreign('template_id')->references('id')->on('template_analisisde_brechas')->onDelete('cascade');
             $table->timestamps();
             $table->softDeletes();
