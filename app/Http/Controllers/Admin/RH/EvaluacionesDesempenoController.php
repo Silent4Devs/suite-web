@@ -67,10 +67,7 @@ class EvaluacionesDesempenoController extends Controller
 
     public function createEvaluacion()
     {
-        $areas = Area::getIdNameAll();
-        $empleados = Empleado::getIDaltaAll();
-
-        return view('admin.recursos-humanos.evaluaciones-desempeno.create-evaluacion', compact('areas', 'empleados'));
+        return view('admin.recursos-humanos.evaluaciones-desempeno.create-evaluacion');
     }
 
     public function cuestionarioEvaluacionDesempeno($evaluacion, $evaluado, $periodo)
