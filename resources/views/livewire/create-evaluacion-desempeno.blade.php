@@ -106,7 +106,6 @@
 
         @case(2)
             <div class="tab-content" id="nav-create-2" role="tabpanel" aria-labelledby="nav-create-2">
-                {{-- <form wire:submit="segundoPaso(Object.fromEntries(new FormData($event.target)))"> --}}
                 <div class="card card-body">
                     <div class="info-first-config">
                         <h4 class="title-config">Periodos de los Objetivos</h4>
@@ -136,8 +135,8 @@
                     <div class="card card-body p-2 "
                         style="background-color: #FFF3F3; color: var(--color-tbj); font-size: 12px;">
                         <div>
-                            El periodo de carga de objetivos esta corriendo del <strong> 01/01/24 </strong> al <strong>
-                                15/03/24
+                            El periodo de carga de objetivos esta corriendo del <strong> {{ $periodo_carga_obj->fecha_inicio }} </strong> al <strong>
+                                {{ $periodo_carga_obj->fecha_fin }}
                             </strong>
                             <i class="ml-3">*Al cambiar y habilitar las fechas de los periodos de las evaluaciones se
                                 interrumpirá la carga de objetivos</i>
@@ -233,7 +232,6 @@
                         <a wire:click.prevent="segundoPaso" type="button" class="btn btn-primary" style="width: 170px;">SIGUIENTE</a>
                     </div>
                 </div>
-                {{-- </form> --}}
             </div>
         @break
 

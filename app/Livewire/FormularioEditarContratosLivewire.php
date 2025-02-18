@@ -291,9 +291,9 @@ class FormularioEditarContratosLivewire extends Component
             $errores[] = 'El campo Número de Pagos es obligatorio, debe ser numérico y menor o igual a 500,000.';
         }
 
-        if (empty($this->tipo_cambio)) {
-            $errores[] = 'El campo Tipo de Cambio es obligatorio.';
-        }
+        // if (empty($this->tipo_cambio)) {
+        //     $errores[] = 'El campo Tipo de Cambio es obligatorio.';
+        // }
 
         if (empty($this->monto_pago) || !is_numeric($this->monto_pago) || $this->monto_pago < 0 || $this->monto_pago > 99999999999.99) {
             $errores[] = 'El campo Monto de Pago es obligatorio, debe ser numérico y estar entre 0 y 99,999,999,999.99.';
@@ -351,13 +351,15 @@ class FormularioEditarContratosLivewire extends Component
                 return;
             }
 
-            // Limpiar valores monetarios
-            $monto_pago = str_replace(['$', ','], '', $this->monto_pago);
-            $minimo = str_replace(['$', ','], '', $this->minimo);
-            $maximo = str_replace(['$', ','], '', $this->maximo);
-            $monto_dolares = str_replace(['$', ','], '', $this->monto_dolares);
-            $maximo_dolares = str_replace(['$', ','], '', $this->maximo_dolares);
-            $minimo_dolares = str_replace(['$', ','], '', $this->minimo_dolares);
+
+            // Limpiar valores monetarios y asegurarse de que sean numéricos con 0 por defecto
+            $monto_pago = is_numeric(str_replace(['$', ','], '', $this->monto_pago)) ? (float) str_replace(['$', ','], '', $this->monto_pago) : 0;
+            $minimo = is_numeric(str_replace(['$', ','], '', $this->minimo)) ? (float) str_replace(['$', ','], '', $this->minimo) : 0;
+            $maximo = is_numeric(str_replace(['$', ','], '', $this->maximo)) ? (float) str_replace(['$', ','], '', $this->maximo) : 0;
+            $monto_dolares = is_numeric(str_replace(['$', ','], '', $this->monto_dolares)) ? (float) str_replace(['$', ','], '', $this->monto_dolares) : 0;
+            $maximo_dolares = is_numeric(str_replace(['$', ','], '', $this->maximo_dolares)) ? (float) str_replace(['$', ','], '', $this->maximo_dolares) : 0;
+            $minimo_dolares = is_numeric(str_replace(['$', ','], '', $this->minimo_dolares)) ? (float) str_replace(['$', ','], '', $this->minimo_dolares) : 0;
+
 
             // Actualizar el contrato
             $this->contrato->update([
@@ -379,7 +381,7 @@ class FormularioEditarContratosLivewire extends Component
                 'area_id' => $this->area_id,
                 'fecha_firma' => $this->fecha_firma,
                 'no_pagos' => $this->no_pagos,
-                'tipo_cambio' => $this->tipo_cambio,
+                'tipo_cambio' => $this->tipo_cambio ?? '',
                 'monto_pago' => $monto_pago,
                 'minimo' => $minimo,
                 'maximo' => $maximo,
