@@ -26,7 +26,7 @@ class PlanAuditoriaController extends Controller
         abort_if(Gate::denies('plan_de_auditoria_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         if ($request->ajax()) {
-            $query = PlanAuditorium::select('id', 'nombre_auditoria', 'fecha_inicio_auditoria', 'objetivo', 'alcance')->get();
+            $query = PlanAuditorium::get();
             $table = Datatables::of($query);
 
             $table->addColumn('placeholder', '&nbsp;');
@@ -71,16 +71,16 @@ class PlanAuditoriaController extends Controller
             $table->editColumn('documentoauditar', function ($row) {
                 return $row->documentoauditar ? $row->documentoauditar : '';
             });
-            $table->editColumn('equipo_auditor', function ($row) {
-                return $row->auditados ? $row->auditados : '';
-            });
+            // $table->editColumn('equipo_auditor', function ($row) {
+            //     return $row->auditados ? $row->auditados : '';
+            // });
 
             $table->rawColumns(['actions', 'placeholder', 'auditados']);
 
             return $table->make(true);
         }
 
-        $auditoria_anuals = AuditoriaAnual::getAll();
+        $auditoria_anuals = AuditoriaAnual::get();
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
         $empresa_actual = $organizacion_actual->empresa;
@@ -130,11 +130,10 @@ class PlanAuditoriaController extends Controller
         return redirect()->route('admin.plan-auditoria.edit', ['planAuditorium' => $planAuditorium]);
     }
 
-    public function edit($id_planAuditorium)
+    public function edit(PlanAuditorium $planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
         // $fechas = AuditoriaAnual::all()->pluck('fechainicio', 'id')->prepend(trans('global.pleaseSelect'), '');
 
         $equipo_seleccionado = $planAuditorium->auditados->pluck('id')->toArray();
@@ -147,10 +146,10 @@ class PlanAuditoriaController extends Controller
         return view('admin.planAuditoria.edit', compact('equipoauditorias', 'planAuditorium', 'equipo_seleccionado', 'actividadesAuditoria'));
     }
 
-    public function update(Request $request, $id_planAuditorium)
+    public function update(Request $request, PlanAuditorium $planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
+
         $request->validate([
             'fecha_inicio_auditoria' => 'required|date',
             'nombre_auditoria' => 'required|string',
@@ -181,19 +180,19 @@ class PlanAuditoriaController extends Controller
         return redirect()->route('admin.plan-auditoria.index');
     }
 
-    public function show($id_planAuditorium)
+    public function show(PlanAuditorium $planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
+
         $planAuditorium->load('auditados', 'team', 'actividadesPlan');
 
         return view('admin.planAuditoria.show', compact('planAuditorium'));
     }
 
-    public function destroy($id_planAuditorium)
+    public function destroy(PlanAuditorium $planAuditorium)
     {
         abort_if(Gate::denies('plan_de_auditoria_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $planAuditorium = PlanAuditorium::where('id', $id_planAuditorium)->first();
+
         $planAuditorium->delete();
 
         return back();

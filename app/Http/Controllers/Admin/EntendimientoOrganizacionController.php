@@ -110,12 +110,9 @@ class EntendimientoOrganizacionController extends Controller
         return view('admin.entendimientoOrganizacions.create', compact('isEdit', 'entendimientoOrganizacion', 'esta_vinculado', 'empleados'));
     }
 
-    public function store(Request $request, $id_entendimientoOrganizacion)
+    public function store(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $entendimientoOrganizacion = EntendimientoOrganizacion::where('id', $id_entendimientoOrganizacion)->first();
-
         $request->validate([
             'analisis' => 'required|string|max:255',
             'fecha' => 'required|date',
@@ -159,10 +156,10 @@ class EntendimientoOrganizacionController extends Controller
         $model->participantes()->sync($participantes);
     }
 
-    public function edit($id_entendimientoOrganizacion)
+    public function edit(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entendimientoOrganizacion = EntendimientoOrganizacion::where('id', $id_entendimientoOrganizacion)->first();
+
         $entendimientoOrganizacion->load('participantes');
 
         $empleados = Empleado::getaltaAll();
@@ -176,10 +173,9 @@ class EntendimientoOrganizacionController extends Controller
         return view('admin.entendimientoOrganizacions.edit', compact('isEdit', 'entendimientoOrganizacion', 'esta_vinculado', 'empleados'));
     }
 
-    public function update(Request $request, $id_entendimientoOrganizacion)
+    public function update(Request $request, EntendimientoOrganizacion $entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entendimientoOrganizacion = EntendimientoOrganizacion::where('id', $id_entendimientoOrganizacion)->first();
         $request->validate([
             'analisis' => 'required|string|max:255',
             'fecha' => 'required|date',
@@ -202,10 +198,10 @@ class EntendimientoOrganizacionController extends Controller
         return redirect()->route('admin.entendimiento-organizacions.index')->with('success', 'Análisis FODA actualizado correctamente');
     }
 
-    public function show($id_entendimientoOrganizacion)
+    public function show(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
         abort_if(Gate::denies('analisis_foda_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entendimientoOrganizacion = EntendimientoOrganizacion::where('id', $id_entendimientoOrganizacion)->first();
+
         $empleados = Empleado::getaltaAll();
         $obtener_FODA = $entendimientoOrganizacion;
         // dd($obtener_FODA);
@@ -221,15 +217,24 @@ class EntendimientoOrganizacionController extends Controller
         return view('admin.entendimientoOrganizacions.show', compact('fortalezas', 'oportunidades', 'amenazas', 'debilidades', 'empleados', 'obtener_FODA', 'organizacion_actual', 'logo_actual', 'empresa_actual'));
     }
 
-    public function destroy($id_entendimientoOrganizacion)
+    public function destroy(EntendimientoOrganizacion $entendimientoOrganizacion)
     {
+        // Verificación de permisos
         abort_if(Gate::denies('analisis_foda_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $entendimientoOrganizacion = EntendimientoOrganizacion::where('id', $id_entendimientoOrganizacion)->first();
-        $entendimientoOrganizacion->delete();
 
-        event(new EntendimientoOrganizacionEvent($entendimientoOrganizacion, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
+        try {
+            // Eliminar el análisis FODA
+            $entendimientoOrganizacion->delete();
 
-        return back()->with('deleted', 'Registro eliminado con éxito');
+            // Disparar el evento
+            event(new EntendimientoOrganizacionEvent($entendimientoOrganizacion, 'delete', 'entendimiento_organizacions', 'Entendimiento'));
+
+            // Devolver respuesta JSON exitosa
+            return response()->json(['message' => 'El análisis FODA ha sido eliminado correctamente'], 200);
+        } catch (\Exception $e) {
+            // En caso de error, devolver respuesta de error
+            return response()->json(['message' => 'Hubo un problema al intentar eliminar el análisis FODA.'], 500);
+        }
     }
 
     public function massDestroy(MassDestroyEntendimientoOrganizacionRequest $request)

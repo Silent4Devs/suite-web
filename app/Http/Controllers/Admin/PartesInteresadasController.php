@@ -150,10 +150,10 @@ class PartesInteresadasController extends Controller
         }
     }
 
-    public function destroy($id_partesInteresada)
+    public function destroy(PartesInteresada $partesInteresada)
     {
         abort_if(Gate::denies('partes_interesadas_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $partesInteresada = PartesInteresada::find($id_partesInteresada);
+
         $partesInteresada->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

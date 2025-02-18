@@ -91,6 +91,5 @@ class UsersObserver
         Cache::forget('Empleados:empleados_alta_all_objetivos_generales');
         Cache::forget('Empleados:portal_cumpleaños');
         Cache::forget('Empleados:portal_nuevos');
-        Cache::forget('Empleados:empleados_index_all');
     }
 }

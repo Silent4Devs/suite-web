@@ -19,6 +19,7 @@ class TeamMembersController extends Controller
         }else{
             $users = [];
         }
+
         return view('admin.team-members.index', compact('team', 'users'));
     }
 

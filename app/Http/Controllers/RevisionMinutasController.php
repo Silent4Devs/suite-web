@@ -16,9 +16,8 @@ use Illuminate\Support\Facades\Storage;
 
 class RevisionMinutasController extends Controller
 {
-    public function edit($id_revisionMinuta)
+    public function edit(RevisionMinuta $revisionMinuta)
     {
-        $revisionMinuta = RevisionMinuta::where('id', $id_revisionMinuta)->first();
         $minuta = Minutasaltadireccion::find(intval($revisionMinuta->minuta_id));
         if (! $minuta) {
             abort_if(! $minuta, 404);

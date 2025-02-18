@@ -110,9 +110,8 @@ class ModeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id_modelo)
+    public function edit(Modelo $modelo)
     {
-        $modelo = Modelo::where('id', $id_modelo)->first();
         $marca = Marca::getAll();
 
         return view('admin.modelo.edit', compact('tipoactivos'));
@@ -123,10 +122,9 @@ class ModeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id_modelo)
+    public function update(Request $request, Modelo $modelo)
     {
         if ($request->ajax()) {
-            $modelo = Modelo::where('id', $id_modelo)->first();
             $request->validate([
                 'nombre' => 'required|string|unique:modelo,nombre',
             ]);
@@ -148,10 +146,8 @@ class ModeloController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_modelo)
+    public function destroy(Modelo $modelo)
     {
-        $modelo = Modelo::where('id', $id_modelo)->first();
-
         return back()->with('deleted', 'Registro eliminado con éxito');
     }
 

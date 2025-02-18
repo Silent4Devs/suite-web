@@ -91,6 +91,31 @@ class OrdenCompraController extends Controller
         return view('contract_manager.ordenes-compra.index', compact('requisiciones', 'buttonSolicitante', 'buttonFinanzas', 'buttonCompras', 'empresa_actual', 'logo_actual'));
     }
 
+    // public function getOCIndex(Request $request)
+    // {
+    //     $user = User::getCurrentUser();
+
+    //     if ($user->roles->contains('title', 'Admin') || $user->can('visualizar_todas_orden_compra')) {
+    //         $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
+    //             ['firma_solicitante', '!=', null],
+    //             ['firma_jefe', '!=', null],
+    //             ['firma_finanzas', '!=', null],
+    //             ['firma_compras', '!=', null],
+    //         ])->where('archivo', false)->orderByDesc('id')
+    //             ->get();
+    //         return datatables()->of($requisiciones)->toJson();
+    //     } else {
+    //         $requisiciones = KatbolRequsicion::with('contrato', 'provedores_requisiciones')->where([
+    //             ['firma_solicitante', '!=', null],
+    //             ['firma_jefe', '!=', null],
+    //             ['firma_finanzas', '!=', null],
+    //             ['firma_compras', '!=', null],
+    //         ])->where('archivo', false)->where('id_user', $user->id)->orderByDesc('id')
+    //             ->get();
+    //         return datatables()->of($requisiciones)->toJson();
+    //     }
+    // }
+
     /**
      * Show the form for creating a new resource.
      *

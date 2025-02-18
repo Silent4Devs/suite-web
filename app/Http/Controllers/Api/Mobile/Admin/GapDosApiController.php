@@ -28,17 +28,15 @@ class GapDosApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show($id_gapDo)
+    public function show(GapDo $gapDo)
     {
         abort_if(Gate::denies('gap_do_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapDo = GapDo::where('id', $id_gapDo)->first();
 
         return new GapDoResource($gapDo->load(['team']));
     }
 
-    public function update(UpdateGapDoRequest $request, $id_gapDo)
+    public function update(UpdateGapDoRequest $request, GapDo $gapDo)
     {
-        $gapDo = GapDo::where('id', $id_gapDo)->first();
         $gapDo->update($request->all());
 
         return (new GapDoResource($gapDo))
@@ -46,10 +44,10 @@ class GapDosApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy($id_gapDo)
+    public function destroy(GapDo $gapDo)
     {
         abort_if(Gate::denies('gap_do_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapDo = GapDo::where('id', $id_gapDo)->first();
+
         $gapDo->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

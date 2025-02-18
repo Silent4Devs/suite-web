@@ -337,9 +337,9 @@ class MinutasaltadireccionController extends Controller
         ));
     }
 
-    public function processUpdate($request, $id_minutasaltadireccion, $edit = false)
+    public function processUpdate($request, Minutasaltadireccion $minutasaltadireccion, $edit = false)
     {
-        $minutasaltadireccion = Minutasaltadireccion::where('id', $id_minutasaltadireccion)->first();
+
         $request->validate([
             'objetivoreunion' => 'required',
             'responsable_id' => 'required|integer',
@@ -391,10 +391,10 @@ class MinutasaltadireccionController extends Controller
         return preg_replace('/[^\x00-\x7F]/u', '', $string);
     }
 
-    public function update(Request $request, $id_minutasaltadireccion)
+    public function update(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion = Minutasaltadireccion::where('id', $id_minutasaltadireccion)->first();
+
         if ($request->flujo === 'on') {
             session()->flash('alert', '¡Operación exitosa ya pueden firmar los participantes!');
         }
@@ -626,10 +626,9 @@ class MinutasaltadireccionController extends Controller
         // }
     }
 
-    public function destroy(Request $request, $id_minutasaltadireccion)
+    public function destroy(Request $request, Minutasaltadireccion $minutasaltadireccion)
     {
         abort_if(Gate::denies('revision_por_direccion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $minutasaltadireccion = Minutasaltadireccion::where('id', $id_minutasaltadireccion)->first();
         if ($request->ajax()) {
             $minutasaltadireccion->delete();
 
@@ -662,10 +661,10 @@ class MinutasaltadireccionController extends Controller
         return view('admin.minutasaltadireccions.revisiones.history-reviews', compact('minuta', 'revisiones'));
     }
 
-    public function createPlanAccion($id)
+    public function createPlanAccion(Minutasaltadireccion $id)
     {
         $planImplementacion = new PlanImplementacion;
-        $modulo = Minutasaltadireccion::where('id', $id)->first();
+        $modulo = $id;
         $modulo_name = 'Matríz de Requisitos Legales';
         $referencia = $modulo->nombrerequisito;
         $urlStore = route('admin.matriz-requisito-legales.storePlanAccion', $id);
@@ -673,7 +672,7 @@ class MinutasaltadireccionController extends Controller
         return view('admin.workPlan.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
-    public function storePlanAccion(Request $request, $id)
+    public function storePlanAccion(Request $request, Minutasaltadireccion $id)
     {
         $request->validate([
             'parent' => 'required|string',
@@ -701,7 +700,7 @@ class MinutasaltadireccionController extends Controller
         $planImplementacion->objetivo = $request->objetivo;
         $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
-        $minuta = Minutasaltadireccion::where('id', $id)->first();
+        $minuta = $id;
         $minuta->planes()->save($planImplementacion);
 
         return redirect()->route('admin.minutasaltadireccions.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');

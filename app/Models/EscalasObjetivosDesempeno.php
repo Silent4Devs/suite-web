@@ -34,6 +34,7 @@ class EscalasObjetivosDesempeno extends Model
         'valor',
         'parametro',
         'color',
+        'no_periodo'
     ];
 
     // public function parametro()

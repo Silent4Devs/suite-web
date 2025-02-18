@@ -310,7 +310,19 @@
                     evidencia(s) de la
                     queja</label><i class="fas fa-info-circle" style="font-size:12pt; float: right;"
                     title="Información que soporta la queja que se esta presentando."></i>
-                <input type="file" name="evidencia[]" class="form-control" multiple="multiple">
+                    <div class="mt-2" x-data="fileUpload()">
+                        <input type="file" name="evidencia[]" class="form-control" multiple
+                               x-ref="fileInput" @change="handleFileChange">
+
+                        <template x-if="hasFile">
+                            <div>
+                                <progress x-bind:value="progress" max="100%" style="width: 100%;" x-show="progress > 0 && progress < 100"></progress>
+                                <span x-show="progress > 0 && progress < 100" x-text="progress + '%'"></span>
+                            </div>
+                        </template>
+
+                        <div x-show="uploaded" class="text-success mt-2">✅ Archivo cargado</div>
+                    </div>
             </div>
             <div class="form-group col-md-4">
                 <a href="{{ url('admin/desk/descargar-evidencia/' . $quejasClientes->id) }}" class="btn btn-link mt-5">
@@ -340,13 +352,6 @@
 
     <div class="mt-4 text-center form-group col-12">
         <div class="container">
-            {{-- <div class="mb-4 row">
-                    <div class="col text-start">
-                        <a href="#" class="btn btn-primary" data-toggle="modal"
-                            data-target="#largeModal">Evidencia</a>
-                    </div>
-                </div> --}}
-            <!-- modal -->
             <div class="modal fade" id="largeModal" tabindex="-1" role="dialog" aria-labelledby="basicModal"
                 aria-hidden="true">
                 <div class="modal-dialog modal-lg">
@@ -364,8 +369,8 @@
                                     <div class='carousel-inner'>
                                         @foreach ($quejasClientes->evidencias_quejas as $idx => $evidencia)
                                             <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                <iframe class='img-size'
-                                                    src='{{ asset('storage/evidencias_quejas_clientes' . '/' . $evidencia->evidencia) }}'></iframe>
+                                                <iframe class='img-size lazy-load'
+                                                    data-src='{{ asset('storage/evidencias_quejas_clientes' . '/' . $evidencia->evidencia) }}'></iframe>
                                             </div>
                                         @endforeach
                                     </div>
@@ -382,64 +387,10 @@
                                 </div>
                             @else
                                 <div class="text-center">
-                                    <h3 style="text-align:center" class="mt-3">Sin
-                                        archivo agregado</h3>
-                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
-                                        style="width:350px !important">
+                                    <h3 class="mt-3">Sin archivo agregado</h3>
+                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid" style="width:350px !important">
                                 </div>
                             @endif
-
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- modal Evidencia Cierre -->
-            <div class="modal fade" id="cierreEvidencia" tabindex="-1" role="dialog" aria-labelledby="basicModal"
-                aria-hidden="true">
-                <div class="modal-dialog modal-lg">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            @if (count($quejasClientes->cierre_evidencias))
-                                <div id='carouselExampleIndicators' class='carousel slide' data-ride='carousel'>
-                                    <ol class='carousel-indicators'>
-                                        @foreach ($quejasClientes->cierre_evidencias as $idx => $cierre)
-                                            <li data-target='#carouselExampleIndicators'
-                                                data-slide-to='{{ $idx }}'
-                                                class='{{ $idx == 0 ? 'active' : '' }}'></li>
-                                        @endforeach
-                                    </ol>
-                                    <div class='carousel-inner'>
-                                        @foreach ($quejasClientes->cierre_evidencias as $idx => $cierre)
-                                            <div class='carousel-item {{ $idx == 0 ? 'active' : '' }}'>
-                                                <iframe class='img-size'
-                                                    src='{{ asset('storage/evidencias_quejas_clientes_cerrado' . '/' . $cierre->cierre) }}'></iframe>
-                                            </div>
-                                        @endforeach
-                                    </div>
-                                    <a class='carousel-control-prev' href='#carouselExampleIndicators' role='button'
-                                        data-slide='prev'>
-                                        <span class='carousel-control-prev-icon' aria-hidden='true'></span>
-                                        <span class='sr-only'>Previous</span>
-                                    </a>
-                                    <a class='carousel-control-next' href='#carouselExampleIndicators' role='button'
-                                        data-slide='next'>
-                                        <span class='carousel-control-next-icon' aria-hidden='true'></span>
-                                        <span class='sr-only'>Next</span>
-                                    </a>
-                                </div>
-                            @else
-                                <div class="text-center">
-                                    <h3 style="text-align:center" class="mt-3">Sin
-                                        archivo agregado</h3>
-                                    <img src="{{ asset('img/undrawn.png') }}" class="img-fluid "
-                                        style="width:350px !important">
-                                </div>
-                            @endif
-
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
@@ -501,3 +452,44 @@
         </div>
     </div>
 </div>
+
+<script>
+    function fileUpload() {
+        return {
+            progress: 0,
+            uploaded: false,
+            hasFile: false,
+
+            handleFileChange(event) {
+                this.hasFile = event.target.files.length > 0;
+                this.progress = 0;
+                this.uploaded = false;
+
+                // Simular carga de archivos con progreso
+                if (this.hasFile) {
+                    let interval = setInterval(() => {
+                        if (this.progress >= 100) {
+                            clearInterval(interval);
+                            this.uploaded = true;
+                        } else {
+                            this.progress += 10; // Incremento simulado
+                        }
+                    }, 300);
+                }
+            }
+        };
+    }
+    </script>
+
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        $('#largeModal').on('shown.bs.modal', function () {
+            document.querySelectorAll('.lazy-load').forEach(iframe => {
+                if (!iframe.src) {
+                    iframe.src = iframe.getAttribute('data-src');
+                }
+            });
+        });
+    });
+</script>

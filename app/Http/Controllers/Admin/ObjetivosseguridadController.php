@@ -129,10 +129,10 @@ class ObjetivosseguridadController extends Controller
         return redirect()->route('admin.objetivos-seguridadsInsertar', ['id' => $objetivosseguridad->id])->with('success', 'Guardado con éxito');
     }
 
-    public function edit($id_objetivosseguridad)
+    public function edit(Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $objetivosseguridad = Objetivosseguridad::where('id', $id_objetivosseguridad)->first();
+
         $tiposObjetivosSistemas = TiposObjetivosSistema::get();
 
         $objetivosseguridad->load('normas');
@@ -144,10 +144,10 @@ class ObjetivosseguridadController extends Controller
         return view('admin.objetivosseguridads.edit', compact('normas_seleccionadas', 'normas', 'objetivosseguridad', 'responsables', 'tiposObjetivosSistemas'));
     }
 
-    public function update(UpdateObjetivosseguridadRequest $request, $id_objetivosseguridad)
+    public function update(UpdateObjetivosseguridadRequest $request, Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $objetivosseguridad = Objetivosseguridad::where('id', $id_objetivosseguridad)->first();
+
         $request->validate([
             'objetivoseguridad' => 'required',
             'indicador' => 'required',
@@ -173,19 +173,19 @@ class ObjetivosseguridadController extends Controller
         return redirect()->route('admin.objetivosseguridads.index')->with('success', 'Editado con éxito');
     }
 
-    public function show($id_objetivosseguridad)
+    public function show(Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $objetivosseguridad = Objetivosseguridad::where('id', $id_objetivosseguridad)->first();
+
         $objetivosseguridad->load('team');
 
         return view('admin.objetivosseguridads.show', compact('objetivosseguridad'));
     }
 
-    public function destroy($id_objetivosseguridad)
+    public function destroy(Objetivosseguridad $objetivosseguridad)
     {
         abort_if(Gate::denies('objetivos_del_sistema_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $objetivosseguridad = Objetivosseguridad::where('id', $id_objetivosseguridad)->first();
+
         $objetivosseguridad->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

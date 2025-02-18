@@ -64,11 +64,16 @@ class EmpleadoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
         abort_if(Gate::denies('bd_empleados_acceder'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $empleados = Empleado::getIndexAll();
+        $empleados = Empleado::select('id', 'n_empleado', 'name', 'foto', 'genero', 'email', 'telefono', 'area_id', 'puesto_id', 'supervisor_id', 'antiguedad', 'estatus', 'sede_id', 'cumpleaños')->orderBy('id', 'DESC')->alta()->get()
+            ->map(function ($empleado) {
+                $empleado['avatar_ruta'] = $empleado->avatar_ruta; // Access the computed attribute
+
+                return $empleado;
+            });
 
         $organizacion_actual = $this->obtenerOrganizacion();
         $logo_actual = $organizacion_actual->logo;
@@ -618,11 +623,8 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function updateCertificaciones(Request $request, $id_certificacion)
+    public function updateCertificaciones(Request $request, CertificacionesEmpleados $certificacion)
     {
-
-        $certificacion = CertificacionesEmpleados::where('id', $id_certificacion)->first();
-
         if (isset($request->name)) {
             $request->validate([
                 'nombre' => 'required|string|max:255',
@@ -661,11 +663,8 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Certificado Actualizado']);
     }
 
-    public function deleteFileCertificacion(Request $request, $id_certificacion)
+    public function deleteFileCertificacion(Request $request, CertificacionesEmpleados $certificacion)
     {
-
-        $certificacion = CertificacionesEmpleados::where('id', $id_certificacion)->first();
-
         $certificacion->update([
             'documento' => null,
         ]);
@@ -729,11 +728,8 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function updateCurso(Request $request, $id_curso)
+    public function updateCurso(Request $request, CursosDiplomasEmpleados $curso)
     {
-
-        $curso = CursosDiplomasEmpleados::where('id', $id_curso)->first();
-
         if (array_key_exists('curso_diploma', $request->all())) {
             $request->validate([
                 'curso_diploma' => 'required|string|max:255',
@@ -795,9 +791,8 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Curso Actualizado', 'curso' => $curso]);
     }
 
-    public function deleteFileCurso(Request $request, $id_curso)
+    public function deleteFileCurso(Request $request, CursosDiplomasEmpleados $curso)
     {
-        $curso = CursosDiplomasEmpleados::where('id', $id_curso)->first();
         $curso->update([
             'file' => null,
         ]);
@@ -843,11 +838,8 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function updateExperiencia(Request $request, $id_experiencia)
+    public function updateExperiencia(Request $request, ExperienciaEmpleados $experiencia)
     {
-
-        $experiencia = ExperienciaEmpleados::where('id', $id_experiencia)->first();
-
         if (array_key_exists('trabactualmente', $request->all())) {
             if ($request->trabactualmente == 'true') {
                 $isTrabActualmente = true;
@@ -928,11 +920,8 @@ class EmpleadoController extends Controller
         }
     }
 
-    public function updateEducacion(Request $request, $id_educacion)
+    public function updateEducacion(Request $request, EducacionEmpleados $educacion)
     {
-
-        $educacion = EducacionEmpleados::where('id', $id_educacion)->first();
-
         if (array_key_exists('estudactualmente', $request->all())) {
             if ($request->estudactualmente == 'true') {
                 $isEstdActualmente = true;
@@ -1345,11 +1334,8 @@ class EmpleadoController extends Controller
         // return redirect()->route('admin.empleados.index')->with('success', 'Editado con éxito');
     }
 
-    public function updateFromCurriculum(Request $request, $id_empleado)
+    public function updateFromCurriculum(Request $request, Empleado $empleado)
     {
-
-        $empleado = Empleado::where('id', $id_empleado)->first();
-
         $request->validate([
             'files.*' => 'nullable|mimes:jpeg,bmp,png,gif,svg,pdf|max:10000',
         ]);
@@ -1375,12 +1361,10 @@ class EmpleadoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id_empleado)
+    public function destroy(Empleado $empleado)
     {
         abort_if(Gate::denies('configuracion_empleados_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-
-        $empleado = Empleado::where('id', $id_empleado)->first();
-
+        // $empleado->delete();
         $empleado->update(['estatus' => 'baja']);
 
         return response()->json(['success' => true, 'empleado' => $empleado->name, 'message' => 'Empleado dado de baja', 'from' => 'rh'], 200);
@@ -1561,11 +1545,8 @@ class EmpleadoController extends Controller
         return redirect()->back()->with(['success' => 'Información actualizada']);
     }
 
-    public function storeDocumentos(Request $request, $id_empleado)
+    public function storeDocumentos(Request $request, Empleado $empleado)
     {
-
-        $empleado = Empleado::where('id', $id_empleado)->first();
-
         $doc_viejo = EvidenciasDocumentosEmpleados::where('nombre', $request->nombre)->where('archivado', false)->first();
         if ($doc_viejo) {
             $doc_viejo->update([
@@ -1598,11 +1579,8 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Documento registrado']);
     }
 
-    public function updateDocumento(Request $request, $id_documento)
+    public function updateDocumento(Request $request, EvidenciasDocumentosEmpleados $documento)
     {
-
-        $documento = EvidenciasDocumentosEmpleados::where('id', $id_documento)->first();
-
         $empleado = $documento->empleados_documentos;
         if (array_key_exists('nombre', $request->all())) {
             $request->validate([
@@ -1635,30 +1613,23 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 'success', 'message' => 'Registro Actualizado']);
     }
 
-    public function getDocumentos($id_empleado)
+    public function getDocumentos(Empleado $empleado)
     {
-
-        $empleado = Empleado::where('id', $id_empleado)->first();
-
         $documentos = EvidenciasDocumentosEmpleados::getAll()->where('empleado_id', $empleado->id);
 
         return datatables()->of($documentos)->toJson();
         // return response()->json(['documentos' => $documentos]);
     }
 
-    public function deleteDocumento($id_documento)
+    public function deleteDocumento(EvidenciasDocumentosEmpleados $documento)
     {
-        $documento = EvidenciasDocumentosEmpleados::where('id', $id_documento)->first();
-
         $documento->delete();
 
         return response()->json(['status' => 'success', 'message' => 'Documento eliminado']);
     }
 
-    public function deleteFileDocumento($id_documento)
+    public function deleteFileDocumento(EvidenciasDocumentosEmpleados $documento)
     {
-        $documento = EvidenciasDocumentosEmpleados::where('id', $id_documento)->first();
-
         if (Storage::disk('public')->exists($documento->ruta_absoluta_documento)) {
             Storage::disk('public')->delete($documento->ruta_absoluta_documento);
         }
@@ -1709,10 +1680,8 @@ class EmpleadoController extends Controller
         return response()->json(['status' => 200, 'message' => 'Vacante eliminada']);
     }
 
-    public function solicitudBaja($id_empleado)
+    public function solicitudBaja(Empleado $empleado)
     {
-        $empleado = Empleado::where('id', $id_empleado)->first();
-
         return view('admin.empleados.solicitudBaja', compact('empleado'));
     }
 

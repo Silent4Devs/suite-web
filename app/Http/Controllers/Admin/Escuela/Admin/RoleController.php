@@ -88,10 +88,11 @@ class RoleController extends Controller
      */
     public function edit($id_role)
     {
-        $role = Role::select('id')->where('id', $id_role)->first();
+        $role = Role::where('id', $id_role)->first();
 
         return view('admin.roles.edit', [
             'role' => $role,
+            'permissions' => Permission::getAll(),
         ]);
     }
 

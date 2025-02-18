@@ -58,28 +58,28 @@ class GrupoAreaController extends Controller
         return redirect()->route('admin.grupoarea.index')->with('success', 'Guardado con éxito');
     }
 
-    public function show($id_grupoarea)
+    public function show(Grupo $grupoarea)
     {
         abort_if(Gate::denies('crear_grupo_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $grupoarea = Grupo::where('id', $id_grupoarea)->first();
+
         $grupoarea->load('team');
 
         return view('admin.grupoarea.show', compact('grupoarea'));
     }
 
-    public function edit($id_grupoarea)
+    public function edit(Grupo $grupoarea)
     {
         abort_if(Gate::denies('crear_grupo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $grupoarea = Grupo::where('id', $id_grupoarea)->first();
+
         $grupoarea->load('team');
 
         return view('admin.grupoarea.edit', compact('grupoarea'));
     }
 
-    public function update(Request $request, $id_grupoarea)
+    public function update(Request $request, Grupo $grupoarea)
     {
         abort_if(Gate::denies('crear_grupo_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $grupoarea = Grupo::where('id', $id_grupoarea)->first();
+
         $request->validate(
             [
                 'nombre' => 'required|string',
@@ -93,10 +93,10 @@ class GrupoAreaController extends Controller
         return redirect()->route('admin.grupoarea.index')->with('success', 'Editado con éxito');
     }
 
-    public function destroy($id_grupoarea)
+    public function destroy(Grupo $grupoarea)
     {
         abort_if(Gate::denies('crear_grupo_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $grupoarea = Grupo::where('id', $id_grupoarea)->first();
+
         $deleted = $grupoarea->delete();
         if ($deleted) {
             return response()->json(['deleted' => true]);

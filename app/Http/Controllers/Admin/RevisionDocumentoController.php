@@ -114,7 +114,6 @@ class RevisionDocumentoController extends Controller
 
     public function edit(RevisionDocumento $revisionDocumento)
     {
-        $revisionDocumento = RevisionDocumento::where('id', $id_revisionDocumento)->first();
         $empleadoActual = User::getCurrentUser()->empleado;
         $empleado = Empleado::getaltaAll()->find(intval($revisionDocumento->empleado_id));
 
@@ -454,10 +453,8 @@ class RevisionDocumentoController extends Controller
         }
     }
 
-    public function sendEmailToNextLevel($email, Documento $documento, $id_revisor, $id_historialRevisionDocumento)
+    public function sendEmailToNextLevel($email, Documento $documento, RevisionDocumento $revisor, HistorialRevisionDocumento $historialRevisionDocumento)
     {
-        $revisor = RevisionDocumento::where('id', $id_revisor)->first();
-        $historialRevisionDocumento = HistorialRevisionDocumento::where('id', $id_historialRevisionDocumento)->first();
         Mail::to(removeUnicodeCharacters($email))->queue(new SolicitudAprobacionMail($documento, $revisor, $historialRevisionDocumento));
     }
 
@@ -502,10 +499,8 @@ class RevisionDocumentoController extends Controller
         }
     }
 
-    public function publishDocumentInFolder($path_documento_aprobacion, $id_documento)
+    public function publishDocumentInFolder($path_documento_aprobacion, Documento $documento)
     {
-        $documento = Documento::where('id', $id_documento)->first();
-
         $this->createDocumentosPublicadosIfNotExists();
         $path_documentos_publicados = 'public/Documentos publicados';
         switch ($documento->tipo) {
@@ -561,9 +556,8 @@ class RevisionDocumentoController extends Controller
         }
     }
 
-    public function moveBeforeVersionOfDirectory($path_documento_version_anterior, $id_documento)
+    public function moveBeforeVersionOfDirectory($path_documento_version_anterior, Documento $documento)
     {
-        $documento = Documento::where('id', $id_documento)->first();
         $this->createDocumentoVersionesAnterioresIfNotExists();
         $path_documentos_versiones_anteriores = 'public/Documento versiones anteriores';
         switch ($documento->tipo) {

@@ -133,28 +133,24 @@
 @include('partials.flashMessages')
 <div class="datatable-fix datatable-rds">
     <table class="datatable tabla_quejasclientes" id="tabla-procesos"
-        style="border-collapse: separate; border-spacing: 0; border-radius: 10px;">
-        <thead>
-            <tr>
-                <th style="min-width:60px;">Folio</th>
-                <th style="min-width:200px;">Nombre del Cliente</th>
-                <th style="min-width:200px;">Puesto</th>
-                <th style="min-width:200px;">Teléfono</th>
-                <th style="min-width:200px;">Correo</th>
-                <th style="min-width:200px;">Título de la Queja</th>
-                <th style="text-align:left !important;min-width:150px;">Fecha de Registro</th>
-                <th style="min-width:150px;">Fecha de Cierre</th>
-                <th style="min-width:200px;">Proceso</th>
-                <th style="min-width:200px;">Ubicación</th>
-                <th style="min-width:200px;">Otros</th>
-                <th style="min-width:500px;">Descripción</th>
-                <th style="min-width:80px;">Estatus</th>
-                <th>Prioridad</th>
-                <th style="min-width:150px;">Acción Correctiva</th>
-                <th style="min-width: 250px;">Opciones</th>
-            </tr>
-        </thead>
-    </table>
+    style="border-collapse: separate; border-spacing: 0; border-radius: 10px;">
+    <thead>
+        <tr>
+            <th style="min-width: 200px;">Folio</th>
+            <th style="min-width: 200px;">Nombre del Cliente</th>
+            <th style="min-width: 200px;">Puesto</th>
+            <th style="min-width: 200px;">Teléfono</th>
+            <th style="min-width: 200px;">Correo</th>
+            <th style="min-width: 200px;">Título de la Queja</th>
+            <th style="min-width: 200px;">Fecha de Cierre</th>
+            <th style="min-width: 200px;">Proceso</th>
+            <th style="min-width: 200px;">Ubicación</th>
+            <th style="min-width: 200px;">Estatus</th>
+            <th style="min-width: 150px;">Opciones</th>
+        </tr>
+    </thead>
+</table>
+
 </div>
 
 
@@ -488,198 +484,73 @@
             //     }
             // };
             //     dtButtons.push(btnAgregar)
-            if (!$.fn.dataTable.isDataTable('.tabla_quejasclientes')) {
-                window.tabla_quejasclientes_desk = $(".tabla_quejasclientes").DataTable({
-                    ajax: "{{ route('admin.desk.quejasClientes-index') }}",
-                    buttons: dtButtons,
-                    columnDefs: [{
-                        targets: [4, 5, 6, 10, 11, 12, 13],
-                        visible: false,
-                    }],
-                    columns: [
-                        // {data: 'id'},
-                        {
-                            data: 'folio',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'nombre',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
 
-                        },
-                        {
-                            data: 'puesto',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'telefono',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'correo',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'titulo',
-                            render: function(data, type, row, meta) {
-                                return `<div style="text-align: left">${data}</div>`
-                            }
-                        },
-                        {
-                            data: 'fecha_reporte',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'fecha_de_cierre',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'proceso_quejado',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'ubicacion',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'otro_quejado',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'descripcion',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'estatus',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'prioridad',
-                            render: function(data, type, row, meta) {
-                                return data ? data : '';
-                            }
-                        },
-                        {
-                            data: 'desea_levantar_ac',
-                            render: function(data, type, row, meta) {
-                                data = data == "" ? 0 : data
-                                let valor = "";
-                                if (data == true) {
-                                    valor = "Solicitada";
-                                }
-                                if (data == false) {
-                                    valor = "No aplica";
-                                }
 
-                                return `
-                                <div>${valor}</div>
-                            `
-                            }
-                        },
-                        {
-                            data: 'id',
-                            render: function(data, type, row, meta) {
-                                let html =
-                                    `
-                			<div class="botones_tabla">
-                				<a href="/admin/desk/${data}/quejas-clientes-edit/"><i class="fas fa-edit" title="Análisis de la queja"></i></a>
-                                <a onclick='EliminarQuejaCliente("/admin/desk/${data}/quejas-clientes-delete"); return false;'><i style="color:#000" class="ml-2 fas fa-trash"  data-toggle="tooltip" data-placement="top" title="Eliminar"></i></a>
+            $(document).ready(function() {
+    if (!$.fn.dataTable.isDataTable('#tabla-procesos')) {
+        $('#tabla-procesos').DataTable({
+            ajax: {
+                url: "{{ route('admin.desk.quejasClientes-index') }}",
+                type: "GET",
+                dataSrc: "data"
+            },
+            columns: [
+                { data: 'folio' },
+                { data: 'nombre' },
+                { data: 'puesto' },
+                { data: 'telefono' },
+                { data: 'correo' },
+                { data: 'titulo' },
+                { data: 'fecha_de_cierre' },
+                { data: 'proceso_quejado' },
+                { data: 'ubicacion' },
+                { data: 'estatus' },
+                {
+                    data: 'id',
+                    orderable: false,
+                    render: function(data) {
+                        if (!data) return '';
 
-                                <button type="button" class="btn d-none" data-bs-toggle="modal" data-bs-target="#sentimiento-modal-clientes-${data}">
-                                    <i class="fa-regular fa-face-smile"></i>
-                                </button>
-                                `;
+                        return `
+                            <div class="botones_tabla">
+                                <a href="/admin/desk/${data}/quejas-clientes-edit/">
+                                    <i class="fas fa-edit" title="Editar"></i>
+                                </a>
+                                <a onclick='EliminarQuejaCliente("/admin/desk/${data}/quejas-clientes-delete"); return false;'>
+                                    <i class="ml-2 fas fa-trash" style="color:red" title="Eliminar"></i>
+                                </a>
+                            </div>`;
+                    }
+                }
+            ],
+            columnDefs: [{
+                targets: 9, // Índice de la columna 'estatus'
+                createdCell: function(td, cellData) {
+                    let colores = {
+                        "Sin atender": "#FFCB63",
+                        "En curso": "#AC84FF",
+                        "En espera": "#6863FF",
+                        "Cerrado": "#6DC866",
+                        "No procedente": "#FF417B"
+                    };
+                    $(td).css({
+                        'background-color': colores[cellData] || '#6DC866',
+                        'color': 'white',
+                        'text-align': 'center',
+                        'font-weight': 'bold'
+                    }).text(cellData);
+                }
+            }],
+            order: [[0, 'desc']],
+            paging: true,  // Activa paginación
+            searching: true,  // Activa el buscador
+            info: true,  // Muestra información de la tabla
+            dom: 'lrtip'  // Oculta botones extra
+        });
+    }
+});
 
-                                if ((row.estatus == 'Cerrado') || (row.estatus ==
-                                        'No procedente')) {
 
-                                    html += `<button onclick='ArchivarQuejaCliente("/admin/desk/${data}/archivarQuejasClientes"); return false;' style="margin-top:-10px">
-				       						<i class="fas fa-archive" ></i></a>
-				       					</button>
-				       					</div>`;
-                                }
-                                return html;
-                            }
-                        },
-                    ],
-                    createdRow: (row, data, dataIndex, cells) => {
-                        let color = "green";
-                        let texto = "white";
-                        if (data.prioridad == 'Alta') {
-                            color = "#FF417B";
-                            texto = "white";
-                        }
-                        if (data.prioridad == 'Media') {
-                            color = "#FFCB63";
-                            texto = "white";
-                        }
-                        if (data.prioridad == 'Baja') {
-                            color = "#6DC866";
-                            texto = "white";
-                        }
-
-                        let fondo = "green";
-                        let letras = "white";
-                        if (data.estatus == 'Sin atender') {
-                            fondo = "#FFCB63";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'En curso') {
-                            fondo = "#AC84FF";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'En espera') {
-                            fondo = "#6863FF";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'Cerrado') {
-                            fondo = "#6DC866";
-                            letras = "white";
-                        }
-                        if (data.estatus == 'No procedente') {
-                            fondo = "#FF417B";
-                            letras = "white";
-                        }
-                        if (data.estatus != null) {
-                            $(cells[14]).css('background-color', fondo)
-                            $(cells[14]).css('color', letras)
-                        }
-                        if (data.prioridad != null) {
-                            $(cells[15]).css('background-color', color)
-                            $(cells[15]).css('color', texto)
-
-                        }
-                    },
-
-                    order: [
-                        [0, 'desc']
-                    ]
-                });
-            }
 
             window.ArchivarQuejaCliente = function(url) {
                 Swal.fire({

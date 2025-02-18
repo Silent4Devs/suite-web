@@ -5,6 +5,7 @@ namespace App\Livewire;
 use App\Models\CuestionarioObjetivoEvDesempeno;
 use App\Models\EscalasMedicionObjetivos;
 use App\Models\EvaluacionDesempeno;
+use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvidenciaObjCuestionarioEvDesempeno;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
@@ -67,6 +68,10 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
     public $porcentajeCalificado;
 
+    public $colaboradores_evaluar = [];
+
+    public $tiposObjetivo;
+
     // Se emite un evento que el livewire principal va a escuchar gracias a listeners
     public function sendDataToParent()
     {
@@ -84,7 +89,7 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
         $this->evaluacion = EvaluacionDesempeno::find($this->id_evaluacion);
         $this->evaluado = $this->evaluacion->evaluados->find($this->id_evaluado);
-        // $this->cuestionarioSecciones();
+
         if ($this->evaluacion->activar_objetivos == true) {
             $this->buscarObjetivos();
         }
@@ -93,12 +98,29 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
             $this->autoevaluacion = true;
         }
 
+        $this->colaboradores_evaluar = EvaluadoresEvaluacionObjetivosDesempeno::with('empleado')->where('periodo_id', $id_periodo)
+        ->where('evaluador_desempeno_id', $this->evaluador->id)
+        ->where('evaluado_desempeno_id', '!=', $this->evaluado->id)
+        ->get();
+
         $this->progresoEvaluacion();
     }
 
     public function render()
     {
         return view('livewire.cuestionario-evaluacion-desempeno-objetivos');
+    }
+
+    public function obtenerIniciales($texto)
+    {
+        $palabras = explode(' ', $texto);
+        $iniciales = '';
+
+        foreach ($palabras as $palabra) {
+            $iniciales .= strtoupper(substr($palabra, 0, 1));
+        }
+
+        return $iniciales;
     }
 
     public function buscarObjetivos()
@@ -115,6 +137,26 @@ class CuestionarioEvaluacionDesempenoObjetivos extends Component
 
             if ($busqueda_evaluador) {
                 $this->objetivos_evaluado = $busqueda_evaluador->preguntasCuestionario->where('periodo_id', $this->id_periodo)->sortBy('id');
+
+                $TO = $busqueda_evaluador->preguntasCuestionario
+                ->where('periodo_id', $this->id_periodo)
+                ->map(function ($pregunta) {
+                    return $pregunta->infoObjetivo->tipo_objetivo;
+                })
+                ->unique()
+                ->values()
+                ->toArray();
+
+                foreach ($TO as $keyTO => $tipo) {
+                    # code...
+                    $iniciales = $this->obtenerIniciales($tipo);
+                    $this->tiposObjetivo[$keyTO] =
+                        [
+                            "tipo" => $tipo,
+                            "iniciales" => $iniciales
+                        ];
+                }
+                // dd($this->tiposObjetivo);
             }
 
             if ($busqueda_autoevaluador) {

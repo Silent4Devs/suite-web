@@ -27,13 +27,9 @@ class TBTenantTimesheetMiddleware
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
-        $tbStripeId = $this->tbTenantManager->tbGetTenantFromRequest($tbRequest);
+        $tbModulosValidos = ['Gestión de Talento', 'Gestión Financiera'];
 
-        $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
-
-        $tbModulosValidos = ['Gestión de talento', 'Gestión Financiera'];
-
-        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
+        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
 
         if ($tbEstado) {
             return $tbNext($tbRequest);

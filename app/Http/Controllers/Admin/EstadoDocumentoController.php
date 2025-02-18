@@ -75,36 +75,35 @@ class EstadoDocumentoController extends Controller
         return redirect()->route('admin.estado-documentos.index');
     }
 
-    public function edit($id_estadoDocumento)
+    public function edit(EstadoDocumento $estadoDocumento)
     {
         abort_if(Gate::denies('estado_documento_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $estadoDocumento = EstadoDocumento::where('id', $id_estadoDocumento)->first();
+
         $estadoDocumento->load('team');
 
         return view('admin.estadoDocumentos.edit', compact('estadoDocumento'));
     }
 
-    public function update(UpdateEstadoDocumentoRequest $request, $id_estadoDocumento)
+    public function update(UpdateEstadoDocumentoRequest $request, EstadoDocumento $estadoDocumento)
     {
-        $estadoDocumento = EstadoDocumento::where('id', $id_estadoDocumento)->first();
         $estadoDocumento->update($request->all());
 
         return redirect()->route('admin.estado-documentos.index');
     }
 
-    public function show($id_estadoDocumento)
+    public function show(EstadoDocumento $estadoDocumento)
     {
         abort_if(Gate::denies('estado_documento_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $estadoDocumento = EstadoDocumento::where('id', $id_estadoDocumento)->first();
+
         $estadoDocumento->load('team');
 
         return view('admin.estadoDocumentos.show', compact('estadoDocumento'));
     }
 
-    public function destroy($id_estadoDocumento)
+    public function destroy(EstadoDocumento $estadoDocumento)
     {
         abort_if(Gate::denies('estado_documento_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $estadoDocumento = EstadoDocumento::where('id', $id_estadoDocumento)->first();
+
         $estadoDocumento->delete();
 
         return back();

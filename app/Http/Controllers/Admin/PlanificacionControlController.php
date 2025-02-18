@@ -177,10 +177,10 @@ class PlanificacionControlController extends Controller
         $planificacionControl->participantes()->sync($participantes);
     }
 
-    public function edit($id_planificacionControl)
+    public function edit(PlanificacionControl $planificacionControl)
     {
         abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $planificacionControl = PlanificacionControl::where('id', $id_planificacionControl)->first();
+
         $duenos = User::getAll()->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
         $alta = Empleado::getAltaEmpleadosWithArea();
         $empleados = $alta;
@@ -196,11 +196,11 @@ class PlanificacionControlController extends Controller
         return view('admin.planificacionControls.edit', compact('aprobadores', 'origen_seleccionado', 'responsables', 'duenos', 'planificacionControl', 'empleados'));
     }
 
-    public function update(Request $request, $id_planificacionControl)
+    public function update(Request $request, PlanificacionControl $planificacionControl)
     {
         abort_if(Gate::denies('planificacion_y_control_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planificacionControl = PlanificacionControl::where('id', $id_planificacionControl)->first();
+        // $planificacionControl->update($request->all());
 
         $request->validate([
             'folio_cambio' => 'required|numeric',
@@ -248,23 +248,21 @@ class PlanificacionControlController extends Controller
         return redirect()->route('admin.planificacion-controls.index')->with('success', 'Editado con éxito');
     }
 
-    public function show($id_planificacionControl)
+    public function show(PlanificacionControl $planificacionControl)
     {
         abort_if(Gate::denies('planificacion_y_control_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $planificacionControl = PlanificacionControl::where('id', $id_planificacionControl)->first();
-
         $planificacionControl->load('empleado', 'responsable', 'origen', 'team', 'participantes');
-
+        // dd( $planificacionControl);
         $route = 'storage/planificacion/firmas/'.preg_replace(['/\s+/i', '/-/i'], '_', $planificacionControl->id).'/';
 
         return view('admin.planificacionControls.show', compact('route', 'planificacionControl'));
     }
 
-    public function destroy($id_planificacionControl)
+    public function destroy(PlanificacionControl $planificacionControl)
     {
         abort_if(Gate::denies('planificacion_y_control_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $planificacionControl = PlanificacionControl::where('id', $id_planificacionControl)->first();
+
         $planificacionControl->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

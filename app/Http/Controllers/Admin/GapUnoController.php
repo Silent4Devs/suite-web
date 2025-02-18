@@ -80,10 +80,10 @@ class GapUnoController extends Controller
         return redirect()->route('admin.gap-unos.index');
     }
 
-    public function edit($id_gapUno)
+    public function edit(GapUno $gapUno)
     {
         abort_if(Gate::denies('gap_uno_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapUno = GapUno::where('id', $id_gapUno)->first();
+
         $gapUno->load('team');
 
         return view('admin.gapUnos.edit', compact('gapUno'));
@@ -121,19 +121,19 @@ class GapUnoController extends Controller
         return redirect()->route('admin.planaccion-correctivas.index');*/
     }
 
-    public function show($id_gapUno)
+    public function show(GapUno $gapUno)
     {
         abort_if(Gate::denies('gap_uno_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapUno = GapUno::where('id', $id_gapUno)->first();
+
         $gapUno->load('team');
 
         return view('admin.gapUnos.show', compact('gapUno'));
     }
 
-    public function destroy($id_gapUno)
+    public function destroy(GapUno $gapUno)
     {
         abort_if(Gate::denies('gap_uno_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $gapUno = GapUno::where('id', $id_gapUno)->first();
+
         $gapUno->delete();
 
         return back();

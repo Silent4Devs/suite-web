@@ -28,17 +28,15 @@ class PermissionsApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show($id_permission)
+    public function show(Permission $permission)
     {
         abort_if(Gate::denies('permission_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $permission = Permission::where('id', $id_permission)->first();
 
         return new PermissionResource($permission);
     }
 
-    public function update(UpdatePermissionRequest $request, $id_permission)
+    public function update(UpdatePermissionRequest $request, Permission $permission)
     {
-        $permission = Permission::where('id', $id_permission)->first();
         $permission->update($request->all());
 
         return (new PermissionResource($permission))
@@ -46,10 +44,10 @@ class PermissionsApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy($id_permission)
+    public function destroy(Permission $permission)
     {
         abort_if(Gate::denies('permission_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $permission = Permission::where('id', $id_permission)->first();
+
         $permission->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

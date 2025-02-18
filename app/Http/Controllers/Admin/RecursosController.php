@@ -275,10 +275,9 @@ class RecursosController extends Controller
         }
     }
 
-    public function edit($id_recurso)
+    public function edit(Recurso $recurso)
     {
         abort_if(Gate::denies('capacitaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $recurso = Recurso::where('id', $id_recurso)->first();
         $categorias = CategoriaCapacitacion::getAll();
         $areas = Area::getWithEmpleados();
         $grupos = GruposEvaluado::getAllWithEmpleado();
@@ -287,10 +286,10 @@ class RecursosController extends Controller
         return view('admin.recursos.edit', compact('recurso', 'categorias', 'areas', 'grupos', 'empleados'));
     }
 
-    public function update(Request $request, $id_recurso)
+    public function update(Request $request, Recurso $recurso)
     {
         abort_if(Gate::denies('capacitaciones_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $recurso = Recurso::where('id', $id_recurso)->first();
+
         $request->merge([
             'tipo_seleccion_participantes' => [
                 'tipo' => $request->tipo_de_grupo,
@@ -348,19 +347,19 @@ class RecursosController extends Controller
         // }
     }
 
-    public function show($id_recurso)
+    public function show(Recurso $recurso)
     {
         abort_if(Gate::denies('capacitaciones_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $recurso = Recurso::where('id', $id_recurso)->first();
+
         $recurso->load('participantes', 'empleados');
 
         return view('admin.recursos.show', compact('recurso'));
     }
 
-    public function destroy($id_recurso)
+    public function destroy(Recurso $recurso)
     {
         abort_if(Gate::denies('capacitaciones_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $recurso = Recurso::where('id', $id_recurso)->first();
+
         $deleted = $recurso->delete();
         if ($deleted) {
             return response()->json(['estatus' => 200, 'mensaje' => 'Registro eliminado con éxito']);
@@ -617,10 +616,8 @@ class RecursosController extends Controller
         return response()->json(['estatus' => 200, 'mensaje' => 'Información Actualizada']);
     }
 
-    public function reprogramarCapacitacion(Request $request, $id_recurso)
+    public function reprogramarCapacitacion(Request $request, Recurso $recurso)
     {
-        $recurso = Recurso::where('id', $id_recurso)->first();
-
         $request->validate([
             'fecha_curso' => 'required|date',
             'fecha_fin' => 'required|date|after:fecha_curso',
@@ -652,9 +649,8 @@ class RecursosController extends Controller
         }
     }
 
-    public function cancelarCapacitacion($id_recurso)
+    public function cancelarCapacitacion(Recurso $recurso)
     {
-        $recurso = Recurso::where('id', $id_recurso)->first();
         if (Carbon::now()->lessThanOrEqualTo(Carbon::parse($recurso->fecha_fin))) {
             $recurso->update([
                 'estatus' => 'Cancelado',
@@ -674,9 +670,8 @@ class RecursosController extends Controller
         }
     }
 
-    public function enviarInvitacionPorCorreoAhora($id_recurso)
+    public function enviarInvitacionPorCorreoAhora(Recurso $recurso)
     {
-        $recurso = Recurso::where('id', $id_recurso)->first();
         if (Carbon::now()->isBefore(Carbon::parse($recurso->fecha_limite))) {
             foreach ($recurso->empleados as $empleado) {
                 Mail::to(removeUnicodeCharacters($empleado->email))->queue(new InvitacionCapacitaciones($empleado, $recurso));
@@ -688,9 +683,8 @@ class RecursosController extends Controller
         }
     }
 
-    public function guardarAsistenciaCapacitacion(Request $request, $id_recurso)
+    public function guardarAsistenciaCapacitacion(Request $request, Recurso $recurso)
     {
-        $recurso = Recurso::where('id', $id_recurso)->first();
         $empleado = $request->empleado;
         $asistio = $request->asistio == 'true' ? true : false;
 
@@ -701,4 +695,16 @@ class RecursosController extends Controller
             return response()->json(['estatus' => 201, 'mensaje' => 'Asistencia Removida']);
         }
     }
+    // public function eliminarParticipante(Request $request)
+    // {
+    //     $int_recurso = intval($request->id_recurso);
+    //     $int_empleado = intval($request->id_empleado);
+    //     $recurso = Recurso::find($int_recurso);
+    //     $recurso->empleados()->detach($int_empleado);
+    //     if ($recurso) {
+    //         return response()->json(['success' => true]);
+    //     } else {
+    //         return response()->json(['error' => true]);
+    //     }
+    // }
 }

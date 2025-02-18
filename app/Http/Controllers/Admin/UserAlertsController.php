@@ -88,19 +88,19 @@ class UserAlertsController extends Controller
         return redirect()->route('admin.user-alerts.index');
     }
 
-    public function show($id_userAlert)
+    public function show(UserAlert $userAlert)
     {
         abort_if(Gate::denies('user_alert_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $userAlert = UserAlert::where('id', $id_userAlert)->first();
+
         $userAlert->load('users', 'team');
 
         return view('admin.userAlerts.show', compact('userAlert'));
     }
 
-    public function destroy($id_userAlert)
+    public function destroy(UserAlert $userAlert)
     {
         abort_if(Gate::denies('user_alert_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $userAlert = UserAlert::where('id', $id_userAlert)->first();
+
         $userAlert->delete();
 
         return back();

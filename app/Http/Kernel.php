@@ -11,7 +11,7 @@ class Kernel extends HttpKernel
         // \App\Http\Middleware\TrustHosts::class,
         \App\Http\Middleware\Tabantaj\TrustProxies::class,
         \App\Http\Middleware\Tabantaj\PreventRequestsDuringMaintenance::class,
-        \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
+        // \Illuminate\Foundation\Http\Middleware\ValidatePostSize::class,
         \App\Http\Middleware\Tabantaj\TrimStrings::class,
         \Illuminate\Foundation\Http\Middleware\ConvertEmptyStringsToNull::class,
         \App\Http\Middleware\Tabantaj\Cors::class,
@@ -38,7 +38,7 @@ class Kernel extends HttpKernel
             //\RenatoMarinho\LaravelPageSpeed\Middleware\CollapseWhitespace::class,
             //\RenatoMarinho\LaravelPageSpeed\Middleware\DeferJavascript::class,
             \App\Http\Middleware\Tabantaj\Auth\AuthGates::class,
-            \App\Http\Middleware\Tenant\TbTenantMiddleware::class,
+            //\App\Http\Middleware\Tenant\TbTenantMiddleware::class,
 
         ],
         'api' => [
@@ -56,6 +56,7 @@ class Kernel extends HttpKernel
         // 'auth' => \App\Http\Middleware\Tabantaj\Auth\Authenticate::class,
         // 'active' => \App\Http\Middleware\Tabantaj\User\ActiveUser::class,
         // 'isActive' => \App\Http\Middleware\Tabantaj\User\IsActiveUser::class,
+        'auth.basic' => \Illuminate\Auth\Middleware\AuthenticateWithBasicAuth::class,
         'cache.headers' => \Illuminate\Http\Middleware\SetCacheHeaders::class,
         'can' => \Illuminate\Auth\Middleware\Authorize::class,
         'guest' => \App\Http\Middleware\Tabantaj\RedirectIfAuthenticated::class,
@@ -75,8 +76,9 @@ class Kernel extends HttpKernel
         'course' => \App\Http\Middleware\Tabantaj\CourseMiddleware::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
         //milddleware control accesos tenant
-        'tenant' => \App\Http\Middleware\Tenant\TBTenantMiddleware::class,
+        //'tenant' => \App\Http\Middleware\Tenant\TBTenantMiddleware::class,
         'Tbcheck.token.expiration' => \App\Http\Middleware\Tenant\TBTenantCheckTokenExpiration::class,
+        'general_tabantaj' => \App\Http\Middleware\Tenant\TBTenantGeneralTabantajMiddleware::class,
         'gestion_contractual' => \App\Http\Middleware\Tenant\TBTenantGestionContractualMiddleware::class,
         'gestion_financiera' => \App\Http\Middleware\Tenant\TBTenantGestionFinancieraMiddleware::class,
         'katbol' => \App\Http\Middleware\Tenant\TBTenantKatbolMiddleware::class,

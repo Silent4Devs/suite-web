@@ -29,17 +29,15 @@ class IncidentesDeSeguridadApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show($id_incidentesDeSeguridad)
+    public function show(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
         abort_if(Gate::denies('incidentes_de_seguridad_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $incidentesDeSeguridad = IncidentesDeSeguridad::where('id', $id_incidentesDeSeguridad)->first();
 
         return new IncidentesDeSeguridadResource($incidentesDeSeguridad->load(['activos', 'estado', 'team']));
     }
 
-    public function update(UpdateIncidentesDeSeguridadRequest $request, $id_incidentesDeSeguridad)
+    public function update(UpdateIncidentesDeSeguridadRequest $request, IncidentesDeSeguridad $incidentesDeSeguridad)
     {
-        $incidentesDeSeguridad = IncidentesDeSeguridad::where('id', $id_incidentesDeSeguridad)->first();
         $incidentesDeSeguridad->update($request->all());
         $incidentesDeSeguridad->activos()->sync($request->input('activos', []));
 
@@ -48,10 +46,10 @@ class IncidentesDeSeguridadApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy($id_incidentesDeSeguridad)
+    public function destroy(IncidentesDeSeguridad $incidentesDeSeguridad)
     {
         abort_if(Gate::denies('incidentes_de_seguridad_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $incidentesDeSeguridad = IncidentesDeSeguridad::where('id', $id_incidentesDeSeguridad)->first();
+
         $incidentesDeSeguridad->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

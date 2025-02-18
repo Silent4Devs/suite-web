@@ -48,6 +48,68 @@ use Yajra\DataTables\Facades\DataTables;
 class MatrizRiesgosController extends Controller
 {
     use ObtenerOrganizacion;
+    /*public function index(Request $request)
+    {
+        /*abort_if(Gate::denies('matriz_riesgo_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        abort_if(Gate::denies('configuracion_sede_access'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+
+        $query = MatrizRiesgo::with(['controles'])->where('id_analisis', '=', $request['id'])->get();
+        //dd(%$query);
+        if ($request->ajax()) {
+            $query = MatrizRiesgo::get();
+            $table = Datatables::of($query);
+
+            $table->addColumn('placeholder', '&nbsp;');
+            $table->addColumn('actions', '&nbsp;');
+
+            $table->editColumn('actions', function ($row) {
+                $viewGate      = 'configuracion_sede_show';
+                $editGate      = 'configuracion_sede_edit';
+                $deleteGate    = 'configuracion_sede_delete';
+                $crudRoutePart = 'sedes';
+
+                return view('partials.datatablesActions', compact(
+                    'viewGate',
+                    'editGate',
+                    'deleteGate',
+                    'crudRoutePart',
+                    'row'
+                ));
+            });
+
+            $table->editColumn('id', function ($row) {
+                return $row->id ? $row->id : "";
+            });
+            $table->editColumn('sede', function ($row) {
+                return $row->sede ? $row->sede : "";
+            });
+            $table->editColumn('foto_sedes', function ($row) {
+                return $row->foto_sedes ? $row->foto_sedes : '';
+            });
+            $table->editColumn('direccion', function ($row) {
+                return $row->direccion ? $row->direccion : "";
+            });
+            $table->editColumn('ubicacion', function ($row) {
+                //return "'lat' => ".$row->latitude. ",'long' => ".$row->longitud ? "'lat' => ".$row->latitude. ",'long' =>".$row->longitud : "";
+                return $row->id ? $row->id : "";
+            });
+            $table->editColumn('descripcion', function ($row) {
+                return $row->descripcion ? $row->descripcion : "";
+            });
+
+            $table->rawColumns(['actions', 'placeholder']);
+
+            return $table->make(true);
+        }
+
+        $teams = Team::get();
+        $numero_sedes = Sede::count();
+        $numero_matriz = MatrizRiesgo::count();
+
+
+        return view('admin.matriz-seguridad', compact('tipoactivos', 'tipoactivos', 'controles', 'teams'));
+    }*/
 
     public function create()
     {
@@ -106,10 +168,9 @@ class MatrizRiesgosController extends Controller
         return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
     }
 
-    public function edit($id_matrizRiesgo)
+    public function edit(MatrizRiesgo $matrizRiesgo)
     {
         abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizRiesgo = MatrizRiesgo::where('id', $id_matrizRiesgo)->first();
         $organizacions = Organizacion::getAll();
         $teams = Team::get();
         $activos = SubcategoriaActivo::getAll();
@@ -143,10 +204,9 @@ class MatrizRiesgosController extends Controller
         return view('admin.matrizRiesgos.edit', compact('planes_seleccionados', 'matrizRiesgo', 'vulnerabilidades', 'controles', 'amenazas', 'activos', 'sedes', 'areas', 'procesos', 'organizacions', 'teams', 'numero_sedes', 'numero_matriz', 'tipoactivos', 'responsables'));
     }
 
-    public function update(UpdateMatrizRiesgoRequest $request, $id_matrizRiesgo)
+    public function update(UpdateMatrizRiesgoRequest $request, MatrizRiesgo $matrizRiesgo)
     {
         abort_if(Gate::denies('iso_27001_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizRiesgo = MatrizRiesgo::where('id', $id_matrizRiesgo)->first();
         $calculo = new Mriesgos;
 
         $matrizRiesgo->update($request->all());
@@ -159,18 +219,20 @@ class MatrizRiesgosController extends Controller
         return redirect()->route('admin.matriz-seguridad', ['id' => $request->id_analisis])->with('success', 'Actualizado con éxito');
     }
 
-    public function show($id_matrizRiesgo)
+    public function show(MatrizRiesgo $matrizRiesgo)
     {
         abort_if(Gate::denies('iso_27001_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizRiesgo = MatrizRiesgo::where('id', $id_matrizRiesgo)->first();
+        /*if (!is_null($matrizRiesgo->activo_id)) {
+            $matrizRiesgo->load('activo_id', 'controles');
+        }*/
 
         return view('admin.matrizRiesgos.show', compact('matrizRiesgo'));
     }
 
-    public function destroy($id_matrizRiesgo)
+    public function destroy(MatrizRiesgo $matrizRiesgo)
     {
         abort_if(Gate::denies('iso_27001_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $matrizRiesgo = MatrizRiesgo::where('id', $id_matrizRiesgo)->first();
+
         $matrizRiesgo->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');
@@ -355,9 +417,8 @@ class MatrizRiesgosController extends Controller
         return view('admin.OCTAVE.heatchart')->with('id', $request->idAnalisis);
     }
 
-    public function createPlanAccion($id)
+    public function createPlanAccion(MatrizRiesgo $id)
     {
-        $matrizRiesgo = MatrizRiesgo::where('id', $id)->first();
         $planImplementacion = new PlanImplementacion;
         $modulo = $id;
         $modulo_name = 'Matríz de Riegos';
@@ -367,7 +428,7 @@ class MatrizRiesgosController extends Controller
         return view('admin.workPlan.create', compact('planImplementacion', 'modulo_name', 'modulo', 'referencia', 'urlStore'));
     }
 
-    public function storePlanAccion(Request $request, $id)
+    public function storePlanAccion(Request $request, MatrizRiesgo $id)
     {
         $request->validate([
             'parent' => 'required|string',
@@ -395,7 +456,7 @@ class MatrizRiesgosController extends Controller
         $planImplementacion->objetivo = $request->objetivo;
         $planImplementacion->elaboro_id = User::getCurrentUser()->empleado->id;
 
-        $matrizRequisitoLegal = MatrizRiesgo::where('id', $id)->first();
+        $matrizRequisitoLegal = $id;
         $matrizRequisitoLegal->planes()->save($planImplementacion);
 
         return redirect()->route('admin.matriz-requisito-legales.index')->with('success', 'Plan de Trabajo'.$planImplementacion->parent.' creado');
@@ -926,7 +987,7 @@ class MatrizRiesgosController extends Controller
         return view('admin.matrizSistemaGestion.heatchart')->with('id', $request->idAnalisis);
     }
 
-    public function showSistemaGestion($id_matrizRiesgo, $id)
+    public function showSistemaGestion(MatrizRiesgo $matrizRiesgo, $id)
     {
         abort_if(Gate::denies('analisis_de_riesgo_integral_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
@@ -1348,6 +1409,30 @@ class MatrizRiesgosController extends Controller
 
         return redirect("admin/matriz-seguridad/NIST?id={$request->id_analisis}")->with('success', 'Editado con éxito');
     }
+
+    // public function storeMatriz31000(Request $request)
+    // {
+    //     //$request->merge(['plan_de_accion' => $request['plan_accion']['0']]);
+    //     // dd($request->controles_id);
+    //     $matrizRiesgo31000 = MatrizIso31000::create($request->all());
+
+    //     foreach ($request->controles_id as $item) {
+    //         $control = new MatrizIso31000ControlesPivot();
+    //         // $control->matriz_id = 2;
+    //         $control->matriz_id = $matrizRiesgo31000->id;
+    //         $control->controles_id = $item;
+    //         $control->save();
+    //     }
+
+    //     if (isset($request->plan_accion)) {
+    //         // $planImplementacion = PlanImplementacion::find(intval($request->plan_accion)); // Necesario se carga inicialmente el Diagrama Universal de Gantt
+    //         $matrizRiesgo31000->planes()->sync($request->plan_accion);
+    //     }
+
+    //     $this->saveUpdateMatriz31000ActivosInfo($request->externos, $matrizRiesgo31000);
+
+    //     return redirect()->route('admin.matriz-riesgos.octave', ['id' => $request->id_analisis])->with('success', 'Guardado con éxito');
+    // }
 
     public function saveUpdateActivosOctave($activosoctave, $matrizRiesgoOctave)
     {

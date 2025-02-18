@@ -54,7 +54,7 @@ class TBTenantStripeService
         try {
             return $this->tbStripeClient->customers->retrieve($tbCustomerId);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener el cliente: '.$e->getMessage());
+            throw new Exception('Error al obtener el cliente: ' . $e->getMessage());
         }
     }
 
@@ -70,7 +70,7 @@ class TBTenantStripeService
         try {
             return $this->tbStripeClient->subscriptions->all(['customer' => $tbCustomerId]);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener las suscripciones del cliente: '.$e->getMessage());
+            throw new Exception('Error al obtener las suscripciones del cliente: ' . $e->getMessage());
         }
     }
 
@@ -84,7 +84,7 @@ class TBTenantStripeService
         try {
             return $this->tbStripeClient->products->retrieve($tbProductId);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener el producto: '.$e->getMessage());
+            throw new Exception('Error al obtener el producto: ' . $e->getMessage());
         }
     }
 
@@ -126,7 +126,7 @@ class TBTenantStripeService
 
             return $unsubscribedProducts;
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener los productos no suscritos activos del cliente: '.$e->getMessage());
+            throw new Exception('Error al obtener los productos no suscritos activos del cliente: ' . $e->getMessage());
         }
     }
 
@@ -179,7 +179,7 @@ class TBTenantStripeService
 
             return $tbProducts;
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener los productos del cliente: '.$e->getMessage());
+            throw new Exception('Error al obtener los productos del cliente: ' . $e->getMessage());
         }
     }
 
@@ -207,7 +207,7 @@ class TBTenantStripeService
 
             return $products;
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener los productos activos: '.$e->getMessage());
+            throw new Exception('Error al obtener los productos activos: ' . $e->getMessage());
         }
     }
 
@@ -263,7 +263,7 @@ class TBTenantStripeService
                 'total_yearly_amount' => $totalYearlyAmount,
             ];
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener los productos: '.$e->getMessage());
+            throw new Exception('Error al obtener los productos: ' . $e->getMessage());
         }
     }
 
@@ -287,9 +287,10 @@ class TBTenantStripeService
                 foreach ($tbSuscripciones as $tbSuscripcion) {
                     if (in_array($tbSuscripcion['name'], $tbModulosValidos) && $tbSuscripcion['active'] === true) {
                         return true;
+                    } else {
+                        return false;
                     }
                 }
-                return false;
             } else {
                 return false;
             }
@@ -297,6 +298,66 @@ class TBTenantStripeService
             abort(403);
         }
     }
+
+    public function tbTenantSubscriptionStatusOnPremise($tbModulosValidos)
+    {
+        try {
+            $clientKey = env('CLIENT_KEY');
+            $clientKeyApi = env('CLIENT_KEYAPI');
+
+            if (!$clientKey || !$clientKeyApi) {
+                die(json_encode(['error' => 'CLIENT_KEY o CLIENT_KEYAPI no están definidos.']));
+            }
+
+            $payload = json_encode(['uuid' => "011827d3-afe9-42fb-b0e9-c8e7f479ad91"]);
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $clientKeyApi,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_HTTPHEADER => [
+                    'Content-Type: application/json',
+                    'Accept: application/json'
+                ],
+            ]);
+
+            $response = curl_exec($curl);
+            if (curl_errno($curl)) {
+                die(json_encode(['error' => 'cURL Error: ' . curl_error($curl)]));
+            }
+
+            curl_close($curl);
+
+            $jsonData = json_decode($response, true);
+
+            if (!empty($jsonData) && is_array($jsonData)) {
+                foreach ($jsonData as $cliente) {
+                    if ($cliente['Estatus'] === true) {
+                        if (!empty($cliente['modulos']) && is_array($cliente['modulos'])) {
+                            foreach ($cliente['modulos'] as $modulo) {
+                                if (in_array($modulo['nombre_catalogo'], $tbModulosValidos) && $modulo['estatus'] === true) {
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                }
+                return false;
+            }
+            return false;
+        } catch (\Throwable $tbTh) {
+            abort(403, 'Error en la verificación de suscripción');
+        }
+    }
+
 
     /**
      * Obtiene el historial de compras de un cliente.
@@ -323,13 +384,13 @@ class TBTenantStripeService
                     'currency' => strtoupper($paymentIntent->currency),
                     'date' => date('Y-m-d H:i:s', $paymentIntent->created),
                     'product_name' => $productName,
-                    'payment_method' => '**** **** **** '.$last4,
+                    'payment_method' => '**** **** **** ' . $last4,
                 ];
             }
 
             return $purchaseHistory;
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener el historial de compras: '.$e->getMessage());
+            throw new Exception('Error al obtener el historial de compras: ' . $e->getMessage());
         }
     }
 
@@ -360,7 +421,7 @@ class TBTenantStripeService
 
             return $savedCards;
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener las tarjetas guardadas: '.$e->getMessage());
+            throw new Exception('Error al obtener las tarjetas guardadas: ' . $e->getMessage());
         }
     }
 
@@ -380,7 +441,7 @@ class TBTenantStripeService
 
             return $this->tbStripeClient->paymentMethods->retrieve($tbPaymentMethodId);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al agregar el método de pago: '.$e->getMessage());
+            throw new Exception('Error al agregar el método de pago: ' . $e->getMessage());
         }
     }
 
@@ -417,7 +478,7 @@ class TBTenantStripeService
 
             return $this->tbStripeClient->paymentMethods->retrieve($paymentMethod->id);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al agregar la tarjeta: '.$e->getMessage());
+            throw new Exception('Error al agregar la tarjeta: ' . $e->getMessage());
         }
     }
 
@@ -431,7 +492,7 @@ class TBTenantStripeService
         try {
             $this->tbStripeClient->paymentMethods->detach($tbPaymentMethodId);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al eliminar el método de pago: '.$e->getMessage());
+            throw new Exception('Error al eliminar el método de pago: ' . $e->getMessage());
         }
     }
 
@@ -450,7 +511,7 @@ class TBTenantStripeService
 
             return $tbCustomer->address ?: [];
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al obtener la dirección de facturación: '.$e->getMessage());
+            throw new Exception('Error al obtener la dirección de facturación: ' . $e->getMessage());
         }
     }
 
@@ -474,7 +535,7 @@ class TBTenantStripeService
         try {
             return $this->tbStripeClient->customers->update($tbCustomerId, ['address' => null]);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al eliminar la dirección de facturación: '.$e->getMessage());
+            throw new Exception('Error al eliminar la dirección de facturación: ' . $e->getMessage());
         }
     }
 
@@ -488,7 +549,7 @@ class TBTenantStripeService
         try {
             return $this->tbStripeClient->customers->update($tbCustomerId, ['address' => $tbBillingAddress]);
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('Error al actualizar la dirección de facturación: '.$e->getMessage());
+            throw new Exception('Error al actualizar la dirección de facturación: ' . $e->getMessage());
         }
     }
 
@@ -545,8 +606,8 @@ class TBTenantStripeService
                 'payment_method_types' => ['card'],
                 'line_items' => $lineItems,
                 'mode' => 'subscription',
-                'success_url' => env('APP_URL').'/success?session_id={CHECKOUT_SESSION_ID}',
-                'cancel_url' => env('APP_URL').'/cancel',
+                'success_url' => env('APP_URL') . '/success?session_id={CHECKOUT_SESSION_ID}',
+                'cancel_url' => env('APP_URL') . '/cancel',
                 'payment_intent_data' => [
                     'setup_future_usage' => 'off_session',
                 ],
@@ -558,7 +619,7 @@ class TBTenantStripeService
                 'product_details' => $productDetails,
             ];
         } catch (\Stripe\Exception\ApiErrorException $e) {
-            throw new Exception('No se pudo procesar la contratación: '.$e->getMessage());
+            throw new Exception('No se pudo procesar la contratación: ' . $e->getMessage());
         }
     }
 }

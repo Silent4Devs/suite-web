@@ -196,10 +196,10 @@ class OrganizacionController extends Controller
         }
     }
 
-    public function update(UpdateOrganizacionRequest $request, $id_organizacion)
+    public function update(UpdateOrganizacionRequest $request, Organizacion $organizacion)
     {
         abort_if(Gate::denies('mi_organizacion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacion = Organizacion::where('id', $id_organizacion)->first();
+
         $request->validate([
             'empresa' => 'required|max:255',
             'direccion' => 'required|max:255',
@@ -256,19 +256,17 @@ class OrganizacionController extends Controller
         return redirect()->route('admin.organizacions.index');
     }
 
-    public function show($id_organizacion)
+    public function show(Organizacion $organizacion)
     {
         abort_if(Gate::denies('mi_organizacion_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacion = Organizacion::where('id', $id_organizacion)->first();
         $organizacion->load('team');
 
         return view('admin.organizacions.show', compact('organizacion'));
     }
 
-    public function destroy($id_organizacion)
+    public function destroy(Organizacion $organizacion)
     {
         abort_if(Gate::denies('mi_organizacion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $organizacion = Organizacion::where('id', $id_organizacion)->first();
         $organizacion->delete();
 
         return back()->with('deleted', 'Registro eliminado con éxito');

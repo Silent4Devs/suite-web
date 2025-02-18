@@ -37,12 +37,12 @@ use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
-use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Facades\Excel;
 use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Support\Facades\Log;
 
 class ContratosController extends AppBaseController
 {
@@ -559,44 +559,44 @@ class ContratosController extends AppBaseController
         try {
             abort_if(Gate::denies('katbol_contratos_modificar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
             $contrato = $this->contratoRepository->find($id);
-            $areas = Area::getAll();
-            // dd($areas->count());
-            $formatoFecha = new FormatearFecha;
-            if (! $contrato) {
-                return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
-            }
-            $proveedor_id = $contrato->proveedor_id;
+            // $areas = Area::getAll();
+            // // dd($areas->count());
+            // $formatoFecha = new FormatearFecha;
+            // if (! $contrato) {
+            //     return redirect()->route('contract_manager.contratos-katbol.index')->with('error', 'Ocurrio un error.');
+            // }
+            // $proveedor_id = $contrato->proveedor_id;
             $contratos = Contrato::with('ampliaciones', 'dolares')->find($id);
-            // dd($contratos);
-            $proveedores = TimesheetCliente::get();
-            if (! is_null($contrato->fecha_inicio)) {
-                $contrato->fecha_inicio = $contrato->fecha_inicio;
-            }
-            if (! is_null($contrato->fecha_fin)) {
-                $contrato->fecha_fin = $contrato->fecha_fin;
-            }
-            if (! is_null($contrato->fecha_firma)) {
-                $contrato->fecha_firma = $contrato->fecha_firma;
-            } else {
-                $fecha_firma = null;
-            }
+            // // dd($contratos);
+            // $proveedores = TimesheetCliente::get();
+            // if (! is_null($contrato->fecha_inicio)) {
+            //     $contrato->fecha_inicio = $contrato->fecha_inicio;
+            // }
+            // if (! is_null($contrato->fecha_fin)) {
+            //     $contrato->fecha_fin = $contrato->fecha_fin;
+            // }
+            // if (! is_null($contrato->fecha_firma)) {
+            //     $contrato->fecha_firma = $contrato->fecha_firma;
+            // } else {
+            //     $fecha_firma = null;
+            // }
 
-            $descargar_archivo = '/public/storage/contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato.'/'.$contrato->file_contrato;
+            // $descargar_archivo = '/public/storage/contratos/' . $contrato->id . '_contrato_' . $contrato->no_contrato . '/' . $contrato->file_contrato;
 
             $convenios = ConveniosModificatorios::where('contrato_id', '=', $contratos->id)->get();
-            // dd($convenios);
-            $dolares = DolaresContrato::where('contrato_id', $id)->first();
+            // // dd($convenios);
+            // $dolares = DolaresContrato::where('contrato_id', $id)->first();
 
-            $organizacion = Organizacion::getFirst();
+            // $organizacion = Organizacion::getFirst();
 
-            $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
+            // $proyectos = TimesheetProyecto::getAll()->where('estatus', 'proceso');
 
-            $razones_sociales = Sucursal::getArchivoFalse();
+            // $razones_sociales = Sucursal::getArchivoFalse();
 
-            // firmas aprobadores
+            // // firmas aprobadores
             $firma = FirmaModule::where('modulo_id', '2')->where('submodulo_id', '7')->first();
-            // dd($firma->aprobadores);
-            // $exampleVar = $firma->aprobadores[0];
+            // // dd($firma->aprobadores);
+            // // $exampleVar = $firma->aprobadores[0];
             $aprobacionFirmaContrato = AprobadorFirmaContrato::where('contrato_id', $contrato->id)->get();
             $firmar = false;
             $firmado = false;
@@ -611,8 +611,8 @@ class ContratosController extends AppBaseController
                 }
             }
             $aprobacionFirmaContratoHisotricoLast = AprobadorFirmaContratoHistorico::where('contrato_id', $contrato->id)->orderBy('id', 'DESC')->first();
-
-            return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
+            return view('contract_manager.contratos-katbol.edit', compact('contrato', 'convenios', 'aprobacionFirmaContrato', 'firma', 'firmar', 'firmado', 'contratos'));
+            // return view('contract_manager.contratos-katbol.edit', compact('razones_sociales', 'proyectos', 'proveedor_id', 'dolares', 'organizacion', 'areas', 'firma', 'firmar', 'firmado', 'aprobacionFirmaContrato', 'aprobacionFirmaContratoHisotricoLast'))->with('contrato', $contrato)->with('proveedores', $proveedores)->with('contratos', $contratos)->with('ids', $id)->with('descargar_archivo', $descargar_archivo)->with('convenios', $convenios)->with('organizacion', $organizacion);
         } catch (\Exception $e) {
             return redirect()->route('contract_manager.contratos-katbol.index')->with('error', $e->getMessage());
         }
@@ -824,10 +824,11 @@ class ContratosController extends AppBaseController
 
             $ruta = 'contratos/'.$contrato->id.'_contrato_'.$contrato->no_contrato;
 
-            Log::info('File uploaded: '.$request->file('file_contrato')->getClientOriginalName());
-            Log::info('File type: '.$request->file('file_contrato')->getClientOriginalExtension());
-            Log::info('File size: '.$request->file('file_contrato')->getSize());
-            Log::info('File MIME type: '.$request->file('file_contrato')->getMimeType());
+            Log::info('File uploaded: ' . $request->file('file_contrato')->getClientOriginalName());
+            Log::info('File type: ' . $request->file('file_contrato')->getClientOriginalExtension());
+            Log::info('File size: ' . $request->file('file_contrato')->getSize());
+            Log::info('File MIME type: ' . $request->file('file_contrato')->getMimeType());
+
 
             // Guardar el archivo en el disco 'public' con la ruta específica
             Storage::disk('public')->put($ruta.'/'.$nombre_f, file_get_contents($request->file('file_contrato')));
@@ -1066,6 +1067,15 @@ class ContratosController extends AppBaseController
         // dd('Hola');
         return Excel::download(new ReporteClienteExport, 'cliente.xlsx');
     }
+
+    // public function downloadFile(Request $request){
+    //     // dd($request->file_contrato);
+    //     // $file = '/7factura-0.pdf';
+    //     // $path = '/app/public/contratos/1_contrato_01/entregables/pdf';
+
+    //     return response()->download(storage_path($path.$file));
+
+    // }
 
     public function obtenerArchivos(Request $request)
     {

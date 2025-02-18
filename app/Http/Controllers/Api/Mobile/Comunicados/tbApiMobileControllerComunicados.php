@@ -4,6 +4,10 @@ namespace app\Http\Controllers\Api\Mobile\Comunicados;
 
 use App\Http\Controllers\Controller;
 use App\Models\ComunicacionSgi;
+use App\Models\Empleado;
+use App\Models\FelicitarCumpleaños;
+use App\Models\Organizacione;
+use App\Models\User;
 use Carbon\Carbon;
 use Gate;
 use Illuminate\Http\Request;
@@ -178,4 +182,54 @@ class tbApiMobileControllerComunicados extends Controller
     {
         //
     }
+
+    // public function reportes()
+    // {
+    //     abort_if(Gate::denies('portal_comunicacion_mostrar_reportar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+    //     $organizacions = Organizacione::first();
+
+    //     return view('admin.portalCommunication.reportes', compact('organizacions'));
+    // }
+
+    // public function felicitarCumpleaños($cumpleañero_id)
+    // {
+    //     $felicitar = FelicitarCumpleaños::create([
+    //         'cumpleañero_id' => $cumpleañero_id,
+    //         'felicitador_id' => User::getCurrentUser()->empleado->id,
+    //         'like' => true,
+    //     ]);
+
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Like generado');
+    // }
+
+    // public function felicitarCumpleañosDislike($id)
+    // {
+    //     $felicitar = FelicitarCumpleaños::where('id', $id);
+    //     $felicitar->update([
+    //         'like' => false,
+    //     ]);
+
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'DisLike generado');
+    // }
+
+    // public function felicitarCumplesComentarios(Request $request, $cumpleañero_id)
+    // {
+    //     $comentario = FelicitarCumpleaños::create([
+    //         'cumpleañero_id' => $cumpleañero_id,
+    //         'felicitador_id' => User::getCurrentUser()->empleado->id,
+    //         'comentarios' => $request->comentarios,
+    //     ]);
+
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario generado');
+    // }
+
+    // public function felicitarCumplesComentariosUpdate(Request $request, $id)
+    // {
+    //     $comentario = FelicitarCumpleaños::where('id', $id);
+    //     $comentario->update([
+    //         'comentarios' => $request->comentarios,
+    //     ]);
+
+    //     return redirect()->route('admin.portal-comunicacion.index')->with('success', 'Comentario actualizado');
+    // }
 }

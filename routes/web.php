@@ -34,7 +34,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::view('tenant', 'central.landing')->name('central.landing');
 
-Route::group(['middleware' => ['tenant']], function () {
+//Route::group(['middleware' => ['tenant']], function () {
 
 // Route::get('correotestqueue', [QueueCorreo::class, 'index']);
 // Route::get('insertarFirmadoresFinanzas', [QueueCorreo::class, 'insertarFirmadoresFinanzas']);
@@ -397,7 +397,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
             });
 
-            Route::group(['middleware' => ['proyectos']], function () {
+
                 Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
                 Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
                 Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
@@ -415,7 +415,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
                 Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
                 Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
-            });
+
 
             // Comunicacion Sgis
             Route::delete('comunicacion-sgis/destroy', 'ComunicacionSgiController@massDestroy')->name('comunicacion-sgis.massDestroy');
@@ -1662,10 +1662,12 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // Planes de Acción
             Route::group(['middleware' => ['planes_trabajo']], function () {
 
-                Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
-                Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
-                Route::get('planes-de-accion/create-plan-trabajo-base', 'PlanesAccionController@createPlanTrabajoBase')->name('planes-de-accion.createPlanTrabajoBase');
-                Route::resource('planes-de-accion', 'PlanesAccionController');
+                Route::group(['middleware' => ['primeros.pasos']], function () {
+                    Route::post('planes-de-accion/{plan}/save', 'PlanesAccionController@saveProject')->name('planes-de-accion.saveProject');
+                    Route::post('planes-de-accion/{plan}/load', 'PlanesAccionController@loadProject')->name('planes-de-accion.loadProject');
+                    Route::get('planes-de-accion/create-plan-trabajo-base', 'PlanesAccionController@createPlanTrabajoBase')->name('planes-de-accion.createPlanTrabajoBase');
+                    Route::resource('planes-de-accion', 'PlanesAccionController');
+                });
 
                 //gantt
                 Route::get('gantt', 'GanttController@index');
@@ -1794,7 +1796,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::post('CargaPoliticaSgsi', 'SubidaExcel@PoliticaSgsi')->name('carga-politica_sgi');
         Route::post('CargaGrupoArea', 'SubidaExcel@GrupoArea')->name('carga-grupo_area');
         Route::post('CargaDatosArea', 'SubidaExcel@DatosArea')->name('carga-datos_area');
-        Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo_inventario');
+        Route::post('CargaActivos', 'SubidaExcel@Activos')->name('carga-activo-inventario');
         Route::post('CargaEmpleado', 'SubidaExcel@Empleado')->name('carga-empleado');
         // Route::post('CargaCategoria', 'SubidaExcel@CategoriaActivo')->name('carga-categoria');
 
@@ -2021,4 +2023,4 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             });
         });
     });
-});
+// });

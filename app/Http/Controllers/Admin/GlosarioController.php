@@ -35,19 +35,15 @@ class GlosarioController extends Controller
         return view('admin.glosarios.edit', compact('glosario'));
     }
 
-    public function update(Request $request, $glosario)
+    public function update(Request $request, Glosario $glosario)
     {
-        $glosario = Glosario::find($glosario);
-
         $glosario->update($request->all());
 
         return redirect()->route('admin.glosarios.index');
     }
 
-    public function show($glosario)
+    public function show(Glosario $glosario)
     {
-        $glosario = Glosario::find($glosario);
-
         return view('admin.glosarios.show', compact('glosario'));
     }
 

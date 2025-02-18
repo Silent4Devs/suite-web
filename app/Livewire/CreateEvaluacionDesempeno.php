@@ -19,6 +19,7 @@ use App\Models\EvaluadoresEvaluacionObjetivosDesempeno;
 use App\Models\EvaluadosEvaluacionDesempeno;
 use App\Models\ListaInformativa;
 use App\Models\PeriodosEvaluacionDesempeno;
+use App\Models\PeriodoCargaObjetivos;
 use App\Models\RH\GruposEvaluado;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
@@ -127,6 +128,8 @@ class CreateEvaluacionDesempeno extends Component
 
     public $periodos_creados_borrador = [];
 
+    public $periodo_carga_obj = null;
+
     public function hydrate()
     {
         $this->dispatch('select2');
@@ -148,6 +151,8 @@ class CreateEvaluacionDesempeno extends Component
 
         $this->areas = Area::getIdNameAll()->sortBy('area');
         $this->grupos = GruposEvaluado::getAll();
+
+        $this->periodo_carga_obj = PeriodoCargaObjetivos::first();
     }
 
     public function render()
@@ -695,15 +700,18 @@ class CreateEvaluacionDesempeno extends Component
                     ]);
 
                     foreach ($obj->objetivo->escalas as $escala) {
-                        EscalasObjCuestionarioEvDesempeno::create(
-                            [
-                                'objetivo_id' => $cat_obj->id,
-                                'condicion' => $escala->condicion,
-                                'parametro' => $escala->parametro,
-                                'valor' => $escala->valor,
-                                'color' => $escala->color,
-                            ]
-                        );
+                        if($escala->no_periodo == 1){
+                            EscalasObjCuestionarioEvDesempeno::create(
+                                [
+                                    'objetivo_id' => $cat_obj->id,
+                                    'condicion' => $escala->condicion,
+                                    'parametro' => $escala->parametro,
+                                    'valor' => $escala->valor,
+                                    'color' => $escala->color,
+                                    'no_periodo' => $escala->no_periodo
+                                ]
+                            );
+                        }
                     }
 
                     $evlr_obj_periodo = $evaluado->evaluadoresObjetivos->where('periodo_id', $periodo->id);

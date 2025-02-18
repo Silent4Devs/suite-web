@@ -187,10 +187,10 @@ class PoliticaSgsiController extends Controller
         return view('admin.politicaSgsis.edit', compact('politicaSgsi', 'empleados', 'fecha_publicacion', 'fecha_revision', 'comentarios'));
     }
 
-    public function update(UpdatePoliticaSgsiRequest $request, $id_politicaSgsi)
+    public function update(UpdatePoliticaSgsiRequest $request, PoliticaSgsi $politicaSgsi)
     {
         abort_if(Gate::denies('politica_sistema_gestion_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $politicaSgsi = PoliticaSgsi::where('id', $id_politicaSgsi)->first();
+
         $request->validate([
             'nombre_politica' => 'required',
             'politicasgsi' => 'required',
@@ -232,11 +232,10 @@ class PoliticaSgsiController extends Controller
         return view('admin.politicaSgsis.show', compact('politicaSgsi'));
     }
 
-    public function destroy($id_politicaSgsi)
+    public function destroy(PoliticaSgsi $politicaSgsi)
     {
-        abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
-        $politicaSgsi = PoliticaSgsi::where('id', $id_politicaSgsi)->first();
+        abort_if(Gate::denies('politica_sistema_gestion_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         $politicaSgsi->delete();
 

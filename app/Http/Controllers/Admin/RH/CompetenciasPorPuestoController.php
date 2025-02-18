@@ -70,19 +70,12 @@ class CompetenciasPorPuestoController extends Controller
     public function indexCompetenciasPorPuesto(Request $request, $id_puesto)
     {
         if ($request->ajax()) {
-            try {
-                $competencias = CompetenciaPuesto::with('puesto', 'competencia')->where('puesto_id', intval($puesto));
+            $competencias = CompetenciaPuesto::with('puesto', 'competencia')->where('puesto_id', intval($id_puesto));
 
-                // dd($competencias);
-                return datatables()->of($competencias)->toJson();
-            } catch (\Throwable $th) {
-                //throw $th;}
-                dd($th);
-            }
+            return datatables()->of($competencias)->toJson();
         }
     }
 
-    // puestos 15, competencias 2,3,4,5,6,7,8,24 truena 142 funciona 2,3,4,5,6,7,8,23
     /**
      * Show the form for creating a new resource.
      *

@@ -27,13 +27,9 @@ class TBTenantKatbolMiddleware
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
-        $tbStripeId = $this->tbTenantManager->tbGetTenantFromRequest($tbRequest);
-
-        $tbSuscripciones = $this->tbStripeService->tbGetProductsByCustomer($tbStripeId);
-
         $tbModulosValidos = ['Gestión Contractual', 'Gestión Financiera'];
 
-        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatus($tbSuscripciones, $tbModulosValidos);
+        $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
 
         if ($tbEstado) {
             return $tbNext($tbRequest);

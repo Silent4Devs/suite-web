@@ -65,10 +65,10 @@ class ServiciosController extends Controller
         return redirect(route('admin.servicios.index'));
     }
 
-    public function update(Request $request, $id_servicios)
+    public function update(Request $request, MatrizOctaveServicio $servicios)
     {
-        $servicios = MatrizOctaveServicio::where('id', $id_servicios)->first();
         $servicios->update($request->all());
+        // $cartaAceptacion = CartaAceptacion::create($request->all());
 
         return redirect(route('admin.servicios.index'));
     }

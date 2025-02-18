@@ -29,17 +29,15 @@ class RolesApiController extends Controller
             ->setStatusCode(Response::HTTP_CREATED);
     }
 
-    public function show($id_role)
+    public function show(Role $role)
     {
         abort_if(Gate::denies('role_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $role = Role::where('id', $id_role)->first();
 
         return new RoleResource($role->load(['permissions']));
     }
 
-    public function update(UpdateRoleRequest $request, $id_role)
+    public function update(UpdateRoleRequest $request, Role $role)
     {
-        $role = Role::where('id', $id_role)->first();
         $role->update($request->all());
         $role->permissions()->sync($request->input('permissions', []));
 
@@ -48,10 +46,10 @@ class RolesApiController extends Controller
             ->setStatusCode(Response::HTTP_ACCEPTED);
     }
 
-    public function destroy($id_role)
+    public function destroy(Role $role)
     {
         abort_if(Gate::denies('role_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $role = Role::where('id', $id_role)->first();
+
         $role->delete();
 
         return response(null, Response::HTTP_NO_CONTENT);

@@ -113,10 +113,10 @@ class RegistromejoraController extends Controller
         return redirect()->route('admin.registromejoras.index');
     }
 
-    public function edit($id_registromejora)
+    public function edit(Registromejora $registromejora)
     {
         abort_if(Gate::denies('registromejora_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $registromejora = Registromejora::where('id', $id_registromejora)->first();
+
         $users = User::getAll();
         $nombre_reportas = $users->pluck('name', 'id')->prepend(trans('global.pleaseSelect'), '');
 
@@ -131,27 +131,26 @@ class RegistromejoraController extends Controller
         return view('admin.registromejoras.edit', compact('nombre_reportas', 'responsableimplementacions', 'validas', 'registromejora', 'empleados'));
     }
 
-    public function update(UpdateRegistromejoraRequest $request, $id_registromejora)
+    public function update(UpdateRegistromejoraRequest $request, Registromejora $registromejora)
     {
-        $registromejora = Registromejora::where('id', $id_registromejora)->first();
         $registromejora->update($request->all());
 
         return redirect()->route('admin.registromejoras.index');
     }
 
-    public function show($id_registromejora)
+    public function show(Registromejora $registromejora)
     {
         abort_if(Gate::denies('registromejora_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $registromejora = Registromejora::where('id', $id_registromejora)->first();
+
         $registromejora->load('nombre_reporta', 'responsableimplementacion', 'valida', 'team', 'mejoraDmaics', 'mejoraPlanMejoras');
 
         return view('admin.registromejoras.show', compact('registromejora'));
     }
 
-    public function destroy($id_registromejora)
+    public function destroy(Registromejora $registromejora)
     {
         abort_if(Gate::denies('registromejora_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $registromejora = Registromejora::where('id', $id_registromejora)->first();
+
         $registromejora->delete();
 
         return back();

@@ -99,27 +99,24 @@ class MacroprocesoController extends Controller
         return redirect()->route('admin.macroprocesos.index')->with('success', 'Guardado con éxito');
     }
 
-    public function show($id_macroproceso)
+    public function show(Macroproceso $macroproceso)
     {
         abort_if(Gate::denies('macroprocesos_ver'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $macroproceso = Macroproceso::where('id', $id_macroproceso)->first();
 
         return view('admin.macroprocesos.show', compact('macroproceso'));
     }
 
-    public function edit($id_macroproceso)
+    public function edit(Macroproceso $macroproceso)
     {
         abort_if(Gate::denies('macroprocesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $macroproceso = Macroproceso::where('id', $id_macroproceso)->first();
         $grupos = DB::table('grupos')->select('id', 'nombre')->get();
 
         return view('admin.macroprocesos.edit', compact('macroproceso'))->with('grupos', $grupos);
     }
 
-    public function update(Request $request, $id_macroproceso)
+    public function update(Request $request, Macroproceso $macroproceso)
     {
         abort_if(Gate::denies('macroprocesos_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $macroproceso = Macroproceso::where('id', $id_macroproceso)->first();
         $request->validate(
             [
                 'codigo' => 'required|string',
@@ -134,10 +131,9 @@ class MacroprocesoController extends Controller
         return redirect()->route('admin.macroprocesos.index')->with('success', 'Editado con éxito');
     }
 
-    public function destroy($id_macroproceso)
+    public function destroy(Macroproceso $macroproceso)
     {
         abort_if(Gate::denies('macroprocesos_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $macroproceso = Macroproceso::where('id', $id_macroproceso)->first();
         $macroproceso->delete();
         Alert::success('éxito', 'Información eliminada con éxito');
 

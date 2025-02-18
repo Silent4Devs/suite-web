@@ -297,9 +297,8 @@ class DeclaracionAplicabilidadController extends Controller
         }
     }
 
-    public function download()
+    public function download(DeclaracionAplicabilidad $declaracionAplicabilidad)
     {
-        // DeclaracionAplicabilidad $declaracionAplicabilidad // No se usa
         $declaracion_aplicabilidad = DeclaracionAplicabilidad::getAll();
 
         $gapda5s = $declaracion_aplicabilidad->where('control-uno', '=', 'A5');

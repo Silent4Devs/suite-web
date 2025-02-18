@@ -106,10 +106,10 @@ class MaterialIsoVeinticienteController extends Controller
         return redirect()->route('admin.material-iso-veinticientes.index');
     }
 
-    public function edit($id_materialIsoVeinticiente)
+    public function edit(MaterialIsoVeinticiente $materialIsoVeinticiente)
     {
         abort_if(Gate::denies('material_iso_veinticiente_edit'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $materialIsoVeinticiente = MaterialIsoVeinticiente::where('id', $id_materialIsoVeinticiente)->first();
+
         $arearesponsables = Area::getAllPluck();
 
         $materialIsoVeinticiente->load('arearesponsable', 'team');
@@ -117,10 +117,8 @@ class MaterialIsoVeinticienteController extends Controller
         return view('admin.materialIsoVeinticientes.edit', compact('arearesponsables', 'materialIsoVeinticiente'));
     }
 
-    public function update(UpdateMaterialIsoVeinticienteRequest $request, $id_materialIsoVeinticiente)
+    public function update(UpdateMaterialIsoVeinticienteRequest $request, MaterialIsoVeinticiente $materialIsoVeinticiente)
     {
-        $materialIsoVeinticiente = MaterialIsoVeinticiente::where('id', $id_materialIsoVeinticiente)->first();
-
         $materialIsoVeinticiente->update($request->all());
 
         if ($request->input('listaasistencia', false)) {
@@ -150,19 +148,19 @@ class MaterialIsoVeinticienteController extends Controller
         return redirect()->route('admin.material-iso-veinticientes.index');
     }
 
-    public function show($id_materialIsoVeinticiente)
+    public function show(MaterialIsoVeinticiente $materialIsoVeinticiente)
     {
         abort_if(Gate::denies('material_iso_veinticiente_show'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $materialIsoVeinticiente = MaterialIsoVeinticiente::where('id', $id_materialIsoVeinticiente)->first();
+
         $materialIsoVeinticiente->load('arearesponsable', 'team');
 
         return view('admin.materialIsoVeinticientes.show', compact('materialIsoVeinticiente'));
     }
 
-    public function destroy($id_materialIsoVeinticiente)
+    public function destroy(MaterialIsoVeinticiente $materialIsoVeinticiente)
     {
         abort_if(Gate::denies('material_iso_veinticiente_delete'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $materialIsoVeinticiente = MaterialIsoVeinticiente::where('id', $id_materialIsoVeinticiente)->first();
+
         $materialIsoVeinticiente->delete();
 
         return back();

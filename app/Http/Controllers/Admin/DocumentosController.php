@@ -195,10 +195,9 @@ class DocumentosController extends Controller
         return $documento;
     }
 
-    public function edit($id_documento)
+    public function edit(Documento $documento)
     {
         abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $documento = Documento::where('id', $id_documento)->first();
         $macroprocesos = Macroproceso::getAll();
         $procesos = Proceso::getAll();
         $empleados = Empleado::getaltaAll();
@@ -208,10 +207,9 @@ class DocumentosController extends Controller
         return view('admin.documentos.edit', compact('macroprocesos', 'procesos', 'empleados', 'documentoActual', 'newversdoc'));
     }
 
-    public function update(Request $request, $id_documento)
+    public function update(Request $request, Documento $documento)
     {
         abort_if(Gate::denies('control_documentar_editar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
-        $documento = Documento::where('id', $id_documento)->first();
         if ($request->ajax()) {
             $this->validateRequestUpdate($request, $documento);
 
@@ -223,10 +221,9 @@ class DocumentosController extends Controller
         }
     }
 
-    public function updateDocumentWhenPublish(Request $request, Documento $id_documento)
+    public function updateDocumentWhenPublish(Request $request, Documento $documento)
     {
         if ($request->ajax()) {
-            $documento = Documento::where('id', $id_documento)->first();
             $documento = $this->updateDocument($request, $documento, Documento::EN_REVISION);
             $proceso = Proceso::where('documento_id', $documento->id)->first();
             if ($proceso) {
@@ -239,9 +236,8 @@ class DocumentosController extends Controller
         }
     }
 
-    public function validateRequestUpdate(Request $request, $id_documento)
+    public function validateRequestUpdate(Request $request, Documento $documento)
     {
-        $documento = Documento::where('id', $id_documento)->first();
         $validateDocumento = $documento->archivo != null ? 'nullable' : 'required';
         $elaboroId = $documento->elaboro_id != null ? 'nullable' : 'required';
         $revisoId = $documento->reviso_id != null ? 'nullable' : 'required';
@@ -287,9 +283,8 @@ class DocumentosController extends Controller
         }
     }
 
-    public function updateDocument(Request $request, $id_documento, $estatus)
+    public function updateDocument(Request $request, Documento $documento, $estatus)
     {
-        $documento = Documento::where('id', $id_documento)->first();
         $this->validateRequestUpdate($request, $documento);
         $this->createDocumentosEnAprobacionIfNotExists();
         $path_documentos_aprobacion = $this->pathDocumentsWhenUpdate($request->tipo);
@@ -399,12 +394,11 @@ class DocumentosController extends Controller
         return $path_documentos_aprobacion;
     }
 
-    public function destroy(Request $request, $id_documento)
+    public function destroy(Request $request, Documento $documento)
     {
         abort_if(Gate::denies('control_documentar_eliminar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
 
         try {
-            $documento = Documento::where('id', $id_documento)->first();
             // Verifica si el documento es de tipo 'proceso'
             if ($documento->tipo == 'proceso') {
                 // Lógica para eliminar el proceso vinculado al documento
@@ -543,10 +537,8 @@ class DocumentosController extends Controller
         }
     }
 
-    public function renderHistoryReview($id_documento)
+    public function renderHistoryReview(Documento $documento)
     {
-        $documento = Documento::where('id', $id_documento)->first();
-
         $revisiones = RevisionDocumento::with('documento', 'empleado')->where('documento_id', $documento->id)->get();
 
         return view('admin.documentos.history-reviews', compact('documento', 'revisiones'));
@@ -576,9 +568,8 @@ class DocumentosController extends Controller
         }
     }
 
-    public function getPublicPathObsoleteDocument($id_documento)
+    public function getPublicPathObsoleteDocument(Documento $documento)
     {
-        $documento = Documento::where('id', $id_documento)->first();
         $this->createDocumentosObsoletosIfNotExists();
         $path_documento = 'public/Documentos obsoletos';
         switch ($documento->tipo) {
@@ -617,9 +608,8 @@ class DocumentosController extends Controller
         return $path_documento;
     }
 
-    public function getPathDocumento($id_documento, $ruta)
+    public function getPathDocumento(Documento $documento, $ruta)
     {
-        $documento = Documento::where('id', $id_documento)->first();
         $path_documento = $ruta.'/Documentos en aprobacion';
 
         if ($documento->estatus == strval(Documento::PUBLICADO)) {
@@ -743,10 +733,8 @@ class DocumentosController extends Controller
         }
     }
 
-    public function renderHistoryVersions($id_documento)
+    public function renderHistoryVersions(Documento $documento)
     {
-        $documento = Documento::where('id', $id_documento)->first();
-
         $versiones = HistorialVersionesDocumento::with('revisor', 'elaborador', 'aprobador', 'responsable')->where('documento_id', $documento->id)->get();
 
         if (empty($versiones[0]['id'])) {
