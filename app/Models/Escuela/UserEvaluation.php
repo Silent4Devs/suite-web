@@ -26,6 +26,8 @@ class UserEvaluation extends Model implements Auditable
         'score',
         'quiz_size',
         'approved',
+        'number_of_attempts',
+        'last_attempt',
     ];
 
     public function users()

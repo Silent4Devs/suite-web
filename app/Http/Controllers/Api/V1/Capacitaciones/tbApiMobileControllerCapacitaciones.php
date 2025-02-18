@@ -7,6 +7,7 @@ use App\Models\ComunicacionSgi;
 use App\Models\Empleado;
 use App\Models\Escuela\Category;
 use App\Models\Escuela\Course;
+use App\Models\Escuela\CourseUser;
 use App\Models\Escuela\Evaluation;
 use App\Models\Escuela\Instructor\Answer;
 use App\Models\Escuela\Instructor\Question;
@@ -55,23 +56,19 @@ class tbApiMobileControllerCapacitaciones extends Controller
         // Obtener el último curso y los últimos tres cursos
         $ultimo = $cursos_usuario->sortBy('last_review')->last();
 
-        $completedLessonsCount = $ultimo->cursos->lessons->filter(function ($lesson) {
-            return $lesson->completed;
-        })->count();
+        $course_user = CourseUser::with('curso.instructor')->where('user_id', $usuario->id)->where('course_id', $ultimo->cursos->id)->first();
 
-        $totalLessonsCount = $ultimo->cursos->lessons->count();
-
-        $advance = ($completedLessonsCount * 100) / ($totalLessonsCount > 0 ? $totalLessonsCount : 1);
-        $ultimo->advance = round($advance, 2);
+        $curso = $course_user->curso;
 
         $json_lastCourse = [
             'id_course' => $ultimo->cursos->id,
             'title' => $ultimo->cursos->title,
             'subtitle' => $ultimo->cursos->subtitle,
             'description' => $ultimo->cursos->description,
-            'nombre_instructor' => $ultimo->cursos->instructor->name,
-            'imagen_instructor' => isset($ultimo->cursos->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($ultimo->cursos->instructor->empleado->avatar_ruta) : '',
-            'course_progress' => $ultimo->advance,
+            'course_progress' => $course_user->completado,
+            'course_certificate' => $course_user->curso->certificado,
+            'nombre_instructor' => $ultimo->cursos->user->name,
+            'imagen_instructor' => isset($curso->user->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($curso->user->empleado->avatar_ruta) : '',
         ];
 
         return response(json_encode(
@@ -84,30 +81,23 @@ class tbApiMobileControllerCapacitaciones extends Controller
     public function tbFunctionCursosInscrito()
     {
         $usuario = User::getCurrentUser();
-        $cursos_usuario = UsuariosCursos::with('cursos')->where('user_id', $usuario->id)->get();
+        $cursos_usuario = UsuariosCursos::with('cursos.instructor')->where('user_id', $usuario->id)->get();
+        $course_user = CourseUser::where('user_id', $usuario->id)->get();
 
         // Obtener el último curso y los últimos tres cursos
         $cursos_usuario = $cursos_usuario->sortBy('last_review');
 
         foreach ($cursos_usuario as $keyCursos => $cu) {
-
-            $completedLessonsCount = $cu->cursos->lessons->filter(function ($lesson) {
-                return $lesson->completed;
-            })->count();
-
-            $totalLessonsCount = $cu->cursos->lessons->count();
-
-            $advance = ($completedLessonsCount * 100) / ($totalLessonsCount > 0 ? $totalLessonsCount : 1);
-            $cu->advance = round($advance, 2);
-
+            $cou = $course_user->where('course_id', $cu->cursos->id)->first();
             $json_inscribedCourses[] = [
                 'id_course' => $cu->cursos->id,
                 'title' => $cu->cursos->title,
                 'subtitle' => $cu->cursos->subtitle,
                 'description' => $cu->cursos->description,
-                'nombre_instructor' => $cu->cursos->instructor->name,
-                'imagen_instructor' => isset($cu->cursos->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($cu->cursos->instructor->empleado->avatar_ruta) : '',
-                'course_progress' => $cu->advance,
+                'course_progress' => $cou->completado,
+                'course_certificate' => $cou->curso->certificado,
+                'nombre_instructor' => $cu->cursos->instructor->name ?? $cu->cursos->teacher->name,
+                'imagen_instructor' => isset($cu->cursos->user->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($cu->cursos->user->empleado->avatar_ruta) : '',
             ];
         }
 
@@ -136,9 +126,10 @@ class tbApiMobileControllerCapacitaciones extends Controller
                 'subtitle' => $course->subtitle,
                 'description' => $course->description,
                 'course_rating' => $course->rating,
+                'course_certificate' => $course->certificado,
                 'colaboradores_inscritos' => $course->students_count,
                 'nombre_instructor' => $course->instructor->name ?? $course->teacher->empleado->name,
-                'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
+                'imagen_instructor' => isset($course->user->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->user->empleado->avatar_ruta) : '',
                 // 'course_progress' => $course->advance, //No util, no esta inscrito a estos.
             ];
 
@@ -182,6 +173,7 @@ class tbApiMobileControllerCapacitaciones extends Controller
         $course = Course::getAll()->where('id', $curso_id)->first();
 
         $evaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        $approvedEvaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('approved', true)->pluck('evaluation_id')->toArray();
 
         $json_informacion_curso = [];
 
@@ -191,10 +183,10 @@ class tbApiMobileControllerCapacitaciones extends Controller
             'subtitle' => $course->subtitle,
             'description' => $course->description,
             'course_rating' => $course->rating,
+            'course_certificate' => $course->certificado,
             'colaboradores_inscritos' => $course->students_count,
             'nombre_instructor' => $course->instructor->name ?? $course->teacher->empleado->name,
-            'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
-            // 'course_progress' => $course->advance, //No util, no esta inscrito a estos.
+            'imagen_instructor' => isset($course->user->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->user->empleado->avatar_ruta) : '',
         ];
 
         $courses_lessons = $course->lessons;
@@ -254,12 +246,14 @@ class tbApiMobileControllerCapacitaciones extends Controller
                 } else {
                     if ($evaluation->questions->count() > 0) {
                         $completed = in_array($evaluation->id, $evaluationsUser);
+                        $approved = in_array($evaluation->id, $approvedEvaluationsUser);
 
                         $json_informacion_curso['course']['section'][$keySections]['evaluations'][$keyEvaluation] = [
                             'id_evaluation' => $evaluation->id,
                             'name_evaluation' => $evaluation->name,
                             'evaluation_completed' => $completed,
                             'evaluation_blocked' => false,
+                            'evaluation_approved' => $approved
                         ];
                     }
                 }
@@ -281,6 +275,8 @@ class tbApiMobileControllerCapacitaciones extends Controller
 
         $course = Course::getAll()->where('id', $curso_id)->first();
 
+        $course_user = CourseUser::with('curso.instructor')->where('user_id', $usuario->id)->where('course_id', $course->id)->first();
+
         $current = $course->last_finished_lesson;
 
         if (! $current) {
@@ -288,14 +284,17 @@ class tbApiMobileControllerCapacitaciones extends Controller
         }
 
         $evaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('completed', true)->pluck('evaluation_id')->toArray();
+        $approvedEvaluationsUser = UserEvaluation::where('user_id', $usuario->id)->where('approved', true)->pluck('evaluation_id')->toArray();
 
         $json_progreso_curso = [];
 
         $json_progreso_curso['course'] = [
             'id_course' => $course->id,
             'title' => $course->title,
+            'subtitle' => $course->subtitle,
+            'course_progress' => $course_user->completado,
             'nombre_instructor' => $course->instructor->name,
-            'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta) : '',
+            'imagen_instructor' => isset($course->user->empleado->avatar_ruta) ? $this->encodeSpecialCharacters($course->user->empleado->avatar_ruta) : '',
         ];
 
         foreach ($course->sections_order as $keySections => $section) {
@@ -352,7 +351,6 @@ class tbApiMobileControllerCapacitaciones extends Controller
 
             // Procesar evaluaciones
             foreach ($section->evaluations as $keyEvaluation => $evaluation) {
-                dd($evaluation);
                 $evaluationData = [
                     'id_evaluation' => $evaluation->id,
                     'name_evaluation' => $evaluation->name,
@@ -362,6 +360,7 @@ class tbApiMobileControllerCapacitaciones extends Controller
                 // Si la evaluación no está bloqueada, agregar datos adicionales
                 if (!$evaluationData['evaluation_blocked'] && $evaluation->questions->count() > 0) {
                     $evaluationData['evaluation_completed'] = in_array($evaluation->id, $evaluationsUser);
+                    $evaluationData['evaluation_approved'] = in_array($evaluation->id, $approvedEvaluationsUser);
                 }
 
                 // Agregar la evaluación al arreglo de progreso del curso
@@ -396,9 +395,10 @@ class tbApiMobileControllerCapacitaciones extends Controller
         return [
             'id_course' => $course->id,
             'title' => $course->title,
+            'subtitle' => $course->subtitle,
             'nombre_instructor' => $course->instructor->name,
-            'imagen_instructor' => isset($course->instructor->empleado->avatar_ruta)
-                ? $this->encodeSpecialCharacters($course->instructor->empleado->avatar_ruta)
+            'imagen_instructor' => isset($course->user->empleado->avatar_ruta)
+                ? $this->encodeSpecialCharacters($course->user->empleado->avatar_ruta)
                 : '',
         ];
     }
@@ -409,13 +409,35 @@ class tbApiMobileControllerCapacitaciones extends Controller
 
         $userEvaluation = UserEvaluation::firstOrCreate(
             ['user_id' => $user->id, 'evaluation_id' => $evaluation->id],
-            ['quiz_size' => $totalQuizQuestions, 'completed' => false]
+            ['quiz_size' => $totalQuizQuestions, 'completed' => false, 'approved' => false]
         );
+
+        $nextAttempt = null;
+
+        $lastAttempt = Carbon::parse($userEvaluation->last_attempt);
+        $now = Carbon::now();
+
+        $diferencia = $now->diffInSeconds($lastAttempt->addHours(8), false);
+
+        if ($diferencia < 0) {
+            // Si ha pasado el tiempo, restablecer los intentos
+            $userEvaluation->update([
+                'number_of_attempts' => 3
+            ]);
+
+        } else {
+            // Formatear el tiempo restante
+            $nextAttempt = Carbon::parse($userEvaluation->last_attempt)->addHours(8)->toDateTimeString();
+        }
 
         $evaluationData = [
             'id_evaluation' => $evaluation->id,
             'name_evaluation' => $evaluation->name,
             'evaluation_completed' => $userEvaluation->completed,
+            'evaluation_approved' => $userEvaluation->approved,
+            'evaluation_number_attempts' => $userEvaluation->number_of_attempts,
+            'evaluation_last_attempt' => $userEvaluation->last_attempt,
+            'evaluation_next_attempt' => $nextAttempt,
             'evaluation_blocked' => false,
             'questions' => $userEvaluation->completed
                 ? $this->formatCompletedQuestions($userEvaluation)
@@ -538,10 +560,15 @@ class tbApiMobileControllerCapacitaciones extends Controller
         // Obtener su calificacion de la evaluación
         $percentage = ($correctQuestions * 100) / $totalQuestions;
 
+        $noa = $userEvaluation->number_of_attempts - 1;
+        $now = Carbon::now();
+
         // Establecerla como completada y poner su porcentaje
         $userEvaluation->update([
             'score' => $percentage,
             'completed' => true,
+            'number_of_attempts' => $noa,
+            'last_attempt' => $now
         ]);
 
         // Insertar todas las respuestas en una sola operación (batch)
