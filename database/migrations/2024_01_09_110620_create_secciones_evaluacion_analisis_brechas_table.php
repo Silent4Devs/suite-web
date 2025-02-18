@@ -16,7 +16,7 @@ return new class extends Migration
             $table->unsignedBigInteger('evaluacion_id');
             $table->integer('numero_seccion');
             $table->longText('descripcion');
-            $table->unsignedDecimal('porcentaje_seccion');
+            $table->decimal('porcentaje_seccion');
             $table->timestamps();
             $table->softDeletes();
 
