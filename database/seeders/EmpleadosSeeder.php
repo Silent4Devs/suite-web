@@ -18,7 +18,8 @@ class EmpleadosSeeder extends Seeder
     public function run()
     {
         Empleado::create([
-            'name' => 'Direccion General',
+            'name' => 'Admin',
+            'email' => 'admin@admin.com',
             'foto' => null,
             'puesto_id' => Puesto::first()->id,
             'antiguedad' => Carbon::now(),
@@ -27,6 +28,7 @@ class EmpleadosSeeder extends Seeder
             'created_at' => Carbon::now(),
             'extension' => null,
             'telefono_movil' => null,
+            'direccion' => 'Direccion General',
             'n_empleado' => 1,
         ]);
     }
