@@ -3,7 +3,10 @@ pipeline {
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'develop_Onpremise', url: 'https://github.com/Silent4Devs/suite-web.git'
+                withCredentials([string(credentialsId: 'github-token', variable: 'GITHUB_TOKEN')]) {
+                    git branch: 'develop_Onpremise',
+                        url: "https://${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}@github.com/Silent4Devs/suite-web.git"
+                }
             }
         }
         stage('Deploy via SSH') {
