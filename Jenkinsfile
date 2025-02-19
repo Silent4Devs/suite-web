@@ -1,17 +1,27 @@
 pipeline {
     agent any
+    environment {
+        GIT_CREDENTIALS = 'github-credentials'
+        SSH_CREDENTIALS = 'ssh-deploy-key'
+        DEPLOY_SERVER = '192.168.9.78'
+        DEPLOY_PATH = '/var/contenedor/suite-web'
+    }
     stages {
         stage('Clone Repository') {
             steps {
-                git branch: 'develop_Onpremise', url: 'https://github.com/Silent4Devs/suite-web.git'
+                script {
+                    git credentialsId: "${env.GIT_CREDENTIALS}",
+                        branch: 'develop_Onpremise',
+                        url: 'https://github.com/Silent4Devs/suite-web.git'
+                }
             }
         }
         stage('Deploy via SSH') {
             steps {
                 script {
-                    sh """
-                    sshpass -p 'S3cur3.qa' scp -o StrictHostKeyChecking=no -r "$WORKSPACE/"* desarrollo@192.168.9.78:/var/contenedor/suite-web
-                    """
+                    sshagent(credentials: ["${env.SSH_CREDENTIALS}"]) {
+                        sh "rsync -avz --delete -e 'ssh -o StrictHostKeyChecking=no' $WORKSPACE/ desarrollo@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}"
+                    }
                 }
             }
         }
