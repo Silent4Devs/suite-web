@@ -1,23 +1,28 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tabantaj\Auth;
 
 use App\Models\Role;
+use App\Models\Tenant;
 use App\Models\User;
+use App\Services\Tenant\TBTenantTenantManager;
 use Closure;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
 class AuthGates
 {
+    public $tbTenantManager;
 
-    /**
-     * Handle an incoming request.
-     *
-     * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
-     */
-    public function handle(Request $request, Closure $next): Response
+    public function __construct(TBTenantTenantManager $tbTenantManager)
     {
+        $this->tbTenantManager = $tbTenantManager;
+    }
+
+    public function handle($request, Closure $next)
+    {
+
         $user = \Auth::user();
 
         if ($user) {
