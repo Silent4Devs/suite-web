@@ -1,9 +1,18 @@
 pipeline {
     agent any
     stages {
-        stage('Hola Mundo') {
+        stage('Clone Repository') {
             steps {
-                echo '¡Hola Mundo desde Jenkins!'
+                git branch: 'develop_Onpremise', url: 'https://github.com/Silent4Devs/suite-web.git'
+            }
+        }
+        stage('Deploy via SSH') {
+            steps {
+                script {
+                    sh """
+                    sshpass -p 'S3cur3.qa' scp -o StrictHostKeyChecking=no -r "$WORKSPACE/"* desarrollo@192.168.9.78:/var/contenedor/suite-web
+                    """
+                }
             }
         }
     }
