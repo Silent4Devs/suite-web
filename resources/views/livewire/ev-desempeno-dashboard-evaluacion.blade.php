@@ -18,7 +18,7 @@
     </p>
 
     <div class="row mt-4">
-        <div class="col-md-3">
+        <div class="col-md-4">
             <a wire:click.prevent="enviarRecordatorio">
                 <div class="w-100 p-3 text-center text-white rounded-lg"
                     style="background-color: #2C9E7F;cursor: pointer;">
@@ -26,7 +26,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <a wire:click.prevent="cerrarEvaluacion">
                 <div class="w-100 p-3 text-center text-white rounded-lg"
                     style="background-color: #DF5050; cursor: pointer;">
@@ -34,7 +34,7 @@
                 </div>
             </a>
         </div>
-        <div class="col-md-3">
+        <div class="col-md-4">
             <!-- Hidden button -->
             <button id="modalOpener" type="button" class="btn btn-primary d-none" data-toggle="modal"
                 data-target="#modificacionPeriodos"></button>
@@ -159,11 +159,11 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-3">
+        {{-- <div class="col-md-3">
             <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #507BDF;">
                 Generar Reporte
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <div class="row mt-4">

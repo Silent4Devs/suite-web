@@ -3,7 +3,7 @@
     <h5 class="titulo_general_funcion"> Dashboard Personal </h5>
 
     <div class="row mt-4">
-        <div class="col-md-10">
+        <div class="col-md-12">
             <div class="card card-body">
                 <div class="row">
                     <div class="col-4">
@@ -78,7 +78,7 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-2">
+        {{-- <div class="col-md-2">
             <div class="card card-body">
                 <div class="d-flex w-100">
                     <div class="">
@@ -86,7 +86,7 @@
                     </div>
                 </div>
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <div class="row" style="font-size: 18px;">

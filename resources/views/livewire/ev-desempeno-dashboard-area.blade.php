@@ -19,7 +19,7 @@
     </p>
 
     <div class="row mt-4">
-        <div class="col-md-6">
+        <div class="col-md-12">
             <a wire:click.prevent="enviarRecordatorio">
                 <div class="w-100 p-3 text-center text-white rounded-lg"
                     style="background-color: #2C9E7F;cursor: pointer;">
@@ -40,11 +40,11 @@
                 Modificar periodo de evaluación
             </div>
         </div> --}}
-        <div class="col-md-6">
+        {{-- <div class="col-md-6">
             <div class="w-100 p-3 text-center text-white rounded-lg" style="background-color: #507BDF;">
                 Generar Reporte
             </div>
-        </div>
+        </div> --}}
     </div>
 
     <div class="row mt-4">
