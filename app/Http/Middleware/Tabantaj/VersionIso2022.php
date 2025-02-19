@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tabantaj;
 
 use App\Models\VersionesIso;
 use Closure;

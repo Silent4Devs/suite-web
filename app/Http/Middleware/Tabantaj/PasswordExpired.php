@@ -1,12 +1,13 @@
 <?php
 
-namespace App\Http\Middleware;
+namespace App\Http\Middleware\Tabantaj;
 
 use Closure;
 use Illuminate\Http\Request;
 
-class XssSanitization
+class PasswordExpired
 {
+
     /**
      * Handle an incoming request.
      *
@@ -14,11 +15,9 @@ class XssSanitization
      */
     public function handle(Request $request, Closure $next)
     {
-        $input = $request->all();
-        array_walk_recursive($input, function (&$input) {
-            $input = strip_tags($input);
-        });
-        $request->merge($input);
+        if (auth()->check() && auth()->user()->passwordExpired()) {
+            return redirect()->route('password.expired');
+        }
 
         return $next($request);
     }
