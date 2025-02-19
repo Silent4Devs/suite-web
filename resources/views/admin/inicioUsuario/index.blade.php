@@ -9,7 +9,7 @@
             <div class="header-card-iu">
                 <div class="d-flex justify-content-between align-items-start">
                     <div class="d-flex align-items-end">
-                        <h4 class="title-name-user">{{ $empleado->name }}</h4>  <h1>DESPLIGUE</h1>
+                        <h4 class="title-name-user">{{ $empleado->name }}</h4>
                         <small class="ml-3">
                             <i class="fa-solid fa-location-dot"></i>
                             Torre Murano
