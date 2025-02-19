@@ -15,14 +15,14 @@ return new class extends Migration
     {
         Schema::table('timesheet_proyectos_empleados', function (Blueprint $table) {
             //
-            $table->float('horas_asignadas', 8, 2)->change();
-            $table->float('costo_hora', 8, 2)->change();
+            $table->float('horas_asignadas', 8, 2, true)->change();
+            $table->float('costo_hora', 8, 2, true)->change();
         });
 
         Schema::table('timesheet_proyectos_proveedores', function (Blueprint $table) {
             //
-            $table->float('horas_tercero', 8, 2)->change();
-            $table->float('costo_tercero', 8, 2)->change();
+            $table->float('horas_tercero', 8, 2, true)->change();
+            $table->float('costo_tercero', 8, 2, true)->change();
         });
     }
 
