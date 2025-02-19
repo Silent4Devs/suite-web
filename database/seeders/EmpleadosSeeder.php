@@ -30,7 +30,7 @@ class EmpleadosSeeder extends Seeder
             'telefono_movil' => null,
             'n_empleado' => 1,
             'direccion' => 'Not provided',
-            'sede_id' => Sede::first()->id,
+            'sede_id' => 1,
             'telefono' => null,
             'n_registro' => null,
             'genero' => null,
