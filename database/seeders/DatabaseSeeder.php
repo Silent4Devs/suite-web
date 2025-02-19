@@ -122,7 +122,7 @@ class DatabaseSeeder extends Seeder
                 ListaInformativaSeeder::class,
 
                 // Competencias
-                CompetenciasCeroSeeder::class,
+                #CompetenciasCeroSeeder::class,
                 // AprobadorObjetivoEstrategicoSeeder es un seeder especificamente
                 // para aprobar los objetivos en caso de que sea necesario que algun otro usuario externo a los lideres deba revisarlos
                 #AprobadorObjetivoEstrategicoSeeder::class,
@@ -148,7 +148,7 @@ class DatabaseSeeder extends Seeder
                 // Lista Distribucion Compradores
                 ListaDistribucionCompradoresSeeder::class,
 
-                SentimentSeeder::class,
+                #$SentimentSeeder::class,
 
                 UpdateDiasSolicitadosSeeder::class,
             ]
