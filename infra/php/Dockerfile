@@ -17,6 +17,8 @@ RUN apk add --no-cache \
     libzip-dev \
     libpq-dev \
     make \
+    musl-dev \
+    gcompat \
     #mysql-client \
     nodejs \
     npm \
