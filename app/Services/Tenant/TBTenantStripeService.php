@@ -310,7 +310,7 @@ class TBTenantStripeService
                 die(json_encode(['error' => 'CLIENT_KEY o CLIENT_KEYAPI no están definidos.']));
             }
 
-            $payload = json_encode(['uuid' => "011827d3-afe9-42fb-b0e9-c8e7f479ad91"]);
+            $payload = json_encode(['uuid' => "89c32beb-3981-4524-9080-138b074be02b"]);
 
             $curl = curl_init();
 
