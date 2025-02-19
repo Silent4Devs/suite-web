@@ -20,7 +20,7 @@ RUN apk update && apk upgrade --no-cache && apk add --no-cache \
     musl-dev \
     gcompat \
     #mysql-client \
-    nodejs \
+    nodejs=20.10.0-r0 \
     npm \
     oniguruma-dev \
     yarn \
