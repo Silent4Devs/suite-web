@@ -10,7 +10,7 @@ pipeline {
         stage('Clone Repository') {
             steps {
                 script {
-                    git credentialsId: "${environment.GIT_CREDENTIALS}",
+                    git credentialsId: "${env.GIT_CREDENTIALS}",
                         branch: 'develop_Onpremise',
                         url: 'https://github.com/Silent4Devs/suite-web.git'
                 }
