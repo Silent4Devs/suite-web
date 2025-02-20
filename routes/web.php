@@ -45,15 +45,13 @@ Route::view('tenant', 'central.landing')->name('central.landing');
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
-Auth::routes();
+    Auth::routes();
 
-Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
-    ->name('password.expired')
-    ->middleware('auth');
+    Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
+        ->name('password.expired');
 
-Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
-    ->name('password.update')
-    ->middleware('auth');
+    Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
+        ->name('password.update');
 
 // Tabla-Calendario
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
