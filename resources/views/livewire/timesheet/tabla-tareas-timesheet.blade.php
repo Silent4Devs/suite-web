@@ -36,7 +36,9 @@
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
                     @if ($origen == 'tareas-proyectos')
                     <div class="form-control" style="background-color: #eee; width: 100%; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {{ $proyecto_seleccionado->proyecto }}
+                        <span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {{ $proyecto_seleccionado->proyecto }}
+                        </span>
                     </div>
                     @endif
                     @if ($origen == 'tareas')
