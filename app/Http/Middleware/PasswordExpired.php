@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class PasswordExpired
 {
+
     /**
      * Handle an incoming request.
      *

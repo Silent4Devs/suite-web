@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Schema;
 
 class TBTenantTenantManager
 {
+
     /**
      * @var mixed Instancia del tenant actual.
      */

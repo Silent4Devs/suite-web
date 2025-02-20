@@ -233,7 +233,7 @@
                     <ul class="menu-modulos">
                         @can('admin_type_catalogue_training')
                             <li>
-                                <a href="{{ route('type-catalogue-training.index') }}">
+                                <a href="{{ route('admin.type-catalogue-training.index') }}">
                                     <i class="bi bi-briefcase"></i>
                                     <span>
                                         Catálogo Tipo de Capacitaciones
@@ -243,7 +243,7 @@
                         @endcan
                         @can('admin_catalogue_training')
                             <li>
-                                <a href="{{ route('catalogue-training.index') }}">
+                                <a href="{{ route('admin.catalogue-training.index') }}">
                                     <i class="bi bi-briefcase"></i>
                                     <span>
                                         Catálogo de Capacitaciones

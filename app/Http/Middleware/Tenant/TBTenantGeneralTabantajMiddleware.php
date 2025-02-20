@@ -11,6 +11,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantGeneralTabantajMiddleware
 {
+
     protected $tbTenantManager;
 
     protected $tbStripeService;
