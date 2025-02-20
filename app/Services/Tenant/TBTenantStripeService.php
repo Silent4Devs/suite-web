@@ -3,6 +3,7 @@
 namespace App\Services\Tenant;
 
 use Exception;
+use Illuminate\Support\Facades\Cache;
 use Stripe\Customer;
 use Stripe\Product;
 use Stripe\Stripe;
@@ -300,6 +301,56 @@ class TBTenantStripeService
         }
     }
 
+    // public function tbTenantSubscriptionStatusOnPremise($tbModulosValidos)
+    // {
+    //     try {
+    //         $clientKey = env('CLIENT_KEY');
+    //         $clientKeyApi = env('CLIENT_KEYAPI');
+
+    //         if (!$clientKey || !$clientKeyApi) {
+    //             die(json_encode(['error' => 'CLIENT_KEY o CLIENT_KEYAPI no están definidos.']));
+    //         }
+
+    //         $payload = json_encode(['uuid' => $clientKey]);
+
+    //         $options = [
+    //             'http' => [
+    //                 'header'  => "Content-Type: application/json\r\nAccept: application/json\r\n",
+    //                 'method'  => 'POST',
+    //                 'content' => $payload,
+    //                 'timeout' => 30
+    //             ]
+    //         ];
+
+    //         $context  = stream_context_create($options);
+
+    //         $response = file_get_contents($clientKeyApi, false, $context);
+    //         if ($response === false) {
+    //             die(json_encode(['error' => 'Error al consumir el servicio.']));
+    //         }
+
+    //         $jsonData = json_decode($response, true);
+
+    //         if (!empty($jsonData) && is_array($jsonData)) {
+    //             foreach ($jsonData as $cliente) {
+    //                 if ($cliente['Estatus'] === true) {
+    //                     if (!empty($cliente['modulos']) && is_array($cliente['modulos'])) {
+    //                         foreach ($cliente['modulos'] as $modulo) {
+    //                             if (in_array($modulo['nombre_catalogo'], $tbModulosValidos) && $modulo['estatus'] === true) {
+    //                                 return true;
+    //                             }
+    //                         }
+    //                     }
+    //                 }
+    //             }
+    //             return false;
+    //         }
+    //         return false;
+    //     } catch (\Throwable $tbTh) {
+    //         abort(403, 'Error en la verificación de suscripción');
+    //     }
+    // }
+
     public function tbTenantSubscriptionStatusOnPremise($tbModulosValidos)
     {
         try {
@@ -310,34 +361,34 @@ class TBTenantStripeService
                 die(json_encode(['error' => 'CLIENT_KEY o CLIENT_KEYAPI no están definidos.']));
             }
 
-            $payload = json_encode(['uuid' => "89c32beb-3981-4524-9080-138b074be02b"]);
+            $cacheKey = 'subscription_status';
+            $jsonData = Cache::get($cacheKey);
 
-            $curl = curl_init();
+            if (!$jsonData) {
+                $payload = json_encode(['uuid' => $clientKey]);
 
-            curl_setopt_array($curl, [
-                CURLOPT_URL => $clientKeyApi,
-                CURLOPT_RETURNTRANSFER => true,
-                CURLOPT_ENCODING => '',
-                CURLOPT_MAXREDIRS => 10,
-                CURLOPT_TIMEOUT => 30,
-                CURLOPT_FOLLOWLOCATION => true,
-                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                CURLOPT_POST => true,
-                CURLOPT_POSTFIELDS => $payload,
-                CURLOPT_HTTPHEADER => [
-                    'Content-Type: application/json',
-                    'Accept: application/json'
-                ],
-            ]);
+                $options = [
+                    'http' => [
+                        'header'  => "Content-Type: application/json\r\nAccept: application/json\r\n",
+                        'method'  => 'POST',
+                        'content' => $payload,
+                        'timeout' => 30
+                    ]
+                ];
 
-            $response = curl_exec($curl);
-            if (curl_errno($curl)) {
-                die(json_encode(['error' => 'cURL Error: ' . curl_error($curl)]));
+                $context  = stream_context_create($options);
+                $response = file_get_contents($clientKeyApi, false, $context);
+
+                if ($response === false) {
+                    die(json_encode(['error' => 'Error al consumir el servicio.']));
+                }
+
+                $jsonData = json_decode($response, true);
+
+                if ($jsonData) {
+                    Cache::put($cacheKey, $jsonData, now()->addDay());
+                }
             }
-
-            curl_close($curl);
-
-            $jsonData = json_decode($response, true);
 
             if (!empty($jsonData) && is_array($jsonData)) {
                 foreach ($jsonData as $cliente) {
@@ -358,6 +409,7 @@ class TBTenantStripeService
             abort(403, 'Error en la verificación de suscripción');
         }
     }
+
 
 
     /**
