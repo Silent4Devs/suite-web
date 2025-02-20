@@ -177,7 +177,7 @@
             </div>
         </div>
     </div>
-    <form method="GET" id="form_id" style="position: relative; left: 10rem; " action="{{ route('orden-compra.excel') }}">
+    <form method="GET" id="form_id" style="position: relative; left: 10rem; " action="{{ route('contract_manager.orden-compra.excel') }}">
         <button class="boton-transparentev2" type="submit" style="color: var(--color-tbj);">
             IMPRIMIR <img src="{{ asset('imprimir.svg') }}" alt="Importar" class="icon">
         </button>
