@@ -311,33 +311,23 @@ class TBTenantStripeService
     //             die(json_encode(['error' => 'CLIENT_KEY o CLIENT_KEYAPI no están definidos.']));
     //         }
 
-    //         $payload = json_encode(['uuid' => "89c32beb-3981-4524-9080-138b074be02b"]);
+    //         $payload = json_encode(['uuid' => $clientKey]);
 
-    //         $curl = curl_init();
+    //         $options = [
+    //             'http' => [
+    //                 'header'  => "Content-Type: application/json\r\nAccept: application/json\r\n",
+    //                 'method'  => 'POST',
+    //                 'content' => $payload,
+    //                 'timeout' => 30
+    //             ]
+    //         ];
 
-    //         curl_setopt_array($curl, [
-    //             CURLOPT_URL => $clientKeyApi,
-    //             CURLOPT_RETURNTRANSFER => true,
-    //             CURLOPT_ENCODING => '',
-    //             CURLOPT_MAXREDIRS => 10,
-    //             CURLOPT_TIMEOUT => 30,
-    //             CURLOPT_FOLLOWLOCATION => true,
-    //             CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-    //             CURLOPT_POST => true,
-    //             CURLOPT_POSTFIELDS => $payload,
-    //             CURLOPT_HTTPHEADER => [
-    //                 'Content-Type: application/json',
-    //                 'Accept: application/json'
-    //             ],
-    //         ]);
+    //         $context  = stream_context_create($options);
 
-    //         $response = curl_exec($curl);
-    //         dd($response);
-    //         if (curl_errno($curl)) {
-    //             die(json_encode(['error' => 'cURL Error: ' . curl_error($curl)]));
+    //         $response = file_get_contents($clientKeyApi, false, $context);
+    //         if ($response === false) {
+    //             die(json_encode(['error' => 'Error al consumir el servicio.']));
     //         }
-
-    //         curl_close($curl);
 
     //         $jsonData = json_decode($response, true);
 
@@ -375,33 +365,23 @@ class TBTenantStripeService
             $jsonData = Cache::get($cacheKey);
 
             if (!$jsonData) {
-                $payload = json_encode(['uuid' => "89c32beb-3981-4524-9080-138b074be02b"]);
+                $payload = json_encode(['uuid' => $clientKey]);
 
-                $curl = curl_init();
+                $options = [
+                    'http' => [
+                        'header'  => "Content-Type: application/json\r\nAccept: application/json\r\n",
+                        'method'  => 'POST',
+                        'content' => $payload,
+                        'timeout' => 30
+                    ]
+                ];
 
-                curl_setopt_array($curl, [
-                    CURLOPT_URL => $clientKeyApi,
-                    CURLOPT_RETURNTRANSFER => true,
-                    CURLOPT_ENCODING => '',
-                    CURLOPT_MAXREDIRS => 10,
-                    CURLOPT_TIMEOUT => 30,
-                    CURLOPT_FOLLOWLOCATION => true,
-                    CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-                    CURLOPT_POST => true,
-                    CURLOPT_POSTFIELDS => $payload,
-                    CURLOPT_HTTPHEADER => [
-                        'Content-Type: application/json',
-                        'Accept: application/json'
-                    ],
-                ]);
+                $context  = stream_context_create($options);
+                $response = file_get_contents($clientKeyApi, false, $context);
 
-                $response = curl_exec($curl);
-
-                if (curl_errno($curl)) {
-                    die(json_encode(['error' => 'cURL Error: ' . curl_error($curl)]));
+                if ($response === false) {
+                    die(json_encode(['error' => 'Error al consumir el servicio.']));
                 }
-
-                curl_close($curl);
 
                 $jsonData = json_decode($response, true);
 
