@@ -108,7 +108,7 @@
                                             resolver
                                             este conflicto</p>
                                     @endif
-                                    <form id="logoutform" action="{{ route('logout') }}" method="POST"
+                                    <form id="logoutform" action="{{ route('logout.leave') }}" method="POST"
                                         style="display: none;">
                                         {{ csrf_field() }}
                                     </form>
