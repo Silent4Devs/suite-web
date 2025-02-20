@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantTimesheetMiddleware
 {
+
     protected $tbTenantManager;
 
     protected $tbStripeService;

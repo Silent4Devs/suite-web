@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantGestionContractualMiddleware
 {
+
     protected $tbTenantManager;
 
     protected $tbStripeService;
