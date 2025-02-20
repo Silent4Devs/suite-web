@@ -146,7 +146,7 @@ class ConcientizacionSgiController extends Controller
                 if (Storage::putFileAs('storage/documentos_concientSgsi', $file, $file->getClientOriginalName())) {
                     DocumentoConcientizacionSgis::create([
                         'documento' => $file->getClientOriginalName(),
-                        'concientSgsi_id' => $controlAcceso->id,
+                        'concientSgsi_id' => $concientizacionSgi->id,
                     ]);
                 }
             }
