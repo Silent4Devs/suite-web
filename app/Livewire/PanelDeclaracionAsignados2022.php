@@ -19,7 +19,7 @@ class PanelDeclaracionAsignados2022 extends Component
 
     public function mount()
     {
-        $this->empleados = Empleado::getAltaEmpleados();
+        $this->empleados = Empleado::getAltaEmpleados()->sortBy('name');
         $this->organizacion_actual = $this->obtenerOrganizacion();
         $this->logo_actual = $this->organizacion_actual?->logo;
         $this->empresa_actual = $this->organizacion_actual?->empresa;
@@ -56,6 +56,28 @@ class PanelDeclaracionAsignados2022 extends Component
                 ],
             ];
         })->toArray();
+    }
+
+    public function cambioResponsable($keyR){
+        // dd(1, $keyR, $this->array_asignados[$keyR]);
+        $nr = $this->empleados->find($this->array_asignados[$keyR]['responsable']['id']);
+        $nuevoResponsable = [
+            'id' => $nr->id,
+            'nombre' => $nr->name
+        ];
+
+        $this->dispatch('asignacionResponsable', nuevoResponsable: $nuevoResponsable);
+    }
+
+    public function cambioAprobador($keyR){
+        // dd(1, $keyR, $this->array_asignados[$keyR]);
+        $nr = $this->empleados->find($this->array_asignados[$keyR]['aprobador']['id']);
+        $nuevoAprobador = [
+            'id' => $nr->id,
+            'nombre' => $nr->name
+        ];
+
+        $this->dispatch('asignacionAprobador', nuevoAprobador: $nuevoAprobador);
     }
 
     public function render()
