@@ -92,7 +92,7 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
-    mem_limit: 3g
+    mem_limit: 4g
 
   schedule-worker:
     build:
@@ -112,7 +112,7 @@ services:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
-    mem_limit: 3g
+    mem_limit: 4g
 
   redis-tabantaj:
     image: redis:alpine
