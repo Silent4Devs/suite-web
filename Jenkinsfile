@@ -16,11 +16,14 @@ pipeline {
                 }
             }
         }
-        stage('Deploy via SSH') {
+
+        stage('Deploy via SCP') {
             steps {
                 script {
                     sshagent(credentials: ["${env.SSH_CREDENTIALS}"]) {
-                        sh "rsync -avz --delete -e 'ssh -o StrictHostKeyChecking=no' $WORKSPACE/ desarrollo@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}"
+                        sh """
+                        scp -o StrictHostKeyChecking=no -r "$WORKSPACE/"* desarrollo@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}
+                        """
                     }
                 }
             }
