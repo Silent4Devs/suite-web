@@ -18,7 +18,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property timestamp without time zone|null $created_at
  * @property timestamp without time zone|null $updated_at
  * @property string|null $deleted_at
- * @property int|null $team_id
  * @property int|null $norma_id
  * @property Team|null $team
  * @property Norma|null $norma
@@ -80,7 +79,6 @@ class PartesInteresada extends Model implements Auditable
     protected $fillable = [
         'parteinteresada',
         'requisitos',
-        'team_id',
         'norma_id',
     ];
 

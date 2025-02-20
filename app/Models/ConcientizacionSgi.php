@@ -51,8 +51,7 @@ class ConcientizacionSgi extends Model implements Auditable, HasMedia
         'concientSgsi_id',
         'created_at',
         'updated_at',
-        'deleted_at',
-        'team_id',
+        'deleted_at'
     ];
 
     const PERSONALOBJETIVO_SELECT = [
@@ -96,11 +95,6 @@ class ConcientizacionSgi extends Model implements Auditable, HasMedia
     public function getArchivoAttribute()
     {
         return $this->getMedia('archivo')->last();
-    }
-
-    public function team()
-    {
-        return $this->belongsTo(Team::class, 'team_id');
     }
 
     public function documentos_concientizacion()

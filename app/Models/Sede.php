@@ -22,7 +22,6 @@ use OwenIt\Auditing\Contracts\Auditable;
  * @property Carbon|null $updated_at
  * @property string|null $deleted_at
  * @property int|null $organizacion_id
- * @property int|null $team_id
  * @property string|null $direccion
  * @property Organizacion|null $organizacion
  * @property Team|null $team
@@ -38,8 +37,7 @@ class Sede extends Model implements Auditable
     protected $table = 'sedes';
 
     protected $casts = [
-        'organizacion_id' => 'int',
-        'team_id' => 'int',
+        'organizacion_id' => 'int'
     ];
 
     protected $fillable = [
@@ -47,7 +45,6 @@ class Sede extends Model implements Auditable
         'foto_sedes',
         'descripcion',
         'organizacion_id',
-        'team_id',
         'direccion',
         'latitude',
         'longitud',
