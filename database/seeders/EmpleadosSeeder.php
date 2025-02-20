@@ -34,7 +34,7 @@ class EmpleadosSeeder extends Seeder
             'telefono' => null,
             'n_registro' => null,
             'genero' => null,
-            'email' => 'admin@admin.com',
+            'email' => 'example@example.com',
             'resumen' => '',
         ]);
     }
