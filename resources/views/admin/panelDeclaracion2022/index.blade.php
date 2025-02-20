@@ -70,6 +70,7 @@
                     Exportar Excel
                 </button>
             </div>
+            @livewire('panel-declaracion-asignados2022')
             <table id="asignados">
         <thead>
             <tr>
@@ -223,7 +224,7 @@
         });
     </script>
 
-    <script>    
+    <script>
      document.addEventListener('DOMContentLoaded', function() {
 
             window.enviarCorreo = (e, tipo) => {
