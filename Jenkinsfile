@@ -20,9 +20,9 @@ pipeline {
         stage('Deploy via SCP') {
             steps {
                 script {
-                    sshagent(credentials: ["${env.SSH_CREDENTIALS}"]) {
+                    withCredentials([usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
                         sh """
-                        scp -o StrictHostKeyChecking=no -r "$WORKSPACE/"* desarrollo@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}
+                        sshpass -p "$SSH_PASS" scp -o StrictHostKeyChecking=no -r "$WORKSPACE/"* desarrollo@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}
                         """
                     }
                 }
