@@ -21,6 +21,8 @@ pipeline {
             steps {
                 script {
                      withCredentials([usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
+                        
+                        sh "chmod -R 775 ${env.DEPLOY_PATH}"
                         sh """
                         sshpass -p "$SSH_PASS" scp -o StrictHostKeyChecking=no -r "$WORKSPACE/"* desarrollo@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}
                         """
