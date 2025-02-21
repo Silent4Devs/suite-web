@@ -15,9 +15,9 @@ class PasswordExpired
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->passwordExpired()) {
-            return redirect()->route('password.expired');
-        }
+        // if (auth()->check() && auth()->user()->passwordExpired()) {
+        //     return redirect()->route('password.expired');
+        // }
 
         return $next($request);
     }

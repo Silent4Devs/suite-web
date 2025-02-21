@@ -26,11 +26,11 @@ class PasswordController extends Controller
         $user = auth()->user();
 
         // Verificar que el email proporcionado coincida con el email del usuario autenticado
-        if ($request->email !== $user->email) {
-            return redirect()->back()->withErrors([
-                'email' => 'El email proporcionado no coincide con el email del usuario autenticado.',
-            ]);
-        }
+        // if ($request->email !== $user->email) {
+        //     return redirect()->back()->withErrors([
+        //         'email' => 'El email proporcionado no coincide con el email del usuario autenticado.',
+        //     ]);
+        // }
 
         // Actualizar la contraseña del usuario
         $user->password = Hash::make($request->password);
