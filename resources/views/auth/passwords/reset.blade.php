@@ -68,6 +68,8 @@
     <p class="text-muted mt-4" style="text-align: left">Introduce tu nueva contraseña y, al confirmarla, presiona el botón "Restablecer contraseña". Una vez completado el proceso, ingresarás automáticamente a TABANTAJ.</p>
 
     <div class="form-group">
+        <label for="email">{{ trans('global.login_email') }}</label>
+        <br>
         <input id="email" type="email" name="email"
             class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus
             placeholder="{{ trans('global.login_email') }}" value="{{ $email ?? old('email') }}" >
@@ -77,6 +79,8 @@
     </div>
     <br>
     <div class="form-group" style="position: relative">
+        <label for="password">{{ trans('global.login_password') }}</label>
+        <br>
         <input id="password" type="password" name="password" class="form-control" required
             placeholder="{{ trans('global.login_password') }}">
         <span style="position: absolute; top:21px;right: 8px;"><i id="tooglePassword" class="fas fa-eye-slash"></i></span>
@@ -86,6 +90,8 @@
     </div>
     <br>
     <div class="form-group" style="position: relative">
+        <label for="password_confirmation">{{ trans('global.login_password_confirmation') }}</label>
+        <br>
         <input id="password-confirm" type="password" name="password_confirmation" class="form-control" required
             placeholder="{{ trans('global.login_password_confirmation') }}">
         <span style="position: absolute; top:21px;right: 8px;"><i id="tooglePasswordConfirmation" class="fas fa-eye-slash"></i></span>
