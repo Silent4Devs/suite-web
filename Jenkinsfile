@@ -26,7 +26,7 @@ pipeline {
                         """
                         
                         sh """
-                            sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${env.DEPLOY_SERVER} "sudo chmod -R 755 /var/contenedor/suite-web"
+                            sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${env.DEPLOY_SERVER} "sudo chmod -R 777 /var/contenedor/suite-web"
                         """
 
                         sh """
