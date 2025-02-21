@@ -1,7 +1,7 @@
 <div>
     {{-- Because she competes with no one, no one can compete with her. --}}
     <div>
-        <table>
+        <table id="">
             <thead>
                 <tr>
                     <th>
@@ -18,6 +18,9 @@
                     </th>
                     <th>
                         Aprobador
+                    </th>
+                    <th>
+
                     </th>
                 </tr>
             </thead>
@@ -55,6 +58,11 @@
                             @endforeach
                         </select>
                     </td>
+                    <td>
+                        <button class="btn-primary" wire:click="envioNotificacionControl('individual', {{$keyAs}})">
+                            Enviar Correo
+                        </button>
+                    </td>
                 </tr>
                 @endforeach
             </tbody>
@@ -78,7 +86,6 @@
                     confirmButtonText: 'Sí, estoy seguro'
                 }).then((result) => {
                     if (result.isConfirmed) {
-                    console.log(responsable.id)
                         // Llama al método del backend y, por ejemplo, pasa el id del responsable
                         @this.call('guardarResponsable', responsable);
                     }
@@ -87,22 +94,76 @@
         });
     </script>
 
-
     <script>
         document.addEventListener('livewire:initialized', function() {
-            @this.on('asignacionAprobador', (data) => {
-                // data tiene la estructura: { nuevoResponsable: { id, nombre } }
-                const aprobador = data.nuevoAprobador;
+            @this.on('desasignacionResponsable', (data) => {
+                const responsable = data.nuevoResponsable;
+
 
                 Swal.fire({
-                    title: 'Asignación de responsable',
-                    text: 'Deseas asignar como responsable a ' + aprobador.nombre,
+                    title: 'Desasignación de responsable',
+                    text: '¿Desea remover al responsable de este control?',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: '#3085d6',
                     cancelButtonColor: '#ffffff',
-                    cancelButtonText: '<span style="color: #057BE2; border: 1px solid var(--unnamed-color-057be2); border-radius: 4px; opacity: 1;">Cancelar</span>',
+                    cancelButtonText: '<span style="color: #057BE2;">Cancelar</span>',
                     confirmButtonText: 'Sí, estoy seguro'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Llama al método del backend y, por ejemplo, pasa el id del responsable
+                        @this.call('quitarResponsable', responsable);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('asignacionAprobador', (data) => {
+                const aprobador = data.nuevoAprobador;
+
+
+                Swal.fire({
+                    title: 'Asignación de aprobador',
+                    text: '¿Deseas asignar como aprobador a ' + aprobador.nombre + '?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#ffffff',
+                    cancelButtonText: '<span style="color: #057BE2;">Cancelar</span>',
+                    confirmButtonText: 'Sí, estoy seguro'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Llama al método del backend y, por ejemplo, pasa el id del responsable
+                        @this.call('guardarAprobador', aprobador);
+                    }
+                });
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('livewire:initialized', function() {
+            @this.on('desasignacionAprobador', (data) => {
+                const aprobador = data.nuevoAprobador;
+
+
+                Swal.fire({
+                    title: 'Desasignación de aprobador',
+                    text: '¿Desea remover al aprobador de este control?',
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#ffffff',
+                    cancelButtonText: '<span style="color: #057BE2;">Cancelar</span>',
+                    confirmButtonText: 'Sí, estoy seguro'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        // Llama al método del backend y, por ejemplo, pasa el id del responsable
+                        @this.call('quitarAprobador', aprobador);
+                    }
                 });
             });
         });
