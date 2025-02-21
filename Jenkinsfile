@@ -22,8 +22,8 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
                         sh """#!/bin/bash
-                        sshpass -p "\${SSH_PASS}" ssh -o StrictHostKeyChecking=no "\${SSH_USER}"@${env.DEPLOY_SERVER} 'echo "\${SSH_PASS}" | sudo -S chmod -R 775 ${env.DEPLOY_PATH}'
-                        sshpass -p "\${SSH_PASS}" scp -o StrictHostKeyChecking=no -r "$WORKSPACE/." "\${SSH_USER}"@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}
+                        sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no "$SSH_USER"@${env.DEPLOY_SERVER} 'echo "$SSH_PASS" | sudo -S chmod -R 775 ${env.DEPLOY_PATH}'
+                        sshpass -p "$SSH_PASS" scp -o StrictHostKeyChecking=no -r "$WORKSPACE/." "$SSH_USER"@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}
                         """
                     }
                 }
