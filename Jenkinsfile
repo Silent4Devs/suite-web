@@ -2,7 +2,7 @@ pipeline {
     agent any
     environment {
         GIT_CREDENTIALS = 'github-credentials'
-        SSH_CREDENTIALS = 'ssh-deploy-key'
+        SSH_CREDENTIALS = 'QA-CREDENCIALES'
         DEPLOY_SERVER = '192.168.9.78'
         DEPLOY_PATH = '/var/contenedor/suite-web'
     }
