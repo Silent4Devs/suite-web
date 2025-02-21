@@ -18,7 +18,7 @@
         $user = User::getCurrentUser();
     @endphp
 
-    @if($user && $user->password_changed_at == null || )
+    @if($user && $user->password_changed_at == null)
         <form method="POST" action="{{ route('password.update') }}" style="height: 513px">
             @csrf
             <img class="logo_silent rounded-circle" style="width: 100px" src="{{ $logotipo }}" />
