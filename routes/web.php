@@ -50,7 +50,7 @@ Route::view('tenant', 'central.landing')->name('central.landing');
     Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
         ->name('password.expired');
 
-    Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
+    Route::post('/password-update', [PasswordController::class, 'updatePassword'])
         ->name('password.update');
 
 // Tabla-Calendario
