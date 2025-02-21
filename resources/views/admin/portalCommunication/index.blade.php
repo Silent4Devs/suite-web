@@ -12,7 +12,7 @@
                 </div>
                 <div class="caja-input-search">
                     <span style="font-size: 20px;"> <strong>
-                            Bienvenido despliegue&nbsp;{{ $user->empleado ? explode(' ', $user->empleado->name)[0] : '' }},
+                            Bienvenido&nbsp;{{ $user->empleado ? explode(' ', $user->empleado->name)[0] : '' }},
                         </strong> </span>
                     <span> ¿Qué&nbsp;quieres&nbsp;hacer&nbsp;hoy? </span>
                     <span> | </span>
