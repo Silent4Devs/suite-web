@@ -22,7 +22,7 @@ pipeline {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
                         sh """
-                        chmod -R 755 ${WORKSPACE}
+                        chmod -R 755 "${WORKSPACE}"
                         """
                         
                         sh """
