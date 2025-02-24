@@ -508,7 +508,14 @@ class PanelDeclaracionAsignados2022 extends Component
         ]);
     }
 
-    public function descargarArchivo()
+    public function descargarExcel()
+    {
+        $export = new PanelDeclaracion2022Export;
+
+        return Excel::download($export, 'Controles2022.xlsx');
+    }
+
+    public function descargarCSV()
     {
         $export = new PanelDeclaracion2022Export;
 

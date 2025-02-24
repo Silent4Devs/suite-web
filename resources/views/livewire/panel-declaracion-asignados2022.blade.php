@@ -2,25 +2,26 @@
     {{-- Because she competes with no one, no one can compete with her. --}}
 
     <div>
-        <div class="row">
-            <div class="text-left">
-                {{-- Botón para abrir el modal de notificación --}}
+        <div class="row align-items-center">
+            <!-- Botón a la izquierda -->
+            <div class="col text-start">
                 <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                     Enviar Notificación
                 </button>
             </div>
-            <div class="text-right">
-                {{-- <button id="btnCSV" class="btn-sm rounded pr-2" style="background-color:#c2efe0; border: #fff">
+
+            <!-- Botones a la derecha -->
+            <div class="col text-end">
+                <button wire:click="descargarCSV" class="btn-sm rounded pr-2" style="background-color:#c2efe0; border: #fff">
                     <i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc" title="Exportar CSV"></i>
                     Exportar CSV
-                </button> --}}
-                <button wire:click="descargarArchivo" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
+                </button>
+                <button wire:click="descargarExcel" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
                     <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
                     Exportar Excel
                 </button>
             </div>
         </div>
-
         {{-- Modal para seleccionar el tipo de notificación --}}
         <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog">
