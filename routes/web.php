@@ -459,7 +459,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('contenedores/{contenedor}', 'ContenedorMatrizOctaveController@destroy')->name('contenedores.destroy');
             Route::resource('contenedores', 'ContenedorMatrizOctaveController')->except(['index', 'create', 'edit', 'destroy']);
 
-            Route::group(['middleware' => ['gestion_talento']], function () {
+            // Route::group(['middleware' => ['gestion_talento']], function () {
                 //Modulo Capital Humano
                 // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
                 Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
@@ -549,6 +549,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::get('solicitud-vacaciones/{id}/respuesta', 'SolicitudVacacionesController@respuesta')->name('solicitud-vacaciones.respuesta');
                 Route::get('solicitud-vacaciones/{id}/show', 'SolicitudVacacionesController@show')->name('solicitud-vacaciones.show');
                 Route::post('solicitud-vacaciones/destroy', 'SolicitudVacacionesController@destroy')->name('solicitud-vacaciones.destroy');
+                Route::post('solicitudAprobacionVacacion/updateAprobacion/{id}', 'SolicitudVacacionesController@updateAprobacion')->name('solicitud-vacaciones.updateAprobacion');
+
                 Route::resource('solicitud-vacaciones', 'SolicitudVacacionesController')->names([
                     'create' => 'solicitud-vacaciones.create',
                     'store' => 'solicitud-vacaciones.store',
@@ -567,6 +569,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::get('solicitud-dayoff/{id}/respuesta', 'SolicitudDayOffController@respuesta')->name('solicitud-dayoff.respuesta');
                 Route::get('solicitud-dayoff/{id}/show', 'SolicitudDayOffController@show')->name('solicitud-dayoff.show');
                 Route::post('solicitud-dayoff/destroy', 'SolicitudDayOffController@destroy')->name('solicitud-dayoff.destroy');
+                Route::post('solicitudAprobacionDayOff/updateAprobacion/{id}', 'SolicitudDayOffController@updateAprobacion')->name('solicitud-DayOff.updateAprobacion');
                 Route::resource('solicitud-dayoff', 'SolicitudDayOffController')->names([
                     'create' => 'solicitud-dayoff.create',
                     'store' => 'solicitud-dayoff.store',
@@ -825,7 +828,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::resource('recursos', 'RecursosController')->except(['update']);
 
                 Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
-            });
+            // });
 
             Route::group(['middleware' => ['gestion_normativa']], function () {
 
@@ -1729,7 +1732,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // Route::resource('/', MejorasController::class);
         });
         // Fin visitantes
-    });
+     });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
         // Change password
