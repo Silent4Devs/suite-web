@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use App\Models\User; // Asegúrate de importar el modelo User
 
 class PasswordController extends Controller
 {
@@ -18,19 +19,16 @@ class PasswordController extends Controller
     {
         // Validar los datos del formulario
         $request->validate([
-            'email' => 'required|email', // Asegurarse de que el email sea válido
+            'email' => 'required|email|exists:users,email', // Asegurarse de que el email sea válido y exista en la base de datos
             'password' => 'required|min:8|confirmed', // Validar la contraseña y su confirmación
         ]);
 
-        // Obtener el usuario autenticado
-        $user = auth()->user();
+        // Buscar al usuario por su email
+        $user = User::where('email', $request->email)->first();
 
-        // Verificar que el email proporcionado coincida con el email del usuario autenticado
-        // if ($request->email !== $user->email) {
-        //     return redirect()->back()->withErrors([
-        //         'email' => 'El email proporcionado no coincide con el email del usuario autenticado.',
-        //     ]);
-        // }
+        if (!$user) {
+            return redirect()->back()->withErrors(['email' => 'El correo electrónico no existe.'])->withInput();
+        }
 
         // Actualizar la contraseña del usuario
         $user->password = Hash::make($request->password);
