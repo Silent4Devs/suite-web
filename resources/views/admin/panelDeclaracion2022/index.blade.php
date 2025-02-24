@@ -60,17 +60,7 @@
         </div>
 
         <div class="card-body datatable-fix">
-            <div class="text-right">
-                <button id="btnCSV" class="btn-sm rounded pr-2" style="background-color:#c2efe0; border: #fff">
-                    <i class="fas fa-file-csv" style="font-size: 1.1rem; color:#3490dc" title="Exportar CSV"></i>
-                    Exportar CSV
-                </button>
-                <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#b9eeb9; border: #fff">
-                    <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
-                    Exportar Excel
-                </button>
-            </div>
-            @livewire('panel-declaracion-asignados2022')
+                @livewire('panel-declaracion-asignados2022')
 
             <div class="container">
                 {{-- <div class="mb-4 row">

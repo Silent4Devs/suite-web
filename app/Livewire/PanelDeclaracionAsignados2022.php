@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Exports\PanelDeclaracion2022\PanelDeclaracion2022Export;
 use App\Mail\DeclaracionAplicabilidadIso;
 use App\Models\Empleado;
 use App\Models\Iso27\DeclaracionAplicabilidadAprobarIso;
@@ -11,6 +12,7 @@ use App\Traits\ObtenerOrganizacion;
 use Illuminate\Support\Facades\Mail;
 use Jantinnerezo\LivewireAlert\LivewireAlert;
 use Livewire\Component;
+use Maatwebsite\Excel\Facades\Excel;
 
 class PanelDeclaracionAsignados2022 extends Component
 {
@@ -22,6 +24,8 @@ class PanelDeclaracionAsignados2022 extends Component
     public $logo_actual;
     public $empresa_actual;
     public $array_asignados = [];
+
+    public $select_envio = 'no_notificado';
 
     public function mount()
     {
@@ -406,88 +410,108 @@ class PanelDeclaracionAsignados2022 extends Component
         }
     }
 
-    public function envioNotificacionControl($tipo, $keyR)
+    public function enviarNotificacion()
+    {
+        $this->envioNotificacionControl($this->select_envio);
+    }
+
+    public function envioNotificacionControl($tipo, $keyR = null)
     {
         switch ($tipo) {
             case 'individual':
-                # code...
-                $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($this->array_asignados[$keyR]['responsable']['id']));
-                $declaracion = $this->array_asignados[$keyR]['id_gap_dos_catalogo'];
-
-                $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad', 'gapdos')->where('declaracion_id', $declaracion)->where('empleado_id', $empleado->id)->get();
-                $controles_name = collect();
-
-                foreach ($responsable as $control) {
-                    $controles_name->push($control->gapdos);
-                }
-
-                Mail::to(removeUnicodeCharacters($empleado->email))->queue(new DeclaracionAplicabilidadIso($empleado->name, $tipo, $controles_name));
-                $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $empleado->id)->first();
-                $responsable->update(['esta_correo_enviado' => true]);
-
-                $this->alert('success', 'Correo enviado', [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
+                $this->enviarCorreoIndividual($keyR);
                 break;
 
             case 'no_notificado':
-                # code...
-                $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)->distinct('empleado_id')->pluck('empleado_id')->toArray();
-
-
-                foreach ($destinatarios as $destinatario) {
-                    $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
-                    $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad', 'gapdos')->where('empleado_id', $destinatario)->get();
-                    $controles_name = collect();
-
-                    foreach ($responsable as $control) {
-                        $controles_name->push($control->gapdos);
-                    }
-
-                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new DeclaracionAplicabilidadIso($empleado->name, $tipo, $controles_name));
-                    $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $destinatario)->first();
-                    $responsable->update(['esta_correo_enviado' => true]);
-                }
-
-                $this->alert('success', 'Correos enviado', [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
+                $this->enviarCorreosNoNotificados();
                 break;
 
             case 'todos':
-                # code...
-                $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id')->toArray();
-
-                foreach ($destinatarios as $destinatario) {
-                    $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
-                    $responsable = DeclaracionAplicabilidadResponsableIso::with('declaracion_aplicabilidad', 'gapdos')->where('empleado_id', $destinatario)->get();
-                    $controles_name = collect();
-                    foreach ($responsable as $control) {
-                        $controles_name->push($control->gapdos);
-                    }
-
-                    Mail::to(removeUnicodeCharacters($empleado->email))->queue(new DeclaracionAplicabilidadIso($empleado->name, $tipo, $controles_name));
-                    $responsable = DeclaracionAplicabilidadResponsableIso::where('empleado_id', $destinatario)->first();
-                    $responsable->update(['esta_correo_enviado' => true]);
-                }
-
-                $this->alert('success', 'Correo enviado', [
-                    'position' => 'top-end',
-                    'timer' => 3000,
-                    'toast' => true,
-                ]);
-
+                $this->enviarCorreosATodos();
                 break;
 
             default:
-                # code...
                 break;
         }
 
-        // return response()->json(['message' => 'Correo enviado'], 200);
+        $this->mostrarAlerta('success', 'Correo enviado');
+    }
+
+    private function enviarCorreoIndividual($keyR)
+    {
+        $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($this->array_asignados[$keyR]['responsable']['id']));
+        $declaracion = $this->array_asignados[$keyR]['id_gap_dos_catalogo'];
+
+        $controles_name = $this->obtenerControlesNombre($empleado->id, $declaracion);
+
+        $this->enviarCorreo($empleado, 'individual', $controles_name);
+        $this->marcarCorreoComoEnviado($empleado->id);
+    }
+
+    private function enviarCorreosNoNotificados()
+    {
+        $destinatarios = DeclaracionAplicabilidadResponsableIso::where('esta_correo_enviado', false)
+            ->distinct('empleado_id')
+            ->pluck('empleado_id');
+
+        $this->enviarCorreos($destinatarios, 'no_notificado');
+    }
+
+    private function enviarCorreosATodos()
+    {
+        $destinatarios = DeclaracionAplicabilidadResponsableIso::distinct('empleado_id')->pluck('empleado_id');
+
+        $this->enviarCorreos($destinatarios, 'todos');
+    }
+
+    private function enviarCorreos($destinatarios, $tipo)
+    {
+        foreach ($destinatarios as $destinatario) {
+            $empleado = Empleado::alta()->select('id', 'name', 'email')->find(intval($destinatario));
+            $controles_name = $this->obtenerControlesNombre($empleado->id);
+
+            $this->enviarCorreo($empleado, $tipo, $controles_name);
+            $this->marcarCorreoComoEnviado($empleado->id);
+        }
+    }
+
+    private function obtenerControlesNombre($empleado_id, $declaracion_id = null)
+    {
+        $query = DeclaracionAplicabilidadResponsableIso::with('gapdos')
+            ->where('empleado_id', $empleado_id);
+
+        if ($declaracion_id) {
+            $query->where('declaracion_id', $declaracion_id);
+        }
+
+        return $query->get()->pluck('gapdos');
+    }
+
+    private function enviarCorreo($empleado, $tipo, $controles_name)
+    {
+        Mail::to(removeUnicodeCharacters($empleado->email))
+            ->queue(new DeclaracionAplicabilidadIso($empleado->name, $tipo, $controles_name));
+    }
+
+    private function marcarCorreoComoEnviado($empleado_id)
+    {
+        DeclaracionAplicabilidadResponsableIso::where('empleado_id', $empleado_id)
+            ->update(['esta_correo_enviado' => true]);
+    }
+
+    private function mostrarAlerta($type, $message)
+    {
+        $this->alert($type, $message, [
+            'position' => 'top-end',
+            'timer' => 3000,
+            'toast' => true,
+        ]);
+    }
+
+    public function descargarArchivo()
+    {
+        $export = new PanelDeclaracion2022Export;
+
+        return Excel::download($export, 'Controles2022.xlsx');
     }
 }
