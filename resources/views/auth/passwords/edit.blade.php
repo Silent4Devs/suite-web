@@ -207,13 +207,13 @@
                                                 style="height:330px !important;width:500px !important;">
                                                 <form method="POST"
                                                     action="{{ route('profile.password.toggleTwoFactor') }}"
-                                                    style="display: flex; justify-content: space-between; align-items: center;">
+                                                    style="display: flex; justify-content: space-between; align-items: center;" id="twoFactorForm">
                                                     @csrf
                                                     <h6 style="font-size:18px;">Doble factor de autenticación <i
                                                             class="fas fa-question-circle ml-2"
                                                             title="Medida de seguridad adicional en la que además de ingresar tu usuario y contraseña se te enviará un código al correo electrónico corporativo para acceder a la plataforma Tabantaj."></i>
                                                     </h6>
-                                                    <button class="btn btn-primary" type="submit">
+                                                    <button class="btn btn-primary" id="toggleTwoFactor" type="submit">
                                                         {{ auth()->user()->two_factor ? 'Deshabilitar' : 'Habilitar' }}
                                                     </button>
                                                 </form>
@@ -391,6 +391,19 @@
             })
         });
     </script>
+
+<script>
+    document.getElementById('toggleTwoFactor').addEventListener('click', function () {
+        toastr.warning('Confirmando acción...', 'Espere');
+        setTimeout(() => {
+            document.getElementById('twoFactorForm').submit();
+        }, 1500);
+    });
+
+    @if(session('success'))
+        toastr.success("{{ session('success') }}");
+    @endif
+</script>
 
     {{-- <script>
         var $modal = $('#modal');
