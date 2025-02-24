@@ -21,7 +21,7 @@
                  @endif
              </div>
              <div class="modal-footer">
-                 <button type="button" class="btn tb-btn-primary" data-bs-dismiss="modal">Acepto</button>
+                 <button type="button" class="btn btn-primary" data-bs-dismiss="modal">Acepto</button>
              </div>
          </div>
      </div>
