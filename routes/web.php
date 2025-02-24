@@ -1714,7 +1714,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
         Route::get('pasarela-pago/apps/visitantes', 'PasarelaPagoAppsController@visitantes')->name('pasarela-pago.apps.visitantes');
     });
 
-    Route::group(['middleware' => ['visitantes']], function () {
+    // Route::group(['middleware' => ['visitantes']], function () {
 
         Route::middleware('cacheResponse')->get('visitantes/menu', 'VisitantesController@menu')->name('visitantes.menu');
         Route::get('visitantes/autorizar', 'VisitantesController@autorizar')->name('visitantes.autorizar');
@@ -1732,7 +1732,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // Route::resource('/', MejorasController::class);
         });
         // Fin visitantes
-    });
+    // });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
         // Change password
