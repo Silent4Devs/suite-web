@@ -39,7 +39,7 @@ class RequisicionesListener implements ShouldQueue
     {
         // //Colaboradores
         try {
-            $requisicion = Requsicion::where('id', $event->requsicion->id)->first();
+            $requisicion = Requsicion::where('id', $event->requisicion->id)->first();
             $user = User::where('id', $requisicion->id_user)->first(); // Solicitante
             $empleado = Empleado::where('email', $user->email)->first();
         } catch (\Throwable $th) {
@@ -49,7 +49,7 @@ class RequisicionesListener implements ShouldQueue
         try {
             if ($event->tipo_consulta == 'cancelarRequisicion') {
                 try {
-                    $user_solicitante = User::where('id', $event->requsicion->id_user)
+                    $user_solicitante = User::where('id', $event->requisicion->id_user)
                         ->first();
 
                     Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
@@ -59,7 +59,7 @@ class RequisicionesListener implements ShouldQueue
                 }
             } elseif ($event->tipo_consulta == 'cancelarOrdenCompra') {
 
-                $user_solicitante = User::where('id', $event->requsicion->id_user)
+                $user_solicitante = User::where('id', $event->requisicion->id_user)
                     ->first();
 
                 Notification::send($user_solicitante, new RequisicionesNotification($requisicion, $event->tipo_consulta, $event->tabla, $event->slug));
