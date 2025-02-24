@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
- 
+
 use App\Http\Controllers\Controller;
 use App\Models\Role;
 use App\Models\User;
@@ -23,10 +23,8 @@ class TbLoginController extends Controller
         ]);
 
         //valida las credenciales del usuario
-        if (! Auth::attempt($request->only('email', 'password'))) {
-            return response()->json([
-                'message' => 'Invalid access credentials',
-            ], 401);
+        if (!Auth::attempt($request->only('email', 'password'))) {
+            return redirect()->back()->with('message', 'Estas credenciales no coinciden con nuestros registros.');
         }
 
         $user = Auth::user();
