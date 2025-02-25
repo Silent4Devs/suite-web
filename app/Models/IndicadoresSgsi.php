@@ -102,4 +102,9 @@ class IndicadoresSgsi extends Model implements Auditable
     {
         return $this->belongsTo('App\Models\Area', 'id_area', 'id');
     }
+
+    public function rangosIndicadoresSGSI()
+    {
+        return $this->hasOne(RangosIndicadoresSGSI::class, 'id_indicador_sgsi', 'id');
+    }
 }

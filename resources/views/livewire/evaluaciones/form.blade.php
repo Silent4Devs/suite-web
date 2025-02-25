@@ -36,7 +36,7 @@
                     <label for="formSlugs.{{ $key }}.{{ $customField }}"><i
                             class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField, 1)) }}</label>
                     <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}" type="number"
-                        min="0" wire:model.live="formSlugs.{{ $key }}.{{ $customField }}"
+                        min="{{ $rangos_ind->valor_minimo }}" max="{{ $rangos_ind->valor_maximo }}" wire:model.live="formSlugs.{{ $key }}.{{ $customField }}"
                         id="formSlugs.{{ $key }}.{{ $customField }}" value="" required>
                 </div>
                 {{-- {{"formSlugs.$key.$customField->variable"}} --}}

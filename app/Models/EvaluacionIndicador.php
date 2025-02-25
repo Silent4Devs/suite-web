@@ -48,13 +48,19 @@ class EvaluacionIndicador extends Model implements Auditable
         'fecha',
         'resultado',
         'id_indicador',
+        'id_rango_indicadores_sgsi'
     ];
 
     // protected $appends=['fecha_formateada'];
 
     public function indicadores_sgsi()
     {
-        return $this->belongsTo(IndicadoresSgsi::class, 'id_indicador');
+        return $this->belongsTo(IndicadoresSgsi::class, 'id_indicador', 'id');
+    }
+
+    public function rangoIndicadores()
+    {
+        return $this->belongsTo(IndicadoresSgsi::class, 'id_rango_indicadores_sgsi', 'id');
     }
 
     // public function setFechaAttribute(){

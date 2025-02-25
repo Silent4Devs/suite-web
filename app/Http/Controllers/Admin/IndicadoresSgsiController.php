@@ -10,6 +10,7 @@ use App\Models\Empleado;
 use App\Models\IndicadoresSgsi;
 use App\Models\Permission;
 use App\Models\Proceso;
+use App\Models\RangosIndicadoresSGSI;
 use App\Models\User;
 use App\Traits\ObtenerOrganizacion;
 use Gate;
@@ -140,9 +141,31 @@ class IndicadoresSgsiController extends Controller
             'no_revisiones' => 'required',
             'ano' => 'required',
         ]);
-        $indicadoresSgsi = IndicadoresSgsi::create($request->all());
+        // $indicadoresSgsi = IndicadoresSgsi::create($request->all());
+        $indicadoresSgsi = IndicadoresSgsi::create([
+            'nombre' => $request->nombre,
+            'id_area' => $request->id_area,
+            'id_empleado' => $request->id_empleado,
+            'id_proceso' => $request->id_proceso,
+            'descripcion' => $request->descripcion,
+            'rojo' => $request->rojo,
+            'amarillo' => $request->amarillo,
+            'verde' => $request->verde,
+            'formula' => $request->formula,
+            'frecuencia' => $request->frecuencia,
+            'unidadmedida' => $request->unidadmedida,
+            'meta' => $request->meta,
+            'no_revisiones' => $request->no_revisiones,
+            'ano' => $request->ano,
+        ]);
 
-        // return redirect()->route('admin.indicadores-sgsis.index');
+        $rangos_indicador = RangosIndicadoresSGSI::create([
+            'valor_minimo' => $request->valor_minimo,
+            'valor_maximo' => $request->valor_maximo,
+            'flujo' => $request->flujo,
+            'id_indicador_sgsi' => $indicadoresSgsi->id,
+        ]);
+
         return redirect()->route('admin.indicadores-sgsisInsertar', ['id' => $indicadoresSgsi->id])->with('success', 'Guardado con éxito');
     }
 
@@ -180,6 +203,22 @@ class IndicadoresSgsiController extends Controller
             'ano' => 'required',
         ]);
         $indicadoresSgsi->update($request->all());
+        // update([
+            //     'nombre' => $request->nombre,
+            //     'id_area' => $request->id_area,
+            //     'id_empleado' => $request->id_empleado,
+            //     'id_proceso' => $request->id_proceso,
+            //     'descripcion' => $request->descripcion,
+            //     'rojo' => $request->rojo,
+            //     'amarillo' => $request->amarillo,
+            //     'verde' => $request->verde,
+            //     'formula' => $request->formula,
+            //     'frecuencia' => $request->frecuencia,
+            //     'unidadmedida' => $request->unidadmedida,
+            //     'meta' => $request->meta,
+            //     'no_revisiones' => $request->no_revisiones,
+            //     'ano' => $request->ano,
+            // ]);
 
         // return redirect()->route('admin.indicadores-sgsis.index');
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
@@ -228,9 +267,6 @@ class IndicadoresSgsiController extends Controller
                 ->update(['formula' => $remplazo_formula, 'formula_raw' => $indicadoresSgsis->formula]);
         }
 
-        // dd($formula_array, $finish_array, $remplazo_formula, $indicadoresSgsis->id);
-
-        // return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesInsert', ['id' => $indicadoresSgsis->id]);
         return redirect()->action('Admin\IndicadoresSgsiController@evaluacionesUpdate', ['id' => $indicadoresSgsis->id, 'variables' => $finish_array]);
     }
 

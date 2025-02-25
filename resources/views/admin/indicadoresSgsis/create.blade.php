@@ -241,6 +241,50 @@
                 <div class="row">
                     <div class="form-group col-sm-4">
                         <div class="form-group">
+                            <label class="required" for="valor_minimo">Valor minimo</label>
+                            <input class="form-control {{ $errors->has('valor_minimo') ? 'is-invalid' : '' }}" type="number"
+                                name="valor_minimo" id="valor_minimo" value="{{ old('valor_minimo', '') }}" required>
+                            @if ($errors->has('valor_minimo'))
+                                <div class="text-danger">
+                                    {{ $errors->first('valor_minimo') }}
+                                </div>
+                            @endif
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <div class="form-group">
+                            <label class="required" for="valor_maximo">Valor maximo</label>
+                            <input class="form-control {{ $errors->has('valor_maximo') ? 'is-invalid' : '' }}" type="number"
+                                name="valor_maximo" id="valor_maximo" value="{{ old('valor_maximo', '') }}" required>
+                            @if ($errors->has('valor_maximo'))
+                                <div class="text-danger">
+                                    {{ $errors->first('valor_maximo') }}
+                                </div>
+                            @endif
+                            <span class="help-block"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-group col-sm-4">
+                        <label class="required" for="flujo">Flujo</label>
+                        <select class="form-control" name="flujo" id="flujo" required>
+                            <option value="ascendente">Ascendente</option>
+                            <option value="descendente">Descendente</option>
+                        </select>
+                        @if ($errors->has('flujo'))
+                            <div class="text-danger">
+                                {{ $errors->first('flujo') }}
+                            </div>
+                        @endif
+                        <span class="help-block"></span>
+                    </div>
+                </div>
+                <hr>
+                <div class="row">
+                    <div class="form-group col-sm-4">
+                        <div class="form-group">
                             <label class="required" for="rojo"><span class="dotred"></span> De 0 a <span
                                     id="textorojo"></span></label>
                             <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}" type="number"

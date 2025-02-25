@@ -60,6 +60,8 @@ class IndicadoresSgsiComponent extends Component
 
     public $evaluacion;
 
+    public $rangos_ind;
+
     protected $rules = [
         'evaluacion' => 'required',
         'fecha' => 'required',
@@ -75,12 +77,14 @@ class IndicadoresSgsiComponent extends Component
     public function mount($indicadoresSgsis, $inpvar)
     {
         $this->indicadoresSgsis = $indicadoresSgsis;
-        // dd($indicadoresSgsis);
+
         // $this->customFields = VariablesIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)
         // ->where('variable', '!=', $this->indicadoresSgsis->formula)->get();
 
+        $this->rangos_ind = $this->indicadoresSgsis->rangosIndicadoresSGSI;
+
         $finish_array = [];
-        // dd('Como llega?', $inpvar);
+
         if (array_key_exists('variables', $inpvar) === true) {
             foreach ($inpvar['variables'] as $result) {
                 if (strstr($result, '$')) {
@@ -101,7 +105,6 @@ class IndicadoresSgsiComponent extends Component
 
             return $data;
         })->toArray();
-        // dd($this->formSlugs);
     }
 
     public function render()
@@ -110,13 +113,14 @@ class IndicadoresSgsiComponent extends Component
         $responsables = Empleado::getaltaAll();
         $procesos = Proceso::getAll();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
-
+        // dd($this->indicadoresSgsis->rangosIndicadoresSGSI);
         return view('livewire.indicadores-sgsi-component', [
             'responsables' => $responsables,
             'procesos' => $procesos,
             'indicadoresSgsis' => $this->indicadoresSgsis,
             'customFields' => $this->customFields,
             'evaluaciones' => $evaluaciones,
+            'rangos_ind' =>$this->rangos_ind,
         ]);
     }
 
@@ -133,7 +137,12 @@ class IndicadoresSgsiComponent extends Component
             array_push($valores, array_values($v1)[0]);
         }
 
-        $formula_final = str_replace($variables, $valores, $formula_sustitucion);
+        $formula_replace = str_replace($variables, $valores, $formula_sustitucion);
+
+        $string = $formula_replace;
+        $sinExclamacion = preg_replace('/[¡!]/u', '', $string);
+
+        $formula_final = $sinExclamacion;
 
         try {
             $result = eval('return '.$formula_final.';');
@@ -182,8 +191,13 @@ class IndicadoresSgsiComponent extends Component
             array_push($valores, array_values($v1)[0]);
         }
 
-        $formula_final = str_replace($variables, $valores, $formula_sustitucion);
-        // dd($this->formSlugs, $variables, $valores, str_replace(".", "",$formula_final));
+        $formula_replace = str_replace($variables, $valores, $formula_sustitucion);
+
+        $string = $formula_replace;
+        $sinExclamacion = preg_replace('/[¡!]/u', '', $string);
+
+        $formula_final = $sinExclamacion;
+
         try {
             $result = eval('return '.$formula_final.';');
         } catch (\Throwable $th) {
