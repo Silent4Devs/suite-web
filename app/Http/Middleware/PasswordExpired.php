@@ -18,7 +18,7 @@ class PasswordExpired
         //Validar 6 meses desde el ultimo cambio de contraseña
         if(auth()->check() && auth()->user()->passwordExpired())
         {
-            return redirect()->route('admin.password.expired');
+            return redirect()->route('password.expired');
         }
 
         return $next($request);

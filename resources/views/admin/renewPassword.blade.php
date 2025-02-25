@@ -18,7 +18,7 @@
         }
     @endphp
 
-    <form method="POST" action="{{ route('password.update') }}" style="height: 513px">
+    <form method="POST" action="{{ route('password.renew-password-update') }}" style="height: 513px">
         @csrf
         <img class="logo_silent rounded-circle" style="width: 100px" src="{{ $logotipo }}" />
         <h3 class="mt-2" style="color: var(--color-tbj); font-weight: normal; font-size:24px;">Reestablecer Contraseña</h3>

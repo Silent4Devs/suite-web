@@ -50,14 +50,15 @@ Route::view('tenant', 'central.landing')->name('central.landing');
     Route::post('/password-update', [PasswordController::class, 'updatePassword'])
         ->name('password.update');
 
-// Tabla-Calendario
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
-
     Route::get('/password-expired', [TbLoginController::class, 'showExpiredForm'])
         ->name('password.expired');
 
     Route::post('/password-change', [TbLoginController::class, 'renewPasswordUpdate'])
         ->name('password.renew-password-update');
+
+// Tabla-Calendario
+Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
+
 
     // Route::group(['middleware' => ['general_tabantaj']], function () {
     // Inicio usuario
@@ -1858,7 +1859,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     //KATBOL
-    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
+    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
         Route::group(['middleware' => 'primeros.pasos'], function () {
 
             Route::group(['middleware' => ['katbol']], function () {
