@@ -20,8 +20,8 @@ pipeline {
                                 cd ${DEPLOY_PATH} && 
 
                                 git reset --hard && 
-
-                                git pull origin develop_Onpremise &&
+                                
+                                git pull https://\$GITHUB_TOKEN@github.com/silent4business/kaxan2.git origin develop_Onpremise &&
 
                                 sudo chmod -R 777 ${DEPLOY_PATH}
 
