@@ -47,14 +47,17 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
     Auth::routes();
 
-    Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
-        ->name('password.expired');
-
     Route::post('/password-update', [PasswordController::class, 'updatePassword'])
         ->name('password.update');
 
 // Tabla-Calendario
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
+
+    Route::get('/password-expired', [TbLoginController::class, 'showExpiredForm'])
+        ->name('password.expired');
+
+    Route::post('/password-change', [TbLoginController::class, 'renewPasswordUpdate'])
+        ->name('password.renew-password-update');
 
     // Route::group(['middleware' => ['general_tabantaj']], function () {
     // Inicio usuario

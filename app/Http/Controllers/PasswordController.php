@@ -8,13 +8,6 @@ use App\Models\User; // Asegúrate de importar el modelo User
 
 class PasswordController extends Controller
 {
-    public function showExpiredForm()
-    {
-        $user = auth()->user();
-
-        return view('auth.passwords.reset', compact('user'));
-    }
-
     public function updatePassword(Request $request)
     {
         // Validar los datos del formulario

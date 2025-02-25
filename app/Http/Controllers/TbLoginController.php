@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
+use Illuminate\Support\Facades\Hash;
 use Laravel\Sanctum\PersonalAccessToken;
 use Laravel\Sanctum\Sanctum;
 
@@ -71,5 +72,31 @@ class TbLoginController extends Controller
 
         // Redirecciona al usuario después del logout
         return redirect(route('users.login'));
+    }
+
+    public function showExpiredForm()
+    {
+        $user = User::getCurrentUser();
+
+        return view('admin.renewPassword', compact('user'));
+    }
+
+    public function renewPasswordUpdate(Request $request)
+    {
+        // Obtener el usuario actualmente autenticado
+        $user = auth()->user();
+
+        // Validar los datos del formulario
+        $request->validate([
+            'password' => 'required|min:8|confirmed', // Validar la nueva contraseña y su confirmación
+        ]);
+
+        // Actualizar la contraseña del usuario
+        $user->password = Hash::make($request->password);
+        $user->password_changed_at = now();
+        $user->save();
+
+        // Redirigir con un mensaje de éxito
+        return redirect()->route('admin.inicio-Usuario.index')->with('success', 'Contraseña actualizada correctamente.');
     }
 }
