@@ -19,7 +19,7 @@ pipeline {
 
                                 cd ${DEPLOY_PATH} && 
                                 
-                                git pull https://Saul183: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@github.com/Silent4Devs/suite-web.git origin staging &&
+                                git pull https://Saul183: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@github.com/Silent4Devs/suite-web.git develop_Onpremise &&
 
                                 sudo chmod -R 777 ${DEPLOY_PATH}
 
