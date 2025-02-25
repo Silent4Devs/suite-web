@@ -12,21 +12,20 @@ pipeline {
 
             steps {
                 script {
-                    withCredentials([usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
+                    withCredentials([
+                        usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS'),
+                        string(credentialsId: 'GITHUB_PAT_TOKEN', variable: 'GITHUB_TOKEN')  
+                    ]) {
                         sh """
-
                             sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${DEPLOY_SERVER} "
-
                                 cd ${DEPLOY_PATH} && 
+                                sudo chmod -R 777 ${DEPLOY_PATH} && 
                                 
-                                git pull https://Saul183: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@github.com/Silent4Devs/suite-web.git develop_Onpremise &&
-
+                                # Usar el token de GitHub para autenticar el git pull
+                                sudo git pull https://jonathansilent:${GITHUB_TOKEN}@github.com/Silent4Devs/suite-web.git develop_Onpremise &&
                                 sudo chmod -R 777 ${DEPLOY_PATH}
-
                             "
-
                         """
-
                     }
                 }
             }
