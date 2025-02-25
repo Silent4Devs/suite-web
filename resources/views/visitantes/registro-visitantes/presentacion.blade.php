@@ -57,22 +57,21 @@
                     <div class="d-flex text-white" style="justify-content: space-evenly;width: 40%;flex-wrap: wrap;">
                         <a class="mb-3 col-md-8 col-8 col-lg-3 border border-4 rounded"
                             href="{{ route('visitantes.index') }}"
-                            style="outline: none; color: white; cursor: pointer;text-decoration: none">
-
+                            style="outline: none; color: black; cursor: pointer;text-decoration: none">
                             <i style="font-size: 50px" class="bi bi-box-arrow-right"></i>
                             <p>Registrar Entrada</p>
 
                         </a>
                         <a class="mb-3 col-md-8 col-8 col-lg-3 border border-4 rounded"
                             href="{{ route('visitantes.salida') }}"
-                            style="outline: none; color: white; cursor: pointer;text-decoration: none">
+                            style="outline: none; color: black; cursor: pointer;text-decoration: none">
                             <i style="font-size: 50px" class="bi bi-box-arrow-left"></i>
                             <p>Registrar Salida</p>
                         </a>
                     </div>
                 </div>
             @else
-                <h3 style="color: white" class="mt-4">No se ha configurado el módulo de visitantes, comunicate con el
+                <h3 style="color: black" class="mt-4">No se ha configurado el módulo de visitantes, comunicate con el
                     administrador.</h3>
             @endif
         </div>
