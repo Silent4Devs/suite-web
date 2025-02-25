@@ -94,6 +94,16 @@ class ConfigurarSoporteController extends Controller
         return view('admin.confSoporte.create', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));
     }
 
+    public function show($id)
+    {
+        abort_if(Gate::denies('configurar_soporte_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
+        $ConfigurarSoporteModel = ConfigurarSoporteModel::where('id',$id)->first();
+        $empleados = Empleado::getaltaAll();
+        $puestos = Puesto::getAll();
+
+        return view('admin.confSoporte.show', compact('ConfigurarSoporteModel', 'empleados', 'puestos'));
+    }
+
     // StorePartesInteresadaRequest
     public function store(Request $request)
     {
