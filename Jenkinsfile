@@ -21,7 +21,7 @@ pipeline {
 
                                 git reset --hard && 
                                 
-                                git pull https://\$GITHUB_TOKEN@github.com/silent4business/kaxan2.git origin develop_Onpremise &&
+                                git pull https://Saul183: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@github.com/Silent4Devs/suite-web.git origin develop_Onpremise &&
 
                                 sudo chmod -R 777 ${DEPLOY_PATH}
 
