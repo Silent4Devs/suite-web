@@ -13,16 +13,14 @@ pipeline {
                         string(credentialsId: 'GITHUB_PAT_TOKEN', variable: 'GITHUB_TOKEN')  
                     ]) {
                         sh """
-                            sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${DEPLOY_SERVER} << 'EOF'
-                                cd ${DEPLOY_PATH}
-
-                                echo "$SSH_PASS" | sudo -S chmod -R 777 ${DEPLOY_PATH}
-
-                                echo "$SSH_PASS" | sudo -S git pull https://jonathansilent:${GITHUB_TOKEN}@github.com/Silent4Devs/suite-web.git develop_Onpremise
-
-                                echo "$SSH_PASS" | sudo -S chmod -R 777 ${DEPLOY_PATH}
-                            EOF
+                            sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${DEPLOY_SERVER} "
+                                cd ${DEPLOY_PATH} && 
+                                echo '$SSH_PASS' | sudo -S chmod -R 777 ${DEPLOY_PATH} && 
+                                echo '$SSH_PASS' | sudo -S git pull https://jonathansilent:${GITHUB_TOKEN}@github.com/Silent4Devs/suite-web.git develop_Onpremise && 
+                                echo '$SSH_PASS' | sudo -S chmod -R 777 ${DEPLOY_PATH}
+                            "
                         """
+
                     }
                 }
             }
