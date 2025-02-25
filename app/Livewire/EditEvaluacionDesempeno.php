@@ -152,9 +152,10 @@ class EditEvaluacionDesempeno extends Component
 
         $this->cargarDatosPaso1();
         // Avanzar al siguiente paso
-        if ($this->evaluacion->periodos->isNotEmpty()) {
+        if ($this->evaluacion && $this->evaluacion->periodos->isNotEmpty()) {
             $this->cargarDatosPaso2();
         }
+
     }
 
     public function render()
@@ -164,12 +165,12 @@ class EditEvaluacionDesempeno extends Component
 
     public function cargarDatosPaso1()
     {
-        $this->nombre_evaluacion = $this->evaluacion->nombre;
-        $this->descripcion_evaluacion = $this->evaluacion->descripcion;
-        $this->activar_objetivos = $this->evaluacion->activar_objetivos;
-        $this->porcentaje_objetivos = $this->evaluacion->porcentaje_objetivos;
-        $this->activar_competencias = $this->evaluacion->activar_competencias;
-        $this->porcentaje_competencias = $this->evaluacion->porcentaje_competencias;
+        $this->nombre_evaluacion = $this->evaluacion->nombre ?? '';
+        $this->descripcion_evaluacion = $this->evaluacion->descripcion ?? '';
+        $this->activar_objetivos = $this->evaluacion->activar_objetivos ?? '';
+        $this->porcentaje_objetivos = $this->evaluacion->porcentaje_objetivos ?? '';
+        $this->activar_competencias = $this->evaluacion->activar_competencias ?? '';
+        $this->porcentaje_competencias = $this->evaluacion->porcentaje_competencias ?? '';
     }
 
     public function cargarDatosPaso2()
@@ -427,7 +428,7 @@ class EditEvaluacionDesempeno extends Component
 
         // Validación de porcentajes
         if ($this->activar_objetivos && $this->activar_competencias) {
-            if (($this->porcentaje_objetivos + $this->porcentaje_competencias) != 100) {
+            if ((float)$this->porcentaje_objetivos + (float)$this->porcentaje_competencias != 100) {
                 $this->alert('warning', 'Porcentaje Incorrecto', [
                     'position' => 'center',
                     'timer' => 6000,
@@ -440,6 +441,7 @@ class EditEvaluacionDesempeno extends Component
 
                 return;
             }
+
 
             if ($this->porcentaje_objetivos == 0 || $this->porcentaje_competencias == 0) {
                 $this->alert('warning', 'Porcentaje Incorrecto', [
