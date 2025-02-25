@@ -174,7 +174,7 @@
                                 <p class="parrafo">¿Desea eliminar la tarea {{ $tarea->tarea }}?</p>
                             </div>
 
-                            <div class="mt-4 d-flex justify-content-between">
+                            <div class="mt-4 d-flex justify-content-between align-items-center" style="gap: 0;">
                                 <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
@@ -183,6 +183,7 @@
                                     Eliminar Tarea
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>
