@@ -47,21 +47,27 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
     Auth::routes();
 
-    Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
-        ->name('password.expired');
-
     Route::post('/password-update', [PasswordController::class, 'updatePassword'])
         ->name('password.update');
 
-// Tabla-Calendario
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
+    Route::get('/password-expired', [TbLoginController::class, 'showExpiredForm'])
+        ->name('password.expired')
+        ->middleware('autorized');
 
-    // Route::group(['middleware' => ['general_tabantaj']], function () {
-    // Inicio usuario
-    Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
-    Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
-    Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
-    Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
+    Route::post('/password-change', [TbLoginController::class, 'renewPasswordUpdate'])
+        ->name('password.renew-password-update')
+        ->middleware('autorized');
+
+    // Tabla-Calendario
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
+
+
+        // Route::group(['middleware' => ['general_tabantaj']], function () {
+        // Inicio usuario
+        Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
+        Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
+        Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
+        Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
 
         Route::get('inicioUsuario/expediente/{id_empleado}', [InicioUsuarioController::class, 'expediente'])->name('inicio-Usuario.expediente');
         Route::post('inicioUsuario/expediente/update', [InicioUsuarioController::class, 'expedienteUpdate'])->name('inicio-Usuario.expediente-update');
@@ -394,26 +400,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
 
                 Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
             });
-
-
-                Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
-                Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
-                Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
-                Route::get('timesheet/proyectos/edit/{id}', 'TimesheetController@editProyectos')->name('timesheet-proyectos-edit');
-                Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
-                // Route::get('timesheet/proyectos/notificacion-horas', 'TimesheetController@notificacionhorassobrepasadas')->name('timesheet-notificacion-horas');
-                Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
-                Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
-                Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
-                Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
-                Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
-                Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
-                Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
-                Route::get('timesheet/proyectos/reporte/financiero', 'TimesheetController@reportesFinanciero')->name('timesheet-reportes-financiero');
-
-                Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
-                Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
-
 
             // Comunicacion Sgis
             Route::delete('comunicacion-sgis/destroy', 'ComunicacionSgiController@massDestroy')->name('comunicacion-sgis.massDestroy');
@@ -1855,7 +1841,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     //KATBOL
-    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
+    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
         Route::group(['middleware' => 'primeros.pasos'], function () {
 
             Route::group(['middleware' => ['katbol']], function () {
