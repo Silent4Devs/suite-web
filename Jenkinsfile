@@ -7,31 +7,28 @@ pipeline {
         DEPLOY_PATH = '/var/contenedor/suite-web'
     }
     stages {
-        stage('Clone Repository') {
-            steps {
-                script {
-                    git credentialsId: "${env.GIT_CREDENTIALS}",
-                        branch: 'develop_Onpremise',
-                        url: 'https://github.com/Silent4Devs/suite-web.git'
-                }
-            }
-        }
 
-        stage('Deploy via SCP') {
+        stage('Deploy via SSH') {
+
             steps {
                 script {
                     withCredentials([usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS')]) {
                         sh """
-                        chmod -R 755 "${WORKSPACE}"
-                        """
-                        
-                        sh """
-                            sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${env.DEPLOY_SERVER} "sudo chmod -R 777 /var/contenedor/suite-web"
+
+                            sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${DEPLOY_SERVER} "
+
+                                cd ${DEPLOY_PATH} && 
+
+                                git reset --hard && 
+
+                                git pull origin develop_Onpremise &&
+
+                                sudo chmod -R 777 ${DEPLOY_PATH}
+
+                            "
+
                         """
 
-                        sh """
-                        sshpass -p "$SSH_PASS" scp -v -o StrictHostKeyChecking=no -r "$WORKSPACE/"* ${SSH_USER}@${env.DEPLOY_SERVER}:${env.DEPLOY_PATH}
-                        """
                     }
                 }
             }
