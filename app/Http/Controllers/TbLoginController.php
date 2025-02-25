@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 use App\Models\Role;
+use App\Models\Organizacion;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -76,9 +77,14 @@ class TbLoginController extends Controller
 
     public function showExpiredForm()
     {
-        $user = User::getCurrentUser();
+        $organizacion = Organizacion::getLogo();
+        if (!is_null($organizacion)) {
+            $logotipo = $organizacion->logotipo;
+        } else {
+            $logotipo = 'silent4business.png';
+        }
 
-        return view('admin.renewPassword', compact('user'));
+        return view('admin.renewPassword', compact('logotipo'));
     }
 
     public function renewPasswordUpdate(Request $request)

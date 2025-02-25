@@ -7,17 +7,6 @@
         </div>
     @endif
 
-    @php
-        use App\Models\Organizacion;
-        use App\Models\User;
-        $organizacion = Organizacion::getLogo();
-        if (!is_null($organizacion)) {
-            $logotipo = $organizacion->logotipo;
-        } else {
-            $logotipo = 'silent4business.png';
-        }
-    @endphp
-
     <form method="POST" action="{{ route('password.renew-password-update') }}" style="height: 513px">
         @csrf
         <img class="logo_silent rounded-circle" style="width: 100px" src="{{ $logotipo }}" />

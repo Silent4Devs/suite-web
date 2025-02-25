@@ -51,21 +51,23 @@ Route::view('tenant', 'central.landing')->name('central.landing');
         ->name('password.update');
 
     Route::get('/password-expired', [TbLoginController::class, 'showExpiredForm'])
-        ->name('password.expired');
+        ->name('password.expired')
+        ->middleware('autorized');
 
     Route::post('/password-change', [TbLoginController::class, 'renewPasswordUpdate'])
-        ->name('password.renew-password-update');
+        ->name('password.renew-password-update')
+        ->middleware('autorized');
 
-// Tabla-Calendario
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
+    // Tabla-Calendario
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
 
 
-    // Route::group(['middleware' => ['general_tabantaj']], function () {
-    // Inicio usuario
-    Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
-    Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
-    Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
-    Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
+        // Route::group(['middleware' => ['general_tabantaj']], function () {
+        // Inicio usuario
+        Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
+        Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
+        Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
+        Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
 
         Route::get('inicioUsuario/expediente/{id_empleado}', [InicioUsuarioController::class, 'expediente'])->name('inicio-Usuario.expediente');
         Route::post('inicioUsuario/expediente/update', [InicioUsuarioController::class, 'expedienteUpdate'])->name('inicio-Usuario.expediente-update');
