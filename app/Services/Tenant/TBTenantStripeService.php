@@ -305,30 +305,39 @@ class TBTenantStripeService
             $clientKey = env('CLIENT_KEY');
             $clientKeyApi = env('CLIENT_KEYAPI');
 
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, $clientKeyApi); //"http://192.168.9.113/api/onPremise/clientes");
-            curl_setopt($ch, CURLOPT_POST, true);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode(['uuid' => $clientKey]));
-            curl_setopt($ch, CURLOPT_HTTPHEADER, [
-                'Content-Type: application/json',
-                'Accept: application/json',
-            ]);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
-            curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-            $response = curl_exec($ch);
-            if (curl_errno($ch)) {
-                curl_close($ch);
-                return false;
-                // return response()->json([
-                //     'message' => 'Error al obtener los datos de la API externa',
-                //     'error' => curl_error($ch),
-                // ], 500);
+            if (!$clientKey || !$clientKeyApi) {
+                die(json_encode(['error' => 'CLIENT_KEY o CLIENT_KEYAPI no están definidos.']));
             }
 
-            curl_close($ch);
+            $payload = json_encode(['uuid' => "011827d3-afe9-42fb-b0e9-c8e7f479ad91"]);
+
+            $curl = curl_init();
+
+            curl_setopt_array($curl, [
+                CURLOPT_URL => $clientKeyApi,
+                CURLOPT_RETURNTRANSFER => true,
+                CURLOPT_ENCODING => '',
+                CURLOPT_MAXREDIRS => 10,
+                CURLOPT_TIMEOUT => 30,
+                CURLOPT_FOLLOWLOCATION => true,
+                CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+                CURLOPT_POST => true,
+                CURLOPT_POSTFIELDS => $payload,
+                CURLOPT_HTTPHEADER => [
+                    'Content-Type: application/json',
+                    'Accept: application/json'
+                ],
+            ]);
+
+            $response = curl_exec($curl);
+            if (curl_errno($curl)) {
+                die(json_encode(['error' => 'cURL Error: ' . curl_error($curl)]));
+            }
+
+            curl_close($curl);
 
             $jsonData = json_decode($response, true);
+
             if (!empty($jsonData) && is_array($jsonData)) {
                 foreach ($jsonData as $cliente) {
                     if ($cliente['Estatus'] === true) {

@@ -9,12 +9,14 @@
                 <strong>{{ \Carbon\Carbon::parse($aviso_privacidad->updated_at)->format('d-m-Y H:i:s') }}</strong>
             </p>
             <form action="{{ route('admin.visitantes.aviso-privacidad.store') }}">
+
                 <textarea name="aviso-privacidad" id="aviso-privacidad" cols="30" rows="20"
                     style="width: 100%; min-height: 300px; border: 2px solid #A5C2FF;
                     border-radius: 8px; font-size: 14px; background-color: white;
                     padding: 20px; resize: both; overflow: auto; color: black;">
                     {!! $aviso_privacidad->aviso_privacidad !!}
                 </textarea>
+                
             </form>
             {{-- Regresar al menú --}}
             <a href="{{ route('admin.visitantes.menu') }}" class="mt-4 btn btn-primary float-right">

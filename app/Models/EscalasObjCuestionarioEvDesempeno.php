@@ -34,6 +34,7 @@ class EscalasObjCuestionarioEvDesempeno extends Model
             'parametro',
             'valor',
             'color',
+            'no_periodo'
         ];
 
     public function pregunta()

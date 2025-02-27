@@ -212,10 +212,11 @@
                         <div class="form-group anima-focus">
                             <div class="form-control" style="height: auto !important;">
                                 <div class="d-flex flex-column py-3" style="gap: 15px;">
-                                    @foreach ($evaluacion_activa->periodos as $key_evaluacion => $periodo)
+                                    @foreach ($array_periodo_objetivo as $key_periodo => $periodo)
                                         <div>
-                                            <input type="checkbox" name="" id="" checked>
-                                            <label for="">{{ $periodo->nombre_evaluacion }}</label>
+                                            <input type="checkbox" wire:click="updateForm" wire:model="array_periodo_objetivo.{{$key_periodo}}.habilitado" @if ($periodo["finalizado"] || $key_periodo == 0)
+                                            disabled @endif >
+                                            <label for="">{{ $periodo["nombre"] }}</label>
                                         </div>
                                     @endforeach
                                 </div>
@@ -236,48 +237,51 @@
                     <span><strong>Variante</strong></span>
                     <span>Selecciona esta opción si deseas agregar una o más variantes a tus valores por periodo.</span>
                 </div> --}}
-
-                <div class="mt-5">
-                    <div class="d-flex flex-wrap gap-3">
-                        @foreach ($escalas as $key => $e)
-                        <div class="d-flex flex-column " style=" min-width: 300px;">
-                            <div class="form-row mb-3 ps-4">
-                                {{ $e->parametro }}
-                            </div>
-                            <div class="form-row mt-3">
-                                <div class="d-flex flex-wrap align-items-center gap-3 ps-3">
-                                    <div class="form-group anima-focus" style="width: 60px;">
-                                        <input
-                                            wire:model.live="array_escalas_objetivos.{{ $key }}.color"
-                                            type="color" class="form-control">
+                @foreach ($evaluacion_activa->periodos as $key_evaluacion => $periodo)
+                    @if ($array_periodo_objetivo[$key_evaluacion]["habilitado"])
+                        <div class="mt-5">
+                            <h6>PERIODO: {{ $periodo->nombre_evaluacion }}</h6>
+                            <div class="d-flex flex-wrap gap-3">
+                                @foreach ($escalas as $key => $e)
+                                <div class="d-flex flex-column " style=" min-width: 300px;">
+                                    <div class="form-row mb-3 ps-4">
+                                        {{ $e->parametro }}
                                     </div>
-                                    <div class="form-group anima-focus flex-grow-1" style="min-width: 140px;">
-                                        <select
-                                            wire:model.live="array_escalas_objetivos.{{ $key }}.condicional"
-                                            class="form-control">
-                                            <option value="0" disabled selected>Seleccione una Condición</option>
-                                            <option value="1">Menor que</option>
-                                            <option value="2">Menor o igual que</option>
-                                            <option value="3">Igual que</option>
-                                            <option value="4">Mayor que</option>
-                                            <option value="5">Mayor o igual que</option>
-                                        </select>
-                                        <label class="required">Condicional</label>
-                                    </div>
-                                    <div class="form-group anima-focus" style="min-width: 60px; flex-grow: 1;">
-                                        <input
-                                            wire:model.live="array_escalas_objetivos.{{ $key }}.valor"
-                                            type="number" min="{{ $minimo_objetivo }}" max="{{ $maximo_objetivo }}"
-                                            class="form-control">
-                                        <label class="required">Valor</label>
+                                    <div class="form-row mt-3">
+                                        <div class="d-flex flex-wrap align-items-center gap-3 ps-3">
+                                            <div class="form-group anima-focus" style="width: 60px;">
+                                                <input disabled
+                                                    wire:model.live="array_escalas_objetivos.{{$key_evaluacion}}.{{ $key }}.color"
+                                                    type="color" class="form-control">
+                                            </div>
+                                            <div class="form-group anima-focus flex-grow-1" style="min-width: 140px;">
+                                                <select
+                                                    wire:model.live="array_escalas_objetivos.{{$key_evaluacion}}.{{ $key }}.condicional"
+                                                    class="form-control">
+                                                    <option value="0" disabled selected>Seleccione una Condición</option>
+                                                    <option value="1">Menor que</option>
+                                                    <option value="2">Menor o igual que</option>
+                                                    <option value="3">Igual que</option>
+                                                    <option value="4">Mayor que</option>
+                                                    <option value="5">Mayor o igual que</option>
+                                                </select>
+                                                <label class="required">Condicional</label>
+                                            </div>
+                                            <div class="form-group anima-focus" style="min-width: 60px; flex-grow: 1;">
+                                                <input
+                                                    wire:model.live="array_escalas_objetivos.{{$key_evaluacion}}.{{ $key }}.valor"
+                                                    type="number" min="{{ $minimo_objetivo }}" max="{{ $maximo_objetivo }}"
+                                                    class="form-control">
+                                                <label class="required">Valor</label>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
+                                @endforeach
                             </div>
                         </div>
-                        @endforeach
-                    </div>
-                </div>
-
+                    @endif
+                @endforeach
 
                 <div class="text-right">
                     <button type="button" wire:click="crearObjetivo" class="btn btn-outline-primary"

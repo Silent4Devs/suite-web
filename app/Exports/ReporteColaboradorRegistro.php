@@ -49,14 +49,10 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo',
-                'timesheet_proyectos.estatus'
             )
             ->where('timesheet.estatus', '!=', 'papelera')
             ->where('timesheet.estatus', '!=', 'rechazado')
             ->where('timesheet.estatus', '!=', 'Rechazada')
-            ->where('timesheet_proyectos.estatus', '!=', 'papelera')
-            ->where('timesheet_proyectos.estatus', '!=', 'rechazado')
-            ->where('timesheet_proyectos.estatus', '!=', 'Rechazada')
             ->where(function ($query) {
 
                 if ($this->fecha_inicio || $this->fecha_fin) {
@@ -86,7 +82,6 @@ class ReporteColaboradorRegistro implements FromCollection, WithHeadings
                 'timesheet_horas.horas_viernes',
                 'timesheet_horas.horas_sabado',
                 'timesheet_horas.horas_domingo',
-                'timesheet_proyectos.estatus',
             )->orderBy('fecha_dia', 'asc')
             ->distinct()
             ->get()
