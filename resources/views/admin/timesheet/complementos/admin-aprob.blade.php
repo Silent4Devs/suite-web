@@ -171,7 +171,7 @@
     $usuario->can('timesheet_administrador_proyectos_access') ||
         $usuario->can('timesheet_administrador_tareas_proyectos_access') ||
         $usuario->can('timesheet_administrador_clientes_access') ||
-        $usuario->can('timesheet_administrador_reportes_aprobador_access') ||
+        $usuario->can('timesheet_administrador_reportes_access') ||
         $usuario->can('timesheet_administrador_dashboard_access'))
     <div class="modal-admin-time modal-config invisible">
         <button class="btn btn-close-time-config" style="position: absolute; right: 10px; top: 10px;"
@@ -266,7 +266,7 @@
                 </a>
             @endcan
         </div>
-        @can('timesheet_administrador_reportes_aprobador_access')
+        @can('timesheet_administrador_reportes_access')
             <div class="d-flex justify-content-center w-100 px-5 flex-wrap cards-reportes-config"
                 style="gap: 60px; margin-top: 100px;">
                 <a href="{{ route('admin.timesheet-reportes-registros') }}">
