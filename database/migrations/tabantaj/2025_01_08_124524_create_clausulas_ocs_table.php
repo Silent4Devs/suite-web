@@ -4,7 +4,8 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-return new class extends Migration {
+return new class extends Migration
+{
     public function up(): void
     {
         Schema::create('clausulas_oc', function (Blueprint $table) {
@@ -16,15 +17,15 @@ return new class extends Migration {
 
             // Definir la clave foránea hacia 'organizacions'
             $table->foreign('organizacion_id')
-                  ->references('id')
-                  ->on('organizacions')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('organizacions')
+                ->onDelete('cascade');
 
             // Definir la clave foránea hacia 'sucursales'
             $table->foreign('sucursal_id')
-                  ->references('id')
-                  ->on('sucursales')
-                  ->onDelete('cascade');
+                ->references('id')
+                ->on('sucursales')
+                ->onDelete('cascade');
         });
     }
 

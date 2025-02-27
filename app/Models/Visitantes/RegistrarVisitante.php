@@ -18,6 +18,7 @@ class RegistrarVisitante extends Model implements Auditable
     protected $table = 'registrar_visitantes';
 
     protected $fillable = [
+        'id',
         'nombre',
         'apellidos',
         'email',

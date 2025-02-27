@@ -92,21 +92,21 @@
         $empresa = $organizacion->empresa;
     @endphp
 
-    <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px;">
+    {{-- <div class="row mt-5 mb-4 col-12 ml-0" style="border: 2px solid #ccc; border-radius: 5px;">
         <div class="col-2 p-2" style="border-right: 2px solid #ccc">
             <img src="{{ asset($logotipo) }}" class="mt-2" style="width:90px;">
         </div>
         <div class="col-7 p-2" style="text-align: center; border-right: 2px solid #ccc">
             <span style="font-size:13px; text-transform: uppercase;color:var(--color-tbj)">{{ $empresa }}</span>
             <br>
-            <span style="color:var(--color-tbj); font-size:15px;"><strong>Bitácora de Accesos</strong></span>
+            <span style="color:var(--color-tbj); font-size:15px;"><strong>Bitácora de Acceeeeeeeeeesos</strong></span>
         </div>
         <div class="col-3 p-2">
             <span style="color:var(--color-tbj)">Fecha:
                 {{ \Carbon\Carbon::now()->format('d-m-Y h:i A') }}
             </span>
         </div>
-    </div>
+    </div> --}}
 
     @if ($tipoVista == 'bitacora')
         <div class="row print-none" x-data="{ show: true }">

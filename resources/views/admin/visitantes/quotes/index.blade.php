@@ -9,9 +9,7 @@
                 <strong>{{ \Carbon\Carbon::parse($quote->updated_at)->format('d-m-Y H:i:s') }}</strong>
             </p>
             <form action="{{ route('admin.visitantes.cita-textual.store') }}">
-                <textarea name="cita-textual" id="cita-textual" cols="30" rows="10">
-                    {!! $quote->quote !!}
-                </textarea>
+                <textarea name="cita-textual" id="cita-textual" cols="30" rows="10" style="resize: both; overflow: auto;">{!! $quote->quote !!}</textarea>
 
             </form>
             {{-- Regresar al menu --}}
@@ -20,6 +18,31 @@
             </a>
         </div>
     </div>
+    <style>
+        textarea {
+            width: 100%;
+            min-height: 300px;
+            padding: 10px;
+            border: 1px solid #A5C2FF;
+            border-radius: 10px;
+            resize: both;
+            overflow: auto;
+            transition: border 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+        }
+
+        textarea:focus {
+            border: 1px solid #62B6CB; /* Color azul cielo */
+            box-shadow: 0 0 5px rgba(98, 182, 203, 0.7);
+            outline: none;
+        }
+
+        .card {
+            border: 1px solid #ddd;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+    </style>
 @endsection
 @section('scripts')
     @parent

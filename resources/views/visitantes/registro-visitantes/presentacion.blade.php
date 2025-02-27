@@ -1,82 +1,128 @@
 @extends('layouts.visitantes')
 @section('content')
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400&display=swap" rel="stylesheet">
+
     <style>
         html,
         body {
-            margin: 0px;
+            margin: 0;
             height: 100%;
         }
 
         .box {
             height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #1766BB;
+            color: white;
+            flex-wrap: wrap;
         }
 
-        .qr-button {
+        .logo {
+            background-image: url('/storage/images/Grupo 2794.jpg');
+        }
+
+        .left-section {
+            flex: 2;
+            padding: 40px;
+        }
+
+        .right-section {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: #3C78D8;
+            padding: 20px;
+            height: inherit;
+        }
+
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: left;
+            color: #2E2E2E;
+            width: 220px;
+            margin: 10px;
+            display: inline-block;
+            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.2);
             cursor: pointer;
+            text-decoration: none;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: scale(1.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            color: #2E2E2E;
+        }
+
+        .card p {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .card i {
+            font-size: 40px;
+        }
+
+        .entrada {
+            color: green;
+        }
+
+        .salida {
+            color: goldenrod;
+        }
+
+        .texto-chico {
+            font-size: 18px;
+            margin: 0;
+        }
+
+        .texto-grande {
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        .presentacion {
+            width: 100%;
+            padding-left: 21%;
         }
     </style>
-    <div class="box row w-100 p-0 m-0" style="background: var(--color-tbj); align-items: center;position: relative;">
-        <div x-data="{ show: false }">
-            <div x-transition.duration.800ms x-show="show"
-                style="position: absolute;bottom: 0;right: 0;display: flex;justify-content: end;padding: 0;">
-                <div class="text-end p-5"
-                    style="background: beige;border-radius: 100% 0 0 0;width:500px;height: 500px;position: relative;">
-                    <div class="text-center" style="position: absolute;bottom: 70px;right: 20px;">
-                        <div class="alert alert-primary" role="alert">
-                            <i class="bi bi-info-circle"></i> ¡Escaneame para registrar tu entrada!
-                        </div>
-                        {!! QrCode::size(180)->generate(route('visitantes.index')) !!}
-                    </div>
-                </div>
-            </div>
-            <div x-on:click="show=!show" class="qr-button"
-                style="position: absolute;bottom: 0px;right: 0px;display: flex;justify-content: end;padding: 0; width: 100px;height: 100px;">
-                <div class="w-100" style="border-radius: 100% 0 0 0;background: #344183;border: 1px solid #2c2c2c94;">
-                    <div class="w-100 h-100" style="position: relative">
-                        <i class="bi bi-qr-code-scan"
-                            style="font-size: 50px;color:white;position: absolute; bottom: 5px;right: 5px;"></i>
-                    </div>
-                </div>
-            </div>
 
+    <div class="box row w-100 p-0 m-0">
+        <div class="left-section text-center">
+            <div class="text-start">
+                <div class="presentacion">
+                    <img class="mb-3" src="{{ url('storage/images/Grupo_2794.png') }}" alt="Logo">
+                    <h1>Bienvenido</h1>
+                    <h3>Registra tu visita</h3>
+                </div>
+            </div>
+            <div class="d-flex justify-content-center mt-4 gap-4">
+                <a href="{{ route('visitantes.index') }}" class="card">
+                    <img class="mb-3" src="{{ url('storage/images/Grupo_2771.png') }}" alt="Logo">
+                    <p class="texto-chico">Registrar </p>
+                    <p class="texto-grande">Entrada
+                        <img class="float-end ms-5" src="{{ url('storage/images/Grupo_2764.png') }}" alt="Logo">
+                    </p>
+                </a>
+                <a href="{{ route('visitantes.salida') }}" class="card">
+                    <img class="mb-3" src="{{ url('storage/images/Grupo_2770.png') }}" alt="Logo">
+                    <p class="texto-chico">Registrar </p>
+                    <p class="texto-grande">Salida
+                        <img class="float-end ms-5" src="{{ url('storage/images/Grupo_2768.png') }}" alt="Logo">
+
+                    </p>
+                </a>
+            </div>
         </div>
-        <div class="container text-center">
-            <div class="col-12 col-md-12 col-lg-12">
-                <h3 class="text-white">REGISTRO DE VISITANTES</h3>
-                <img style="max-width: 167px" class="img-fluid mt-4" src="{{ $logo }}" alt="">
+        <div class="right-section text-center">
+            <div>
+                <p>Escanea el QR para registrar tu entrada</p>
+                    {!! QrCode::size(180)->generate(route('visitantes.index')) !!}
             </div>
-            <div class="col-12 col-md-12 col-lg-12 mt-3">
-                <div class="w-100 d-flex justify-content-center">
-                    <cite style="max-width: 50%" class="mt-4 text-white">
-                        {!! $quote->quote ?? '[<i>Insertar Cita Textual, solicita al administrador que ingrese alguna</i>]' !!}
-                    </cite>
-                </div>
-            </div>
-            @if ($existsResponsable)
-                <div class="col-12 col-md-12 col-lg-12 justify-content-around d-flex justify-content-center mt-5">
-                    <div class="d-flex text-white" style="justify-content: space-evenly;width: 40%;flex-wrap: wrap;">
-                        <a class="mb-3 col-md-8 col-8 col-lg-3 border border-4 rounded"
-                            href="{{ route('visitantes.index') }}"
-                            style="outline: none; color: white; cursor: pointer;text-decoration: none">
-
-                            <i style="font-size: 50px" class="bi bi-box-arrow-right"></i>
-                            <p>Registrar Entrada</p>
-
-                        </a>
-                        <a class="mb-3 col-md-8 col-8 col-lg-3 border border-4 rounded"
-                            href="{{ route('visitantes.salida') }}"
-                            style="outline: none; color: white; cursor: pointer;text-decoration: none">
-                            <i style="font-size: 50px" class="bi bi-box-arrow-left"></i>
-                            <p>Registrar Salida</p>
-                        </a>
-                    </div>
-                </div>
-            @else
-                <h3 style="color: white" class="mt-4">No se ha configurado el módulo de visitantes, comunicate con el
-                    administrador.</h3>
-            @endif
         </div>
     </div>
-@endsection
-@section('scripts')
 @endsection
