@@ -105,10 +105,6 @@ class CourseController extends Controller
      */
     public function edit(Course $course)
     {
-        // $this->authorize('dicatated', $course);
-
-        // dd($course);
-
         $categories = Category::pluck('name', 'id');
         $levels = Level::pluck('name', 'id');
         $prices = Price::pluck('name', 'id');

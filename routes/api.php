@@ -5,6 +5,7 @@ use App\Http\Controllers\Api\InicioUsuario\InicioUsuarioController;
 use App\Http\Controllers\Api\v1\AnalisisRiesgo\FormulasController;
 use App\Http\Controllers\Api\V1\AnalisisRiesgo\templateAnalisisRiesgoController;
 use App\Http\Controllers\Api\V1\Capacitaciones\tbApiMobileControllerCapacitaciones;
+use App\Http\Controllers\Api\V1\Capacitaciones\tbApiMobileControllerInstructorCapacitaciones;
 use App\Http\Controllers\Api\V1\Comunicados\tbApiMobileControllerComunicados;
 use App\Http\Controllers\Api\V1\ContadorSolicitudes\tbApiMobileControllerContadorSolicitudes;
 use App\Http\Controllers\Api\V1\Documentos\tbApiMobileControllerDocumentos;
@@ -117,6 +118,16 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
         Route::get('tbstudentcourse/{course}/evaluation/{evaluation}', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCursoEvaluacion']);
         Route::get('/tbstudentcourse/{id}', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionCursoEstudiante']);
         Route::post('/tbstudentevaluation/answers', [tbApiMobileControllerCapacitaciones::class, 'tbFunctionRespuestasCursoEvaluacion']);
+    });
+
+    Route::prefix('instructorCapacitaciones')->group(function () {
+        Route::get('/tbIndexCourse', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexCurso']);
+        Route::get('/tbCreateCourse', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionCreateCurso']);
+        Route::post('/tbStoreCourse', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreCurso']);
+        Route::get('/tbEditCourse/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditCurso']);
+        Route::post('/tbUpdateCourse/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateCurso']);
+        Route::get('/tbShowCourse/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionShowCurso']);
+        Route::delete('/tbDeleteCourse/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteCurso']);
     });
 });
 
