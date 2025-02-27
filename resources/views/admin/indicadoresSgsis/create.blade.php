@@ -285,10 +285,8 @@
                 <div class="row">
                     <div class="form-group col-sm-4">
                         <div class="form-group">
-                            <label class="required" for="rojo"><span class="dotred"></span> De 0 a <span
-                                    id="textorojo"></span></label>
-                            <input class="form-control {{ $errors->has('rojo') ? 'is-invalid' : '' }}" type="number"
-                                name="rojo" id="rojo" value="{{ old('rojo', '') }}" min="0" required>
+                            <label class="required" for="rojo"><span class="dotred"></span> De <span id="textorojo"></span> a <span id="textorojo2"></span></label>
+                            <input class="form-control" type="number" name="rojo" id="rojo" required>
                             @if ($errors->has('rojo'))
                                 <div class="text-danger">
                                     {{ $errors->first('rojo') }}
@@ -300,10 +298,8 @@
 
                     <div class="form-group col-sm-4">
                         <div class="form-group">
-                            <label class="required" for="amarillo"><span class="dotyellow"></span> De <span
-                                    id="textorojo2"></span> a <span id="textoamarillo"></span>:</label>
-                            <input class="form-control {{ $errors->has('amarillo') ? 'is-invalid' : '' }}" type="number"
-                                name="amarillo" id="amarillo" value="{{ old('amarillo', '') }}" min="0" required>
+                            <label class="required" for="amarillo"><span class="dotyellow"></span> De <span id="textorojo_fin_amarillo"></span> a <span id="textoamarillo"></span></label>
+                            <input class="form-control" type="number" name="amarillo" id="amarillo" required>
                             @if ($errors->has('amarillo'))
                                 <div class="text-danger">
                                     {{ $errors->first('amarillo') }}
@@ -314,12 +310,8 @@
                     </div>
 
                     <div class="form-group col-sm-4">
-                        <label class="required" for="verde">
-                            <span class="dotverde"></span>
-                            De <span id="textoamarillo2"></span> a <span id="textoverde"></span>:</label>
-                        <input class="form-control {{ $errors->has('verde') ? 'is-invalid' : '' }}" type="number"
-                            name="verde" id="verde" value="{{ old('verde', '') }}" placeholder="" min="0"
-                            required>
+                        <label class="required" for="verde"> <span class="dotverde"></span> De <span id="textoamarillo_fin_verde"></span> a <span id="textoverde"></span></label>
+                        <input class="form-control" type="number" name="verde" id="verde" required readonly>
                         @if ($errors->has('verde'))
                             <div class="text-danger">
                                 {{ $errors->first('verde') }}
@@ -492,30 +484,64 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
     <script>
-        //script para rangos de valores
-        var n = document.getElementById("rojo");
-        var m = document.getElementById("amarillo");
-        var o = document.getElementById("verde");
+        document.addEventListener("DOMContentLoaded", function () {
+            const flujo = document.getElementById("flujo");
+            const rojo = document.getElementById("rojo");
+            const amarillo = document.getElementById("amarillo");
+            const verde = document.getElementById("verde");
+            const valorMinimoInput = document.getElementById("valor_minimo");
+            const valorMaximoInput = document.getElementById("valor_maximo");
 
-        n.addEventListener("keyup", function(e) {
-            rojo = document.getElementById("rojo").value;
-            document.getElementById("textorojo").innerHTML = rojo
-            document.getElementById("textorojo2").innerHTML = parseInt(rojo) + 1
-            document.getElementById("amarillo").min = parseInt(rojo) + 1;
-        });
+            function actualizarRangos() {
+                const tipoFlujo = flujo.value;
+                const rojoVal = parseInt(rojo.value);
+                const amarilloVal = parseInt(amarillo.value);
+                const valorMinimo = parseInt(valorMinimoInput.value);
+                const valorMaximo = parseInt(valorMaximoInput.value);
 
-        m.addEventListener("keyup", function(e) {
-            amarillo = document.getElementById("amarillo").value;
-            document.getElementById("textoamarillo").innerHTML = amarillo
-            document.getElementById("textoamarillo2").innerHTML = parseInt(amarillo) + 1
-        });
+                if (tipoFlujo === "ascendente") {
+                    document.getElementById("textorojo").innerText = valorMinimo;
+                    document.getElementById("textorojo2").innerText = rojoVal;
+                    amarillo.min = rojoVal + 1;
 
-        o.addEventListener("keyup", function(e) {
-            verde = document.getElementById("verde").value;
-            document.getElementById("textoverde").innerHTML = verde
-            document.getElementById("verde").min = parseInt(amarillo) + 1;
+                    document.getElementById("textorojo_fin_amarillo").innerText = rojoVal + 1;
+
+                    document.getElementById("textoamarillo").innerText = amarilloVal;
+                    // document.getElementById("textoamarillo2").innerText = amarilloVal + 1;
+
+                    document.getElementById("textoamarillo_fin_verde").innerText = amarilloVal +1;
+
+                    document.getElementById("textoverde").innerText = valorMaximo;
+
+                    verde.value = valorMaximo;
+                    verde.max = valorMaximo;
+
+                } else {
+                    document.getElementById("textorojo").innerText = valorMaximo;
+                    document.getElementById("textorojo2").innerText = rojoVal;
+                    amarillo.min = rojoVal - 1;
+
+                    document.getElementById("textorojo_fin_amarillo").innerText = rojoVal - 1;
+
+                    document.getElementById("textoamarillo").innerText = amarilloVal;
+                    // document.getElementById("textoamarillo2").innerText = amarilloVal + 1;
+
+                    document.getElementById("textoamarillo_fin_verde").innerText = amarilloVal - 1;
+
+                    document.getElementById("textoverde").innerText = valorMinimo;
+
+                    verde.value = valorMinimo;
+                    verde.max = valorMinimo;
+                }
+            }
+
+            flujo.addEventListener("change", actualizarRangos);
+            rojo.addEventListener("input", actualizarRangos);
+            amarillo.addEventListener("input", actualizarRangos);
+            verde.addEventListener("input", actualizarRangos);
+
+            actualizarRangos();
         });
-        //script para rangos de valores
     </script>
 
     <script>

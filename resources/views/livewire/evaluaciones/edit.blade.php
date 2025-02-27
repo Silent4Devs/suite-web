@@ -6,15 +6,19 @@
 
     @include('livewire.evaluaciones.form')
 
-    <div class="row w-100 m-0" style="justify-content:end">
-        <button type="submit" class="mr-3 btn-success btn green" wire:loading.attr="disabled" wire:target="update"
-            wire:click.prevent="update()">
-            <i class="fas fa-spinner fa-pulse" wire:loading wire:target="update"></i>
-            <span wire:loading.remove wire:target="update">Actualizar</span>
-            {{-- <span wire:loading wire:target="update">Actualizando</span> --}}
-        </button>
-        <button wire:click="default" class="btn btn-outline-primary">
-            Cancelar
-        </button>
+    <div class="row m-0" style="justify-content:end">
+        <div class="col-sm-1">
+            <button type="submit" class="mr-3 btn-success btn green" wire:loading.attr="disabled" wire:target="update"
+                wire:click.prevent="update()">
+                <i class="fas fa-spinner fa-pulse" wire:loading wire:target="update"></i>
+                <span wire:loading.remove wire:target="update">Actualizar</span>
+                {{-- <span wire:loading wire:target="update">Actualizando</span> --}}
+            </button>
+        </div>
+        <div class="col-sm-1">
+            <button wire:click="default" class="btn btn-outline-primary">
+                Cancelar
+            </button>
+        </div>
     </div>
 </div>

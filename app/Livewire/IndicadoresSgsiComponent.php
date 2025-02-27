@@ -62,17 +62,38 @@ class IndicadoresSgsiComponent extends Component
 
     public $rangos_ind;
 
-    protected $rules = [
-        'evaluacion' => 'required',
-        'fecha' => 'required',
-        'formSlugs.*.*' => 'required',
-    ];
+    public $no_aplica = false;
+
+    public $justificacion = null;
+
+    // protected $rules = [
+    //     'evaluacion' => 'required',
+    //     'fecha' => 'required',
+    //     'formSlugs.*.*' => 'required',
+    // ];
 
     protected $mesages = [
         'evaluacion.required' => 'Debes de definir una evaluación',
         'fecha.required' => 'Debes seleccionar una fecha',
         'formSlugs.*.*.required' => 'Agrega la evaluación',
     ];
+
+    public function rules()
+    {
+        $rules = [
+            'evaluacion' => 'required',
+            'fecha' => 'required',
+            'no_aplica' => 'required|boolean'
+        ];
+
+        if ($this->no_aplica) {
+            $rules['justificacion'] = 'required';
+        } else {
+            $rules['formSlugs.*.*'] = 'required';
+        }
+
+        return $rules;
+    }
 
     public function mount($indicadoresSgsis, $inpvar)
     {
@@ -113,7 +134,7 @@ class IndicadoresSgsiComponent extends Component
         $responsables = Empleado::getaltaAll();
         $procesos = Proceso::getAll();
         $evaluaciones = EvaluacionIndicador::where('id_indicador', '=', $this->indicadoresSgsis->id)->get();
-        // dd($this->indicadoresSgsis->rangosIndicadoresSGSI);
+
         return view('livewire.indicadores-sgsi-component', [
             'responsables' => $responsables,
             'procesos' => $procesos,
@@ -128,30 +149,42 @@ class IndicadoresSgsiComponent extends Component
     {
         $this->validate();
 
-        $variables = [];
-        $valores = [];
-        $formula_sustitucion = $this->indicadoresSgsis->formula;
+        if (!$this->no_aplica)
+        {
+            $variables = [];
+            $valores = [];
+            $formula_sustitucion = $this->indicadoresSgsis->formula;
 
-        foreach ($this->formSlugs as $key => $v1) {
-            array_push($variables, array_keys($v1)[0]);
-            array_push($valores, array_values($v1)[0]);
-        }
-
-        $formula_replace = str_replace($variables, $valores, $formula_sustitucion);
-
-        $string = $formula_replace;
-        $sinExclamacion = preg_replace('/[¡!]/u', '', $string);
-
-        $formula_final = $sinExclamacion;
-
-        try {
-            $result = eval('return '.$formula_final.';');
-        } catch (\Throwable $th) {
-            if ($th->getMessage() == 'Division by zero') {
-                $result = 0;
-            } else {
-                $result = 0;
+            foreach ($this->formSlugs as $key => $v1) {
+                array_push($variables, array_keys($v1)[0]);
+                array_push($valores, array_values($v1)[0]);
             }
+
+            $formula_replace = str_replace($variables, $valores, $formula_sustitucion);
+
+            $string = $formula_replace;
+            $sinExclamacion = preg_replace('/[¡!]/u', '', $string);
+
+            $formula_final = $sinExclamacion;
+
+            try {
+                $result = eval('return '.$formula_final.';');
+            } catch (\Throwable $th) {
+                if ($th->getMessage() == 'Division by zero') {
+                    $result = 0;
+                } else {
+                    $result = 0;
+                }
+            }
+
+            if($result > $this->rangos_ind->valor_maximo || $result < $this->rangos_ind->valor_minimo){
+                $this->alert('error', 'El resultado de la operación:'. $result .' no se encuentra dentro de los valores limite del indicador');
+
+                return false;
+            }
+
+        }else{
+            $result = $this->indicadoresSgsis->verde;
         }
 
         $evaluaciones = EvaluacionIndicador::create([
@@ -159,6 +192,9 @@ class IndicadoresSgsiComponent extends Component
             'fecha' => $this->fecha,
             'resultado' => $result,
             'id_indicador' => $this->indicadoresSgsis->id,
+            'no_aplica' => $this->no_aplica ?? false,
+            'justificacion' => $this->justificacion ?? null,
+            'id_rango_indicadores_sgsi' => $this->rangos_ind->id ?? null,
         ]);
 
         $this->default();
@@ -171,6 +207,8 @@ class IndicadoresSgsiComponent extends Component
         $evaluaciones = EvaluacionIndicador::find($id);
         $this->evaluacion = $evaluaciones->evaluacion;
         $this->fecha = $evaluaciones->fecha;
+        $this->no_aplica = $evaluaciones->no_aplica;
+        $this->justificacion = $evaluaciones->justificacion;
         // $this->resultado = $evaluaciones->resultado;
         // $this->default();
         $this->view = 'edit';
@@ -182,36 +220,50 @@ class IndicadoresSgsiComponent extends Component
     {
         $evaluaciones = EvaluacionIndicador::find($this->id_evaluacion);
 
-        $variables = [];
-        $valores = [];
-        $formula_sustitucion = $this->indicadoresSgsis->formula;
+        if (!$this->no_aplica)
+        {
+            $variables = [];
+            $valores = [];
+            $formula_sustitucion = $this->indicadoresSgsis->formula;
 
-        foreach ($this->formSlugs as $key => $v1) {
-            array_push($variables, array_keys($v1)[0]);
-            array_push($valores, array_values($v1)[0]);
-        }
-
-        $formula_replace = str_replace($variables, $valores, $formula_sustitucion);
-
-        $string = $formula_replace;
-        $sinExclamacion = preg_replace('/[¡!]/u', '', $string);
-
-        $formula_final = $sinExclamacion;
-
-        try {
-            $result = eval('return '.$formula_final.';');
-        } catch (\Throwable $th) {
-            if ($th->getMessage() == 'Division by zero') {
-                $result = 0;
-            } else {
-                $result = 0;
+            foreach ($this->formSlugs as $key => $v1) {
+                array_push($variables, array_keys($v1)[0]);
+                array_push($valores, array_values($v1)[0]);
             }
+
+            $formula_replace = str_replace($variables, $valores, $formula_sustitucion);
+
+            $string = $formula_replace;
+            $sinExclamacion = preg_replace('/[¡!]/u', '', $string);
+
+            $formula_final = $sinExclamacion;
+
+            try {
+                $result = eval('return '.$formula_final.';');
+            } catch (\Throwable $th) {
+                if ($th->getMessage() == 'Division by zero') {
+                    $result = 0;
+                } else {
+                    $result = 0;
+                }
+            }
+
+            if($result > $this->rangos_ind->valor_maximo || $result < $this->rangos_ind->valor_minimo){
+                $this->alert('error', 'El resultado de la operación: '. $result .' no se encuentra dentro de los valores limite del indicador');
+
+                return false;
+            }
+        }else{
+            $result = $this->indicadoresSgsis->verde;
         }
 
         $evaluaciones->update([
             'evaluacion' => $this->evaluacion,
             'fecha' => $this->fecha,
             'resultado' => $result,
+            'no_aplica' => $this->no_aplica ?? false,
+            'justificacion' => $this->justificacion ?? null,
+            'id_rango_indicadores_sgsi' => $this->rangos_ind->id ?? null,
         ]);
 
         $this->default();
@@ -229,8 +281,17 @@ class IndicadoresSgsiComponent extends Component
     {
         $this->evaluacion = '';
         $this->fecha = '';
+        $this->no_aplica = false;
+        $this->justificacion = null;
+
         $this->dispatch('contentChanged');
 
         $this->view = 'create';
+    }
+
+    public function cambio_aplica()
+    {
+        // dd($this->no_aplica);
+        $this->render();
     }
 }

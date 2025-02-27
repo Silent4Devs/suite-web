@@ -1,4 +1,3 @@
-{{-- <form wire:submit="store" enctype="multipart/form-data"> --}}
 <div class="row">
     <div class="mb-0 form-group col-sm-7">
         <div class="form-group">
@@ -28,28 +27,59 @@
         <span class="help-block">{{ trans('cruds.planBaseActividade.fields.fecha_inicio_helper') }}</span>
     </div>
 </div>
-<div class="row">
-    @foreach ($customFields as $key => $customField)
-        @if ($customField != null)
-            <div class="mb-0 form-group col-sm-6">
-                <div class="form-group mb-1">
-                    <label for="formSlugs.{{ $key }}.{{ $customField }}"><i
-                            class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField, 1)) }}</label>
-                    <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}" type="number"
-                        min="{{ $rangos_ind->valor_minimo }}" max="{{ $rangos_ind->valor_maximo }}" wire:model.live="formSlugs.{{ $key }}.{{ $customField }}"
-                        id="formSlugs.{{ $key }}.{{ $customField }}" value="" required>
-                </div>
-                {{-- {{"formSlugs.$key.$customField->variable"}} --}}
-                @if ($errors->has("formSlugs.$key.$customField"))
-                    <small class="text-danger">
-                        {{-- {{ $errors->first("formSlugs.$key.$customField->variable") }} --}}
-                        <p>Debes agregar esta evaluación</p>
-                    </small>
-                @endif
-            </div>
-        @endif
-    @endforeach
-    {{-- <button type="button" wire:click.prevent="store()" class="btn btn-primary btn-sm">Enviar</button> --}}
 
+<div class="row">
+    <div class="mb-2 form-group col-sm-2">
+        <div class="form-check">
+            <input class="form-check-input @error('no_aplica') is-invalid @enderror" type="checkbox" id="no_aplica"
+                wire:model="no_aplica" wire:click="cambio_aplica">
+            <label class="form-check-label" for="no_aplica">No aplica evaluación</label>
+        </div>
+        @error('no_aplica')
+            <div class="invalid-feedback d-block">
+                {{ $message }}
+            </div>
+        @enderror
+    </div>
 </div>
-{{-- </form> --}}
+@if ($no_aplica)
+    <div class="row">
+        <div class="mb-2 form-group col-sm-12">
+            <div class="mt-2">
+                <label for="justificacion">Justificación</label>
+                <textarea class="form-control @error('justificacion') is-invalid @enderror" id="justificacion"
+                    wire:model="justificacion"></textarea>
+
+                @error('justificacion')
+                    <div class="invalid-feedback">
+                        {{ $message }}
+                    </div>
+                @enderror
+
+                <span class="help-block">{{ trans('cruds.planBaseActividade.fields.fecha_inicio_helper') }}</span>
+            </div>
+        </div>
+    </div>
+@else
+    <div class="row">
+        @foreach ($customFields as $key => $customField)
+            @if ($customField != null)
+                <div class="mb-0 form-group col-sm-6">
+                    <div class="form-group mb-1">
+                        <label for="formSlugs.{{ $key }}.{{ $customField }}"><i
+                                class="fab fa-diaspora iconos-crear"></i>{{ ucfirst(substr($customField, 1)) }}</label>
+                        <input class="form-control slugs-inputs {{ $errors->has('') ? 'is-invalid' : '' }}" type="number"
+                            wire:model.live="formSlugs.{{ $key }}.{{ $customField }}"
+                            {{-- min="{{ $rangos_ind->valor_minimo ?? 0 }}" max="{{ $rangos_ind->valor_maximo ?? null }}"  --}}
+                            id="formSlugs.{{ $key }}.{{ $customField }}" value="" required>
+                    </div>
+                    @if ($errors->has("formSlugs.$key.$customField"))
+                        <small class="text-danger">
+                            <p>Debes agregar esta evaluación</p>
+                        </small>
+                    @endif
+                </div>
+            @endif
+        @endforeach
+    </div>
+@endif

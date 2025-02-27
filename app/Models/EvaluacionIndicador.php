@@ -48,6 +48,8 @@ class EvaluacionIndicador extends Model implements Auditable
         'fecha',
         'resultado',
         'id_indicador',
+        'no_aplica',
+        'justificacion',
         'id_rango_indicadores_sgsi'
     ];
 

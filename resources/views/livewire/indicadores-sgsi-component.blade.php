@@ -8,7 +8,7 @@
                 border-radius: 50%;
                 display: inline-block;
             }
-    
+
             .dotyellow {
                 height: 15px;
                 width: 15px;
@@ -16,7 +16,7 @@
                 border-radius: 50%;
                 display: inline-block;
             }
-    
+
             .dotred {
                 height: 15px;
                 width: 15px;
@@ -25,7 +25,7 @@
                 display: inline-block;
             }
         </style>
-    
+
         <div class="row">
             <div class="form-group col-sm-12">
                 <label for="nombre"><i class="fas fa-id-card iconos-crear"></i>Nombre del
@@ -42,29 +42,46 @@
                 </div>
             </div>
         </div>
-    
+
         <div class="row">
             <div class="form-group col-sm-12">
                 <label for="formula"><i class="fas fa-square-root-alt iconos-crear"></i></i>Fórmula</label>
                 <span class="ml-1"> {{ $indicadoresSgsis->formula }}</span>
             </div>
         </div>
-    
-    
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <div class="form-group">
+                    <label for="meta"><i class="fas fa-minus iconos-crear"></i>Valor Minimo</label>
+                    <span class="ml-1"> {{ $rangos_ind->valor_minimo}}</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-sm-4">
+                <div class="form-group">
+                    <label for="meta"><i class="fas fa-plus iconos-crear"></i>Valor Maximo</label>
+                    <span class="ml-1"> {{ $rangos_ind->valor_maximo}}</span>
+                </div>
+            </div>
+        </div>
+
         <div class="row">
             <div class="form-group col-sm-4">
                 <div class="form-group">
                     <label for="meta"><i class="fas fa-flag-checkered iconos-crear"></i></i>Meta</label>
-                    <span class="ml-1"> {{ $indicadoresSgsis->meta . $indicadoresSgsis->unidadmedida }}</span>
+                    <span class="ml-1"> {{ $indicadoresSgsis->meta . ' ' . $indicadoresSgsis->unidadmedida }}</span>
                 </div>
             </div>
         </div>
         @include("livewire.evaluaciones.$view")
-    
+
         <hr>
         @include('livewire.evaluaciones.table')
     </div>
-    
+
     <script>
         window.addEventListener('contentChanged', event => {
             var inputArray = document.querySelectorAll('.slugs-inputs');
@@ -72,21 +89,21 @@
                 input.value = "";
             });
         });
-    
+
         window.addEventListener('contentChanged', event => {
             console.log("Evento2");
         });
-    
+
         document.querySelectorAll("button.btnAñadir").forEach(function(elem) {
             elem.addEventListener('click', agregarTexto, false);
         });
-    
+
         function agregarTexto() {
             var btnValor = this.value;
             var elInput = document.getElementById("formula");
             elInput.value += btnValor;
         }
-    
+
         // $('#fecha').datepicker({
         //     format: "dd-mm-yyyy",
         //     todayBtn: true,

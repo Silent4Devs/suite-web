@@ -105,6 +105,6 @@ class IndicadoresSgsi extends Model implements Auditable
 
     public function rangosIndicadoresSGSI()
     {
-        return $this->hasOne(RangosIndicadoresSGSI::class, 'id_indicador_sgsi', 'id');
+        return $this->hasOne(RangosIndicadoresSGSI::class, 'id_indicador_sgsi', 'id') ?? false;
     }
 }
