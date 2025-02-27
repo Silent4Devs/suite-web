@@ -199,14 +199,31 @@
         </div>
     </div>
     <div class="col-sm-12 col-lg-4">
-        <label for="archivo"
-            style="cursor: pointer"><span>{{ $documentoActual->archivo != null ? 'Reemplazar' : 'Archivo' }}</span></label>
-        <div class="mb-3 custom-file">
+        <label for="archivo" style="cursor: pointer">
+            <span>{{ $documentoActual->archivo ? 'Reemplazar' : 'Archivo' }}</span>
+        </label>
+
+        <div class="mb-3 custom-file" x-data="fileUpload('{{ $documentoActual->archivo }}')">
             <input type="file" class="custom-file-input" id="archivo"
                 {{ $documentoActual->archivo == null ? 'required' : '' }} name="archivo"
-                accept="application/pdf, application/.doc,.docx">
-            <label class="custom-file-label"
-                for="archivo">{{ $documentoActual->archivo == null ? 'Selecciona un archivo' : $documentoActual->archivo }}</label>
+                accept="application/pdf, application/msword, .doc, .docx"
+                x-ref="fileInput"
+                @change="handleFileChange">
+
+            <!-- Barra de progreso -->
+            <template x-if="progress > 0 && progress < 100">
+                <div>
+                    <progress x-bind:value="progress" max="100" style="width: 100%;"></progress>
+                    <span x-text="progress + '%'"></span>
+                </div>
+            </template>
+
+            <!-- Mensaje de éxito -->
+            <div x-show="uploaded" class="text-success mt-2">✅ Archivo cargado</div>
+
+            <!-- Nombre del archivo -->
+            <label class="custom-file-label" for="archivo" x-text="fileName"></label>
+
             @if ($errors->has('archivo'))
                 <span class="text-danger">
                     {{ $errors->first('archivo') }}
@@ -214,6 +231,7 @@
             @endif
             <span class="text-danger archivo_error error-ajax"></span>
         </div>
+
         @if ($documentoActual->archivo != null)
             <!-- Button trigger modal -->
             <a data-toggle="modal" data-target="#documentoCargado" style="color: #0f37e8">
@@ -331,3 +349,39 @@
         </div>
     </div>
 </div>
+
+<script>
+    function fileUpload(initialFile = '') {
+        return {
+            fileName: initialFile || 'Selecciona un archivo',
+            hasFile: false,
+            uploaded: false,
+            progress: 0,
+
+            handleFileChange(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    this.fileName = file.name;
+                    this.hasFile = true;
+                    this.uploaded = false;
+                    this.progress = 0;
+
+                    // Simula la carga con una barra de progreso
+                    let interval = setInterval(() => {
+                        if (this.progress >= 100) {
+                            clearInterval(interval);
+                            this.uploaded = true;
+                        } else {
+                            this.progress += 10; // Incrementa la barra de 10 en 10
+                        }
+                    }, 200);
+                } else {
+                    this.fileName = initialFile || 'Selecciona un archivo';
+                    this.hasFile = false;
+                    this.uploaded = false;
+                    this.progress = 0;
+                }
+            }
+        };
+    }
+</script>

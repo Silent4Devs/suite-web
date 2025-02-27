@@ -1507,7 +1507,7 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
             });
 
-            Route::group(['middleware' => ['centro_atencion']], function () {
+            // Route::group(['middleware' => ['centro_atencion']], function () {
 
                 // TODO Quejas
                 Route::get('inicioUsuario/reportes/quejas', [QuejasController::class, 'quejas'])->name('reportes-quejas');
@@ -1644,7 +1644,7 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
                 Route::get('desk-sugerencias-actividades/{sugerencia_id}', 'ActividadesSugerenciasController@index')->name('desk-sugerencias-actividades.index');
                 Route::resource('desk-sugerencias-actividades', 'ActividadesSugerenciasController')->except(['index']);
-            });
+            // });
 
             // Planes de Acción
             Route::group(['middleware' => ['planes_trabajo']], function () {
