@@ -83,7 +83,7 @@ services:
       - .:/var/www/html
       - ./infra/php/php.ini:/usr/local/etc/php/php.ini
       - ./infra/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-    command: php artisan queue:work --tries=6
+    command: php artisan queue:work --tries=6 --timeout=180 --memory=4096 --max-jobs=100 --max-time=900
     depends_on:
       - php
     container_name: queue-worker-tabantaj
@@ -93,7 +93,7 @@ services:
       CONTAINER_ROLE: queue
     networks:
       - tabantajnetwork
-    mem_limit: 3g
+    mem_limit: 4g
 
   schedule-worker:
     build:
@@ -113,7 +113,7 @@ services:
       CONTAINER_ROLE: scheduler
     networks:
       - tabantajnetwork
-    mem_limit: 3g
+    mem_limit: 2g
 
   redis-tabantaj:
     image: redis:alpine
