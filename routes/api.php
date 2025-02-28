@@ -128,6 +128,30 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
         Route::post('/tbUpdateCourse/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateCurso']);
         Route::get('/tbShowCourse/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionShowCurso']);
         Route::delete('/tbDeleteCourse/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteCurso']);
+
+        Route::get('/tbIndexGoals/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexGoals']);
+        Route::post('/tbStoreGoals/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreGoals']);
+        Route::get('/tbEditGoals/{id_goal}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditGoals']);
+        Route::post('/tbUpdateGoals/{id_goal}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateGoals']);
+        Route::delete('/tbDeleteGoals/{id_goal}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteGoals']);
+
+        Route::get('/tbIndexRequirements/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexRequirements']);
+        Route::post('/tbStoreRequirements/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreRequirements']);
+        Route::get('/tbEditRequirements/{id_requirement}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditRequirements']);
+        Route::post('/tbUpdateRequirements/{id_requirement}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateRequirements']);
+        Route::delete('/tbDeleteRequirements/{id_requirement}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteRequirements']);
+
+        Route::get('/tbIndexAudience/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexAudience']);
+        Route::post('/tbStoreAudience/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreAudience']);
+        Route::get('/tbEditAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditAudience']);
+        Route::post('/tbUpdateAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateAudience']);
+        Route::delete('/tbDeleteAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteAudience']);
+
+        Route::get('/tbIndexEstudiantes/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexEstudiantes']);
+        Route::post('/tbStoreEstudiantes/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreEstudiantes']);
+        Route::delete('/tbDeleteEstudiantes', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteEstudiantes']);
+        Route::delete('/tbDeleteMultipleEstudiantes', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionMultipleDeleteEstudiantes']);
+        Route::delete('/tbDeleteAllEstudiantes/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionAllDeleteEstudiantes']);
     });
 });
 

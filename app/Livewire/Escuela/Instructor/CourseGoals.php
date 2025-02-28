@@ -57,7 +57,6 @@ class CourseGoals extends Component
 
     public function update()
     {
-        // dd($this->formName);
         $this->validateOnly('formName');
 
         $this->goal->name = $this->formName;
