@@ -17,11 +17,20 @@
         }
     @endphp
 
-    <form method="POST" action="{{ route('admin.password.renew-password-update') }}" style="height: 513px">
+    <form method="POST" action="{{ route('password.update') }}" style="height: 513px">
         @csrf
         <img class="logo_silent rounded-circle" style="width: 100px" src="{{ $logotipo }}" />
         <h3 class="mt-2" style="color: var(--color-tbj); font-weight: normal; font-size:24px;">Reestablecer Contraseña</h3>
         <p class="text-muted mt-4" style="text-align: left">Introduce tu nueva contraseña y, al confirmarla, presiona el botón "Restablecer contraseña". Una vez completado el proceso, ingresarás automáticamente a TABANTAJ.</p>
+
+        <div class="form-group">
+            <input id="email" type="email" name="email"
+                class="form-control{{ $errors->has('email') ? ' is-invalid' : '' }}" required autocomplete="email" autofocus
+                placeholder="{{ trans('global.login_email') }}" value="{{ $email ?? old('email') }}" >
+            @if ($errors->has('email'))
+                <small class="text-danger">{{ $errors->first('email') }}</small>
+            @endif
+        </div>
 
         <div class="form-group" style="position: relative">
             <label for="password">{{ trans('global.login_password') }}</label>
