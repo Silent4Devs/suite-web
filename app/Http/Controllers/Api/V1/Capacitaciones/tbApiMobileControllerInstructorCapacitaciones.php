@@ -28,11 +28,12 @@ use Gate;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Validator;
+use Illuminate\Support\Str;
 use Illuminate\Validation\Rule;
-
 use App\Models\Escuela\Price;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
-
+use App\Models\Escuela\Lesson;
 
 class tbApiMobileControllerInstructorCapacitaciones extends Controller
 {
@@ -766,108 +767,148 @@ class tbApiMobileControllerInstructorCapacitaciones extends Controller
         ]);
     }
 
-    public function tbFunctionSeccionesCurso($id_course)
+    public function tbFunctionIndexSeccionesCurso($id_course)
     {
-        $course = Course::where('id', $id_course)
-        ->select('id', 'title', 'slug', 'subtitle', 'description', 'category_id', 'level_id', 'user_id', 'empleado_id')
-        ->first(); // Obtener un solo registro
+        $course = Course::with(['instructor', 'teacher.empleado', 'user.empleado', 'sections_order.lessons'])
+            ->where('id', $id_course)
+            ->firstOrFail();
 
-        $courseArray = $course ? $course->toArray() : []; // Convertir a array o devolver vacío si no existe
+        $data['course'] = [
+            'id_course' => $course->id,
+            'title' => $course->title,
+            'subtitle' => $course->subtitle,
+            'description' => $course->description,
+            'course_rating' => $course->rating,
+            'course_certificate' => $course->certificado,
+            'colaboradores_inscritos' => $course->students_count,
+            'nombre_instructor' => $course->instructor->name ?? $course->teacher->empleado->name ?? '',
+            'imagen_instructor' => optional($course->user->empleado)->avatar_ruta ? $this->encodeSpecialCharacters($course->user->empleado->avatar_ruta) : '',
+        ];
 
-        $sections = json_decode($request->input('sections'));
-        $lessons = json_decode($request->input('lessons'));
+        foreach ($course->sections_order as $section) {
+            $data['course']['sections'][] = [
+                'id_section' => $section->id,
+                'name_section' => $section->name,
+                'lessons' => $section->lessons->map(function ($lesson) {
+                    return [
+                        'id_lesson' => $lesson->id,
+                        'name_lesson' => $lesson->name,
+                        'url_evaluation' => $lesson->url,
+                        'lesson_completed' => $lesson->completed,
+                    ];
+                })->toArray(),
+            ];
+        }
 
-        $templateId = $sections[0]->course_id;
-        $sectionId = $sections[0]->id;
-
-        $this->saveSections($sections, $lessons);
-
-        $this->createQuestionsDefault($templateId, $sectionId);
-
-        return json_encode(['data' => 'Sections and questions created successfully'], 200);
-
+        return response()->json(['data' => $data], 200);
     }
 
-    public function saveSections($sections, $lessons)
+    public function tbFunctionStoreSeccionesCurso(Request $request, $id_course)
+    {
+        $course = Course::select(['id', 'title', 'slug', 'subtitle', 'description', 'category_id', 'level_id', 'user_id', 'empleado_id'])
+            ->findOrFail($id_course);
+
+        $this->saveSections($request->input('sections', []), $request->input('lessons', []), $id_course);
+
+        return response()->json(['message' => 'Sections and lessons created successfully'], 200);
+    }
+
+    public function saveSections($sections, $lessons, $cursoID)
     {
         DB::beginTransaction();
         try {
             foreach ($sections as $section) {
-                $sectionId = $section->id;
-                $courseId = $section->course_id;
-                $lessonsFilter = array_filter($lessons, function ($item) use ($sectionId) {
-                    return $item->columnId === $sectionId;
-                });
+                $sec = Str::startsWith($section['id_seccion'], 'sec-')
+                    ? Section::create(['name' => $section['name_seccion'], 'course_id' => $cursoID])
+                    : Section::findOrFail($section['id_seccion'])->update(['name' => $section['name_seccion']]);
 
-                $sectionCreate = TBSectionTemplateAnalisisRiesgoModel::create([
-                    'name' => $section->name,
-                    'course_id' => $courseId,
-                ]);
-                $sectionId = $sectionCreate->id;
-                $this->saveLessons($sectionId, $lessonsFilter, $courseId);
+                $this->saveLessons($sec->id, collect($lessons)->where('section_id', $section['id_seccion'])->all(), $cursoID);
             }
             DB::commit();
         } catch (\Throwable $th) {
-            // throw $th;
             DB::rollback();
+            dd($th);
         }
     }
 
     public function saveLessons($sectionId, $lessons, $templateId)
     {
-        foreach ($lessons as $lesson) {
-            $id = $lesson->id;
-            $exist = intval($id);
-            if (! $exist) {
-                DB::beginTransaction();
-                try {
-                    $uuid = $this->verifyUuidFormula($lesson);
-                    $lessonCreate = TBQuestionTemplateAnalisisRiesgoModel::create([
-                        'title' => $lesson->title,
-                        'size' => $lesson->size,
-                    ]);
+        DB::beginTransaction();
+        try {
+            foreach ($lessons as $lesson) {
+                if (empty($lesson['id'])) {
+                    $resource = match ($lesson['formato_lesson']) {
+                        'Youtube', 'Vimeo' => Lesson::create([
+                            'name' => $lesson['name_lesson'],
+                            'platform_id' => $lesson['platform_id'],
+                            'url' => "{$lesson['url_lesson']}?rel=0",
+                            'section_id' => $sectionId,
+                            'description' => $lesson['description'],
+                        ]),
+                        'Texto' => Lesson::create([
+                            'name' => $lesson['name_lesson'],
+                            'platform_id' => $lesson['platform_id'],
+                            'section_id' => $sectionId,
+                            'text_lesson' => $lesson['description'],
+                        ]),
+                        'Documento' => (!empty($lesson['file']) && $this->isValidDocument($lesson['file']))
+                            ? $this->storeDocumentLesson($lesson, $sectionId)
+                            : throw new \Exception("Formato de archivo no válido."),
+                        default => throw new \Exception("Formato de lección no válido."),
+                    };
 
-                    TBSectionTemplateAr_QuestionTemplateArModel::create([
-                        'section_id' => $sectionId,
-                        'lesson_id' => $lessonCreate->id,
-                    ]);
-
-                    TBSettingsTemplateAR_TBlessonTemplateARModel::create([
-                        'template_id' => $templateId,
-                        'lesson_id' => $lessonCreate->id,
-                        'is_show' => false,
-                    ]);
-
-                    $this->filterSaveDataQuestion($question, $questionCreate);
-                    DB::commit();
-                } catch (\Throwable $th) {
-                    DB::rollback();
-
-                    continue;
-                }
-            } else {
-                $pivot = TBSectionTemplateAr_QuestionTemplateArModel::where('question_id', $id)->first();
-                $register = TBQuestionTemplateAnalisisRiesgoModel::where('id', $id)->first();
-                DB::beginTransaction();
-                try {
-                    $register->update([
-                        'title' => $question['title'],
-                        'size' => $question['size'],
-                        'type' => $question['type'],
-                        'position' => $question['position'],
-                        'obligatory' => $question['obligatory'],
-                        'is_numeric' => $question->isNumeric,
-                    ]);
-                    $pivot->update(
-                        ['section_id' => $sectionId],
-                    );
-                    DB::commit();
-                } catch (\Throwable $th) {
-                    DB::rollback();
-
-                    continue;
+                    if (!empty($lesson['file'])) {
+                        $this->storeResourceFile($lesson['file'], $resource, $sectionId);
+                    }
+                } else {
+                    $this->updateExistingLesson($lesson['id'], $lesson, $sectionId);
                 }
             }
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollback();
+            dd($th);
+        }
+    }
+
+    private function storeDocumentLesson($lesson, $sectionId)
+    {
+        return Lesson::create([
+            'name' => $lesson['name_lesson'],
+            'platform_id' => $lesson['platform_id'],
+            'section_id' => $sectionId,
+        ]);
+    }
+
+    private function storeResourceFile($file, $resource, $sectionId = null)
+    {
+        $uuid = Str::uuid();
+        $newFileName = "{$uuid}_{$file->getClientOriginalName()}";
+        $path = "cursos/section/{$sectionId}/lesson/{$resource->id}";
+
+        $storedPath = $file->storeAs($path, $newFileName);
+        $file->storeAs("public/{$path}", $newFileName);
+
+        $resource->resource()->create(['url' => $storedPath]);
+    }
+
+    private function updateExistingLesson($id, $lesson, $sectionId)
+    {
+        DB::beginTransaction();
+        try {
+            Lesson::findOrFail($id)->update([
+                'title' => $lesson['title'],
+                'size' => $lesson['size'],
+                'type' => $lesson['type'],
+                'position' => $lesson['position'],
+                'obligatory' => $lesson['obligatory'],
+                'is_numeric' => $lesson['isNumeric'] ?? null,
+            ]);
+
+            DB::commit();
+        } catch (\Throwable $th) {
+            DB::rollback();
+            dd($th);
         }
     }
 
@@ -2046,48 +2087,4 @@ class tbApiMobileControllerInstructorCapacitaciones extends Controller
     //         ]);
     //     }
 
-    //     public function verifyUuidFormula($question)
-    //     {
-    //         switch ($question->type) {
-    //             case '3':
-    //                 $uuid = Str::uuid();
-    //                 $uuid = substr($uuid, 0, 5);
-
-    //                 return $uuid;
-    //                 break;
-    //             case '5':
-    //                 if ($question->is_numeric) {
-    //                     $uuid = Str::uuid();
-    //                     $uuid = substr($uuid, 0, 5);
-
-    //                     return $uuid;
-    //                 } else {
-    //                     return null;
-    //                 }
-    //                 break;
-    //             case '6':
-    //                 if ($question->is_numeric) {
-    //                     $uuid = Str::uuid();
-    //                     $uuid = substr($uuid, 0, 5);
-
-    //                     return $uuid;
-    //                 } else {
-    //                     return null;
-    //                 }
-    //                 break;
-    //             case '7':
-    //                 if ($question->is_numeric) {
-    //                     $uuid = Str::uuid();
-    //                     $uuid = substr($uuid, 0, 5);
-
-    //                     return $uuid;
-    //                 } else {
-    //                     return null;
-    //                 }
-    //                 break;
-    //             default:
-    //                 return null;
-    //         }
-    //     }
-    // }
 }

@@ -152,6 +152,12 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
         Route::delete('/tbDeleteEstudiantes', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteEstudiantes']);
         Route::delete('/tbDeleteMultipleEstudiantes', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionMultipleDeleteEstudiantes']);
         Route::delete('/tbDeleteAllEstudiantes/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionAllDeleteEstudiantes']);
+
+        Route::get('/tbIndexSections/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexSeccionesCurso']);
+        Route::post('/tbStoreSections/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreSeccionesCurso']);
+        Route::get('/tbEditAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditAudience']);
+        Route::post('/tbUpdateAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateAudience']);
+        Route::delete('/tbDeleteAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteAudience']);
     });
 });
 

@@ -227,6 +227,39 @@ class tbApiMobileControllerCapacitaciones extends Controller
                 ];
             }
 
+            foreach ($section->lessons as $keyLesson => $lesson) {
+
+                // Datos comunes para todas las lecciones
+                $lessonData = [
+                    'id_lesson' => $lesson->id,
+                    'name_lesson' => $lesson->name,
+                    'platform_lesson' => $lesson->platform_format,
+                    'resource_lesson' => null, // Valor por defecto
+                ];
+
+                // Asignar el valor de data_lesson y resource_lesson según el formato de la plataforma
+                switch ($lesson->platform_format) {
+                    case 'Vimeo':
+                    case 'Youtube':
+                        $lessonData['data_lesson'] = $lesson->url;
+                        if ($lesson->resource) {
+                            $lessonData['resource_lesson'] = asset('storage/' . $lesson->resource->url);
+                        }
+                        break;
+                    case 'Documento':
+                        $lessonData['data_lesson'] = asset('storage/' . $lesson->resource->url);
+                        break;
+                    case 'Texto':
+                        $lessonData['data_lesson'] = $lesson->text_lesson;
+                        break;
+                    default:
+                        continue 2; // Saltar al siguiente ciclo del foreach
+                }
+
+                // Agregar la lección al arreglo de progreso del curso
+                $json_informacion_curso['course']['section'][$keySections]['lesson'][$keyLesson] = $lessonData;
+            }
+
             foreach ($section->evaluations as $keyEvaluation => $evaluation) {
 
                 $totalLectionSection = $section->lessons->count();
