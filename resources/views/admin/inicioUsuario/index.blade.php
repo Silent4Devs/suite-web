@@ -270,6 +270,21 @@
             </a>
             @endif
 
+            @if ($empleado->es_supervisor)
+            <a
+                href="{{ route('admin.ev360-objetivos.index') }}">
+                <div class="item-ob-ev" style="background-color: #117994;">
+                    <div class="img-ob-ev">
+                        <img src="{{ asset('img/reunion.png') }}" alt="">
+                    </div>
+                    <div class="info-ob-ev">
+                        <h5>Evaluación 360: Objetivos del Equipo</h5>
+                        <p><small>Asignar Objetivos</small></p>
+                    </div>
+                </div>
+            </a>
+            @endif
+
             <a href="" class="d-none">
                 <div class="item-ob-ev" style="background-color: #249AB8;">
                     <div class="img-ob-ev">
