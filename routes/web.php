@@ -465,7 +465,9 @@ Route::view('tenant', 'central.landing')->name('central.landing');
                 Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
                 Route::get('ajustes-vacaciones', 'AusenciasController@ajustesVacaciones')->name('ajustes-vacaciones');
                 Route::get('ajustes-permisos-goce-sueldo', 'AusenciasController@ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo');
-                Route::resource('Ausencias', 'AusenciasController');
+                Route::resource('ausencias', 'AusenciasController');
+
+                Route::get('dashboardPermisos/dashboardOrg/{id}', 'DashboardPermisosController@dashboardOrg')->name('dashboard-permisos.dashboard-org');
 
                 Route::resource('incidentes-vacaciones', 'IncidentesVacacionesController')->names([
                     'create' => 'incidentes-vacaciones.create',
