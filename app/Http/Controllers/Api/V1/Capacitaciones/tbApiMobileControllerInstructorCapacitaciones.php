@@ -1235,7 +1235,16 @@ class tbApiMobileControllerInstructorCapacitaciones extends Controller
         ]);
     }
 
-    public function tbFunctionCertificadoCurso(Request $request, $id_course)
+    public function tbFunctionEditCertificadoCurso($id_course)
+    {
+        $course = Course::select('id','certificado','firma_instructor','firma_habilitar')->find($id_course);
+
+        return response()->json([
+            'course' => $course,
+        ]);
+    }
+
+    public function tbFunctionUpdateCertificadoCurso(Request $request, $id_course)
     {
         $course = Course::find($id_course);
 

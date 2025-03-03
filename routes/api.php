@@ -175,6 +175,9 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
         Route::delete('/tbDeleteAnswer/{id_answer}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteAnswer']);
 
 
+
+        Route::get('/tbEditCertificadoCurso/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditCertificadoCurso']);
+        Route::post('/tbUpdateCertificadoCurso/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateCertificadoCurso']);
     });
 });
 
