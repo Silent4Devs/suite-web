@@ -155,9 +155,26 @@ Route::group(['prefix' => 'v1', 'as' => 'api.', 'namespace' => 'Api\v1', 'middle
 
         Route::get('/tbIndexSections/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexSeccionesCurso']);
         Route::post('/tbStoreSections/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreSeccionesCurso']);
-        Route::get('/tbEditAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditAudience']);
-        Route::post('/tbUpdateAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateAudience']);
-        Route::delete('/tbDeleteAudience/{id_audience}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteAudience']);
+        Route::delete('/tbDeleteSection/{id_section}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteSeccion']);
+        Route::delete('/tbDeleteLesson/{id_lesson}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteLesson']);
+
+        Route::get('/tbIndexEvaluations/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexEvaluacion']);
+
+        Route::get('/tbIndexEvaluation/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionIndexEvaluacion']);
+        Route::get('/tbCreateEvaluation/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionCreateEvaluacion']);
+        Route::post('/tbStoreEvaluation/{id_course}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreEvaluacion']);
+        Route::get('/tbEditEvaluation/{id_evaluation}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditarEvaluacion']);
+        Route::post('/tbUpdateEvaluation/{id_evaluation}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateEvaluacion']);
+        Route::delete('/tbDeleteEvaluation/{id_evaluation}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDestroyEvaluacion']);
+
+        Route::get('/tbEvaluationQuestions/{id_evaluation}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEvaluacionwithQuestions']);
+        Route::post('/tbStoreQuestion/{id_evaluation}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionStoreQuestion']);
+        Route::get('/tbEditQuestion/{id_question}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionEditarQuestion']);
+        Route::get('/tbUpdateQuestion/{id_question}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionUpdateQuestion']);
+        Route::post('/tbDeleteQuestion/{id_question}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteQuestion']);
+        Route::delete('/tbDeleteAnswer/{id_answer}', [tbApiMobileControllerInstructorCapacitaciones::class, 'tbFunctionDeleteAnswer']);
+
+
     });
 });
 
