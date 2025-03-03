@@ -523,52 +523,17 @@
                                                 </div>
                                             </div>
                                             <div class="row">
-                                                <div class="col s12 l12 anima-focus"
-    x-data="{
-        fileName: '{{ $documentoActual->archivo ?? 'Carga de cotizaciones *' }}',
-        progress: 0,
-        uploaded: false,
-        handleFileChange(event) {
-            this.fileName = event.target.files.length ? event.target.files[0].name : 'Carga de cotizaciones *';
-            this.progress = 10; // Inicia la barra de progreso
-            this.uploaded = false;
-
-            // Simulación de carga (reemplaza esto con la lógica real de subida)
-            let interval = setInterval(() => {
-                if (this.progress >= 100) {
-                    clearInterval(interval);
-                    this.uploaded = true;
-                } else {
-                    this.progress += 10;
-                }
-            }, 300);
-        }
-    }">
-
-    <input type="file" required
-        class="modal-cotizacion form-control-file"
-        id="cotizacion_{{ $keyP }}"
-        name="cotizacion_{{ $keyP }}"
-        accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv"
-        @change="handleFileChange">
-
-    <label for="cotizacion_{{ $keyP }}">
-        <span x-text="fileName"></span>
-        <font class="asterisco">*</font>
-    </label>
-
-    <!-- Barra de progreso -->
-    <template x-if="progress > 0 && progress < 100">
-        <div class="mt-2">
-            <progress :value="progress" max="100" style="width: 100%;"></progress>
-            <span x-text="progress + '%'"></span>
-        </div>
-    </template>
-
-    <!-- Mensaje cuando se completa la carga -->
-    <div x-show="uploaded" class="text-success mt-2">✅ Archivo cargado</div>
-</div>
-
+                                                <div class="col s12 l12 anima-focus">
+                                                    <input type="file" required
+                                                        class="modal-cotizacion form-control-file"
+                                                        wire:model.lazy='array_proveedores.{{ $keyP }}.archivo'
+                                                        id="cotizacion_{{ $keyP }}"
+                                                        name="cotizacion_{{ $keyP }}"
+                                                        accept=".pdf, .docx, .pptx, .point, .xml, .jpeg, .jpg, .png, .xlsx, .xlsm, .csv">
+                                                    <label for="cotizacion_{{ $keyP }}">
+                                                        Carga de cotizaciones <font class="asterisco">*</font>
+                                                    </label>
+                                                </div>
                                             </div>
                                             <br>
                                             <button class="btn btn-primary" wire:click.prevent="robot">
