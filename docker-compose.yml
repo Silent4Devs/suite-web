@@ -83,7 +83,7 @@ services:
       - .:/var/www/html
       - ./infra/php/php.ini:/usr/local/etc/php/php.ini
       - ./infra/php/www.conf:/usr/local/etc/php-fpm.d/www.conf
-    command: php artisan queue:work --tries=6 --timeout=240 --memory=6144 --max-jobs=100 --max-time=1800
+    command: php artisan queue:work --tries=6 --memory=6144 --max-jobs=150
     depends_on:
       - php
     container_name: queue-worker-tabantaj
