@@ -1,6 +1,14 @@
 @extends('layouts.admin')
 @section('content')
     <style>
+        .form-control{
+            width: auto !important;
+        }
+
+        textarea.form-control {
+            width: 100% !important; /* O el ancho que necesites */
+        }
+
         span.errors {
             font-size: 11px;
         }
@@ -476,7 +484,7 @@
                                                                     <label class="m-0 mt-2"><i
                                                                             class="mr-2 far fa-dot-circle"></i>Comentarios
                                                                         Autoevaluación</label>
-                                                                    <textarea class="m-0 form-control" readonly rows="0"
+                                                                    <textarea class="m-0 form-control w-100" readonly rows="0"
                                                                         id="autoevaluacionComentariosObjetivos{{ $objetivo->objetivo_id }}" type="text">Cargando autoevaluacion...</textarea>
                                                                 @endif
                                                             @endif
@@ -490,7 +498,7 @@
                                                             </label>
                                                             <textarea
                                                                 onchange="event.preventDefault();saveMetaAlcanzadaDescripcion(this,'{{ $objetivo->objetivo->id }}','{{ $evaluado->id }}','{{ $evaluador->id }}','{{ $evaluacion->id }}','{{ route('admin.ev360-evaluaciones.objetivos.storeMetaAlcanzadaDescripcion') }}')"
-                                                                placeholder="Comentarios adicionales" class="m-0 form-control" type="text"> {{ $objetivo->meta_alcanzada }}</textarea>
+                                                                placeholder="Comentarios adicionales" class="m-0 form-control w-100" type="text"> {{ $objetivo->meta_alcanzada }}</textarea>
                                                         </div>
                                                     </div>
                                                 @endforeach
