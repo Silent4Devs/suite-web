@@ -108,7 +108,10 @@ class EV360ObjetivosController extends Controller
 
                     $permiso = $user->can('aprobacion_objetivos_estrategicos');
 
-                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'objetivos', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+                    //No puede ser su propio supervisor
+                    $permiso_supervisor = false;
+
+                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'objetivos', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso', 'permiso_supervisor'));
                 } else {
                     abort_if(Gate::denies('objetivos_estrategicos_agregar'), Response::HTTP_FORBIDDEN, '403 Forbidden');
                     $objetivo = new Objetivo;
@@ -133,8 +136,13 @@ class EV360ObjetivosController extends Controller
                     $empleados = Empleado::getAltaDataColumns();
                     $permiso = $user->can('aprobacion_objetivos_estrategicos');
 
-                    // dd($permiso);
-                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'objetivos', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso'));
+                    if($user->empleado->id == $empleado->supervisor->id){
+                        $permiso_supervisor = true;
+                    } else {
+                        $permiso_supervisor = false;
+                    }
+
+                    return view('admin.recursos-humanos.evaluacion-360.objetivos.create-by-empleado', compact('objetivo', 'objetivos', 'tipo_seleccionado', 'metrica_seleccionada', 'empleado', 'empleados', 'permiso', 'permiso_supervisor'));
                 }
             } catch (\Throwable $th) {
                 dd($th);

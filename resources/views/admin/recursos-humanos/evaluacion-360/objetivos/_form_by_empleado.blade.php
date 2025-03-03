@@ -216,7 +216,7 @@
                                             onclick="event.preventDefault();Eliminar('{{ route('admin.ev360-objetivos-empleado.destroyByEmpleado', ['objetivo' => $objetivo->objetivo->id]) }}')">
                                             <i class="fas fa-trash-alt"></i>
                                         </button>
-                                        @if (true)
+                                        @if (($permiso || $permiso_supervisor) && $objetivo->objetivo?->esta_aprobado == 0)
                                             <button onclick="event.preventDefault();aprobarObjetivoEstrategico({{ $objetivo->objetivo->id }}, {{ $objetivo->empleado_id }}, true);"
                                                 class="btn btn-small text-success me-2">
                                                 <i class="fa-solid fa-thumbs-up"></i>
