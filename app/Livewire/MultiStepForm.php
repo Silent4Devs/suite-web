@@ -661,17 +661,20 @@ class MultiStepForm extends Component
             }
         }
 
-        // Se asignan los valores que tendra la evaluacion
-        $catalogo = CatalogoRangosObjetivos::with('rangos')->findOrFail($this->catalogoObjetivos);
+        #Solo cuando hay objetivos
+        if ($this->includeObjetivos) {
+            // Se asignan los valores que tendra la evaluacion
+            $catalogo = CatalogoRangosObjetivos::with('rangos')->findOrFail($this->catalogoObjetivos);
 
-        foreach ($catalogo->rangos as $r) {
-            Ev360ParametrosObjetivos::create([
-                'evaluacion_id' => $evaluacion->id,
-                'parametro' => $r->parametro,
-                'valor' => $r->valor,
-                'color' => $r->color,
-                'descripcion' => $r->descripcion,
-            ]);
+            foreach ($catalogo->rangos as $r) {
+                Ev360ParametrosObjetivos::create([
+                    'evaluacion_id' => $evaluacion->id,
+                    'parametro' => $r->parametro,
+                    'valor' => $r->valor,
+                    'color' => $r->color,
+                    'descripcion' => $r->descripcion,
+                ]);
+            }
         }
 
         if ($idx == 0 && $this->sendEmail) {
