@@ -21,7 +21,6 @@ class ListaCampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,RequisicionesEvent' => 'render',
         'echo:notificaciones-campana,EntendimientoOrganizacionEvent' => 'render',
         'echo:notificaciones-campana,DocumentoEvent' => 'render',
-        'echo:notificaciones-campana,TimesheetEvent' => 'render',
         'echo:notificaciones-campana,CoursesEvent' => 'render',
         'echo:notificaciones-campana,SolicitudVacacionesEvent' => 'render',
         'echo:notificaciones-campana,SolicitudDayofEvent' => 'render',
