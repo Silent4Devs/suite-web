@@ -40,15 +40,18 @@ class Ev360ResumenTabla extends Component
 
     public $rangos;
 
+    public $dataEvaluacion;
+
     public function mount($evaluacion, $rangos = null)
     {
         $this->evaluacion = $evaluacion;
+        $this->dataEvaluacion = Evaluacion::select('id', 'nombre', 'include_competencias', 'include_objetivos')->where('id', '=', intval($this->evaluacion))->first();
         $this->rangos = $rangos;
     }
 
     public function render()
     {
-        $evaluacion = Evaluacion::select('id', 'nombre')->with('evaluados:id,name,area_id,puesto_id')->where('id', '=', intval($this->evaluacion))->first();
+        $evaluacion = Evaluacion::select('id', 'nombre', 'include_competencias', 'include_objetivos')->with('evaluados:id,name,area_id,puesto_id')->where('id', '=', intval($this->evaluacion))->first();
 
         $lista_evaluados = collect();
         $calificaciones = collect();
@@ -58,6 +61,7 @@ class Ev360ResumenTabla extends Component
         $sobresaliente = 0;
 
         $lista_evaluados = $evaluacion->evaluados->map(function ($evaluado) use ($evaluacion) {
+
             $informacion = $this->obtenerInformacionDeLaConsultaPorEvaluado($evaluacion->id, $evaluado->id);
 
             return [
@@ -66,6 +70,7 @@ class Ev360ResumenTabla extends Component
                 'area' => ! empty($evaluado->area->area) ? $evaluado->area->area : 'Sin área',
                 'informacion_evaluacion' => $informacion,
             ];
+
         });
 
         foreach ($lista_evaluados as $evaluado) {
@@ -90,18 +95,17 @@ class Ev360ResumenTabla extends Component
 
         $collection = $lista_evaluados;
 
-        $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
-        $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
+        if ($evaluacion->include_competencias) {
+            # code...
+            $this->competencias_evaluadas = Competencia::find($this->obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion->id));
+        }
+        if ($evaluacion->include_objetivos) {
+            # code...
+            $this->objetivos_evaluados = $this->obtenerCantidadMaximaDeObjetivos($evaluacion->evaluados, $evaluacion->id);
+        }
 
-        return view('livewire.ev360-resumen-tabla', ['calificaciones', 'evaluacion', 'lista' => $collection]);
+        return view('livewire.ev360-resumen-tabla', ['calificaciones', 'lista' => $collection]);
     }
-
-    // public function paginate($items, $perPage = 5, $page = null, $options = [])
-    // {
-    //     $page = $page ?: (Paginator::resolveCurrentPage() ?: 1);
-    //     $items = $items instanceof Collection ? $items : Collection::make($items);
-    //     return new LengthAwarePaginator($items->forPage($page, $perPage), $items->count(), $perPage, $page, $options);
-    // }
 
     public function obtenerCompetenciasEvaluadasEnLaEvaluacion($evaluacion, $evaluado = 0)
     {
@@ -289,22 +293,6 @@ class Ev360ResumenTabla extends Component
 
                 $promedio_competencias_collect->push((($calificacion * 100) / $cantidad_competencias_evaluadas) * ($evaluacion->peso_area / 100));
             }
-
-            // $cantidad_participantes = $promedio_competencias_collect->count();
-            // if ($this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id)) {
-            //     $promedio_competencias = floatval(number_format($promedio_competencias_collect->sum(), 2));
-            //     $promedio_general_competencias = floatval(number_format(($promedio_competencias * ($evaluacion->peso_general_competencias / 100)), 2));
-
-            //     $promedio_general_competencias = $promedio_general_competencias > intval($evaluacion->peso_general_competencias) ? $evaluacion->peso_general_competencias : $promedio_general_competencias;
-
-            //     $promedio_competencias = $promedio_general_competencias;
-
-            //     $calificacion_final += $promedio_general_competencias;
-            // } else {
-            //     $promedio_competencias = 1;
-            //     $promedio_general_competencias = number_format(100, 2);
-            //     $calificacion_final += $evaluacion->peso_general_competencias;
-            // }
 
             $cantidad_participantes = $promedio_competencias_collect->count();
             $promedio_general_competencias = $this->empleadoTieneCompetenciasAsignadas($evaluado->id, $evaluacion->id) ?
