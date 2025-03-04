@@ -29,6 +29,7 @@ class NotificacionesComponent extends Component
         'echo:notificaciones-campana,MatrizRequisitosEvent' => 'unreadNotifications',
         'echo:notificaciones-campana,EntendimientoOrganizacionEvent' => 'unreadNotifications',
         'echo:notificaciones-campana,DocumentoEvent' => 'unreadNotifications',
+        'echo:notificaciones-campana,TimesheetEvent' => 'unreadNotifications',
         'echo:notificaciones-campana,CoursesEvent' => 'unreadNotifications',
         'echo:notificaciones-campana,SolicitudVacacionesEvent' => 'unreadNotifications',
         'echo:notificaciones-campana,SolicitudDayofEvent' => 'unreadNotifications',

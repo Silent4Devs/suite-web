@@ -31,6 +31,7 @@ use App\Events\SolicitudVacacionesEvent;
 use App\Events\SugerenciasEvent;
 use App\Events\TaskRecursosEvent;
 use App\Events\TemplateAnalisisRiesgosEvent;
+use App\Events\TimesheetEvent;
 use App\Events\TimesheetProyectoEvent;
 use App\Listeners\AccionCorrectivaListener;
 use App\Listeners\AlcancesListener;
@@ -328,6 +329,9 @@ class EventServiceProvider extends ServiceProvider
         ],
         DocumentoEvent::class => [
             DocumentoListener::class,
+        ],
+        TimesheetEvent::class => [
+            TimesheetListener::class,
         ],
         TimesheetProyectoEvent::class => [
             TimesheetProyectoListener::class,

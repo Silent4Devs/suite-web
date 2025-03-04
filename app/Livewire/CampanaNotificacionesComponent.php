@@ -24,6 +24,7 @@ class CampanaNotificacionesComponent extends Component
         'echo:notificaciones-campana,MatrizRequisitosEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,EntendimientoOrganizacionEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,DocumentoEvent' => 'getTotalNotificaciones',
+        'echo:notificaciones-campana,TimesheetEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,CoursesEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,SolicitudVacacionesEvent' => 'getTotalNotificaciones',
         'echo:notificaciones-campana,SolicitudDayofEvent' => 'getTotalNotificaciones',
