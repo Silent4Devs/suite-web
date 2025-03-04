@@ -135,8 +135,8 @@
                     <div class="card card-body p-2 "
                         style="background-color: #FFF3F3; color: var(--color-tbj); font-size: 12px;">
                         <div>
-                            El periodo de carga de objetivos esta corriendo del <strong> {{ $periodo_carga_obj->fecha_inicio }} </strong> al <strong>
-                                {{ $periodo_carga_obj->fecha_fin }}
+                            El periodo de carga de objetivos esta corriendo del <strong> {{ $periodo_carga_obj->fecha_inicio ?? 'Sin asignar' }} </strong> al <strong>
+                                {{ $periodo_carga_obj->fecha_fin ?? 'Sin asignar' }}
                             </strong>
                             <i class="ml-3">*Al cambiar y habilitar las fechas de los periodos de las evaluaciones se
                                 interrumpirá la carga de objetivos</i>

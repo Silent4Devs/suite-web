@@ -991,7 +991,7 @@ class CreateEvaluacionDesempeno extends Component
 
                 case 4:
                     $this->guardarPaso2($evaluacion);
-                    $this->guardarPaso3($evaluacion);
+                    // $this->guardarPaso3($evaluacion); //Se duplicaria
                     $this->guardarPaso4($evaluacion);
                     break;
             }
