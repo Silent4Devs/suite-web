@@ -316,11 +316,13 @@ class CoursesLesson extends Component
         //     // 'file' => 'required',
         // ];
 
+        $previousLesson = Lesson::find($this->lesson->id);
+
         switch ($this->lesson->platform_format) {
             case 'Youtube':
                 // code...
                 try {
-                    if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
+                    if ($previousLesson->platform_format == 'Documento' && isset($previousLesson->resource)) {
                         $this->lesson->resource->delete();
                     }
                     // code...
@@ -358,7 +360,7 @@ class CoursesLesson extends Component
             case 'Vimeo':
                 // code...
                 try {
-                    if ($this->lesson->platform_format == 'Documento' && isset($this->lesson->resource)) {
+                    if ($previousLesson->platform_format == 'Documento' && isset($previousLesson->resource)) {
                         $this->lesson->resource->delete();
                     }
                     // code...
@@ -398,7 +400,7 @@ class CoursesLesson extends Component
 
                 try {
 
-                    if (isset($this->lesson->resource)) {
+                    if (isset($previousLesson->resource)) {
                         $this->lesson->resource->delete();
                     }
 
@@ -429,7 +431,7 @@ class CoursesLesson extends Component
 
                 try {
 
-                    if ($this->lesson->resource) {
+                    if ($previousLesson->resource) {
                         $this->lesson->resource->delete();
                     }
 

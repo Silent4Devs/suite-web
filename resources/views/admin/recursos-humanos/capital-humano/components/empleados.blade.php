@@ -30,7 +30,7 @@
 
     @can('objetivos_estrategicos_acceder')
         <li>
-            <a href="{{ route('admin.ev360-objetivos.index') }}">
+            <a href="#" data-bs-toggle="modal" data-bs-target="#objetivos">
                 <i class="bi bi-bullseye"></i>
                 <span>
                     Objetivos Estratégicos
@@ -217,6 +217,38 @@
                                 </span>
                             </a>
                         </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade modal-menu-modulo" id="objetivos" tabindex="-1" aria-labelledby="" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div>
+                    <h4 class="text-center"><strong>Objetivos Estratégicos</strong></h4>
+                    <ul class="menu-modulos">
+                        @can('objetivos_estrategicos_acceder')
+                            <li>
+                                <a href="{{ route('admin.ev360-objetivos.index') }}">
+                                    <i class="bi bi-bullseye"></i>
+                                    <span>
+                                        Asignar Objetivos Estratégicos
+                                    </span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="{{ route('admin.rangos.index') }}">
+                                    <i class="bi bi-briefcase"></i>
+                                    <span>
+                                        Definir Catalogo de Rangos
+                                    </span>
+                                </a>
+                            </li>
+                        @endcan
                     </ul>
                 </div>
             </div>

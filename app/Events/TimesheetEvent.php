@@ -2,13 +2,15 @@
 
 namespace App\Events;
 
+use App\Models\Timesheet;
 use Illuminate\Broadcasting\Channel;
 use Illuminate\Broadcasting\InteractsWithSockets;
 use Illuminate\Contracts\Broadcasting\ShouldBroadcast;
+use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Events\Dispatchable;
 use Illuminate\Queue\SerializesModels;
 
-class TimesheetEvent implements ShouldBroadcast
+class TimesheetEvent implements ShouldBroadcast, ShouldQueue
 {
     use Dispatchable, InteractsWithSockets, SerializesModels;
 
@@ -20,7 +22,7 @@ class TimesheetEvent implements ShouldBroadcast
 
     public $slug;
 
-    public function __construct($timesheet, $tipo_consulta, $tabla, $slug)
+    public function __construct(Timesheet $timesheet, $tipo_consulta, $tabla, $slug)
     {
         $this->timesheet = $timesheet;
         $this->tipo_consulta = $tipo_consulta;

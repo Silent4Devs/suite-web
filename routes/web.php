@@ -465,7 +465,9 @@ Route::view('tenant', 'central.landing')->name('central.landing');
                 Route::get('ajustes-dayoff', 'AusenciasController@ajustesDayoff')->name('ajustes-dayoff');
                 Route::get('ajustes-vacaciones', 'AusenciasController@ajustesVacaciones')->name('ajustes-vacaciones');
                 Route::get('ajustes-permisos-goce-sueldo', 'AusenciasController@ajustesGoceSueldo')->name('ajustes-permisos-goce-sueldo');
-                Route::resource('Ausencias', 'AusenciasController');
+                Route::resource('ausencias', 'AusenciasController');
+
+                Route::get('dashboardPermisos/dashboardOrg/{id}', 'DashboardPermisosController@dashboardOrg')->name('dashboard-permisos.dashboard-org');
 
                 Route::resource('incidentes-vacaciones', 'IncidentesVacacionesController')->names([
                     'create' => 'incidentes-vacaciones.create',
@@ -1507,7 +1509,7 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
             });
 
-            Route::group(['middleware' => ['centro_atencion']], function () {
+            // Route::group(['middleware' => ['centro_atencion']], function () {
 
                 // TODO Quejas
                 Route::get('inicioUsuario/reportes/quejas', [QuejasController::class, 'quejas'])->name('reportes-quejas');
@@ -1644,7 +1646,7 @@ Route::view('tenant', 'central.landing')->name('central.landing');
 
                 Route::get('desk-sugerencias-actividades/{sugerencia_id}', 'ActividadesSugerenciasController@index')->name('desk-sugerencias-actividades.index');
                 Route::resource('desk-sugerencias-actividades', 'ActividadesSugerenciasController')->except(['index']);
-            });
+            // });
 
             // Planes de Acción
             Route::group(['middleware' => ['planes_trabajo']], function () {

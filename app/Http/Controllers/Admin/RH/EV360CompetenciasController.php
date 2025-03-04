@@ -234,6 +234,7 @@ class EV360CompetenciasController extends Controller
             $nivel = 0;
         } else {
             $nivel = max($competencia->opciones->pluck('ponderacion')->toArray());
+            $nivel++;
         }
 
         return $nivel;

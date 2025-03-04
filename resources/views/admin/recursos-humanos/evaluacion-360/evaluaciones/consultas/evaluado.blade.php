@@ -101,44 +101,6 @@
                             </div>
                         </div>
                     </div>
-                    {{-- <div class="p-1 text-center col-12" style="background: #3e3e3e">
-                    <h6 class="m-0 text-white">Metodología utilizada</h6>
-                </div> --}}
-                    {{-- <div class="mt-2 text-center form-group col-12"
-                        style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
-                        Metodología utilizada
-                    </div>
-                    <p class="p-0 col-12" style="font-size:11px; text-align: justify;">
-                        Método de evaluación 360°: La evaluación de 360° también conocida como evaluación integral, es
-                        una
-                        herramienta muy utilizada. Esta evaluación ayuda a identificar las fortalezas y necesidades de
-                        desarrollo de los subordinados solicitando información a todas aquellas personas que interactúan
-                        con
-                        el
-                        colaborador, que abarcan jefes y compañeros, además de brindarle
-                        una amplia retroalimentación de su desempeño; estos resultados son necesarios para tomar medidas
-                        en
-                        cuanto a mejorar su desempeño, comportamiento o ambos, y dar a la gerencia la información
-                        necesaria
-                        para
-                        tomar decisiones en el futuro.
-                        Los objetivos de realizar una evaluación de 360° grados son: Conocer el
-                        desempeño de cada uno de los evaluados de acuerdo a diferentes competencias requeridas por la
-                        organización y el puesto; Detectar áreas de oportunidad del individuo, del equipo y de la
-                        organización y
-                        Llevar a cabo acciones precisas para mejorar el desempeño del personal y de la organización. La
-                        diferencia de este método se basa en el hecho que la retroalimentación no proviene de una sola
-                        persona,
-                        llámese superior o evaluador, sino que proviene de un entorno global que incluye incluso al
-                        evaluado, a
-                        los niveles jerárquicos superiores, a los inferiores, por lo tanto, esta retroalimentación se
-                        convierte en aceptable o creíble para el
-                        evaluado.
-                        Esta forma ayuda a reducir los desvíos a partir de proveer una retroalimentación equilibradadada
-                        la
-                        variedad de fuentes
-                    </p> --}}
-
                     <div class="col-12">
                         <div class="mt-1 row justify-content-between">
                             <div class="mt-2 text-center form-group col-12"
@@ -155,405 +117,164 @@
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-4" style="font-size:12px">
-                                <div class="text-center row align-items-center">
-                                    <div class="border col-6" style="background: #3e3e3e">
-                                        <p class="m-0 text-white">Competencias</p>
-                                    </div>
-                                    <div class="border col-6">
-                                        <p class="m-0">
-                                            {{ round(($promedio_competencias * $peso_general_competencias) / $peso_general_competencias, 2) }}%
-                                        </p>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="col-4" style="font-size:12px">
-                                <div class="text-center row align-items-center">
-                                    <div class="border col-6" style="background: #3e3e3e">
-                                        <p class="m-0 text-white">Objetivos</p>
-                                    </div>
-                                    <div class="border col-6">
-                                        <p class="m-0">
-                                            {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
-                                        </p>
+                            @if ($evaluacion->include_competencias)
+                                <div class="col-4" style="font-size:12px">
+                                    <div class="text-center row align-items-center">
+                                        <div class="border col-6" style="background: #3e3e3e">
+                                            <p class="m-0 text-white">Competencias</p>
+                                        </div>
+                                        <div class="border col-6">
+                                            <p class="m-0">
+                                                {{ round(($promedio_competencias * $peso_general_competencias) / $peso_general_competencias, 2) }}%
+                                            </p>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="mt-2 text-center form-group col-12"
-                style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
-                Resultado de la evaluación por competencias
-            </div>
-            @if (session()->has('success'))
-                <div class="alert alert-success">
-                    {{ session()->get('success') }}
-                </div>
-            @endif
-            <div class="col-12">
-                {{-- <div class="mt-2 row">
-                    <div class="p-0 col-12 progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: {{ $calificacion_final }}%;"
-                            aria-valuenow="{{ $calificacion_final }}" aria-valuemin="0" aria-valuemax="100">
-                            {{ $calificacion_final }}%
-                        </div>
-                    </div>
-                </div> --}}
-                <div class="mt-2">
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] ?? '' }}</span>
-                    <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] ?? '' }}%</span>
-                    <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2"
-                        style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
-                            title="Exportar Excel Autoevaluación"></i>
-                    </button>
-                    @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
-                        @include(
-                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
-                            [
-                                'tipo' => 'autoevaluacion',
-                            ]
-                        )
-                    @empty
-                        <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
-                            aplica
-                            para la evaluación
-                        </div>
-                    @endforelse
-                </div>
-
-                <div class="mt-2">
-                    <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
-                    <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
-                    <button id="btnExportarJefe" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
-                            title="Exportar Excel Jefe"></i>
-                    </button>
-                    @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
-                        @include(
-                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
-                            ['tipo' => 'jefe']
-                        )
-                    @empty
-                        <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
-                            aplica
-                            para la evaluación
-                        </div>
-                    @endforelse
-                </div>
-
-                <div class="mt-2">
-                    <span style="font-size: 11px">Subordinado</span>
-                    <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
-                    <button id="btnExportarSubordinado" class="btn-sm rounded pr-2"
-                        style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
-                            title="Exportar Excel Subordinado"></i>
-                    </button>
-                    @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
-                        @include(
-                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
-                            ['tipo' => 'equipo']
-                        )
-                    @empty
-                        <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
-                            aplica
-                            para la evaluación
-                        </div>
-                    @endforelse
-                </div>
-
-                <div class="mt-2">
-                    <span style="font-size: 11px">Par</span>
-                    <span style="font-size: 11px">{{ $lista_misma_area->first()['peso_general'] }}%</span>
-                    <button id="btnExportarPar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                        <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
-                            title="Exportar Excel Colega"></i>
-                    </button>
-                    @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
-                        @include(
-                            'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
-                            [
-                                'tipo' => 'misma_area',
-                            ]
-                        )
-                    @empty
-                        <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
-                            aplica
-                            para la evaluación
-                        </div>
-                    @endforelse
-                </div>
-                <div class="mt-3 row">
-                    <div class="col-8"></div>
-                    <div class="col-4">
-                        <p class="m-0 text-center text-white" style="background: #3e3e3e; border: 1px solid #fff">
-                            Competencias
-                        </p>
-                        <div class="col-12" style="font-size:11px">
-                            <div class="row">
-                                <div class="border col-6">Promedio</div>
-                                <div class="border col-6">
-                                    {{ number_format(($promedio_competencias * 100) / $peso_general_competencias / 100, 2) }}
+                            @endif
+                            @if ($evaluacion->include_objetivos)
+                                <div class="col-4" style="font-size:12px">
+                                    <div class="text-center row align-items-center">
+                                        <div class="border col-6" style="background: #3e3e3e">
+                                            <p class="m-0 text-white">Objetivos</p>
+                                        </div>
+                                        <div class="border col-6">
+                                            <p class="m-0">
+                                                {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
+                                            </p>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                            <div class="row">
-                                <div class="border col-6">% Participación</div>
-                                <div class="border col-6">
-                                    {{ round(($promedio_competencias * 100) / $peso_general_competencias, 2) }}%</div>
-                            </div>
-                            <div class="row">
-                                <div class="border col-6">Promedio total en la evaluación</div>
-                                <div class="border col-6">
-                                    {{ round(($promedio_competencias / $peso_general_competencias) * $peso_general_competencias, 2) }}%
-                                </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
             </div>
-            <div class="mt-2 text-center form-group col-12"
-                style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
-                Gráficas Competencias
-            </div>
-            <div id="graficasCompetencias">
-                <div class="row">
-                    <div class="col-12" x-data="{ show: false }">
-                        <div style="display: flex;justify-content: end">
-                            <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
-                                x-bind:style="show ? 'background:blue;color:white' : 'backgrond:white'"><i
-                                    class="fas fa-chart-area"></i></button>
-                            <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
-                                x-bind:style="!show ? 'background:blue;color:white' : 'backgrond:white'"><i
-                                    class="fas fa-chart-bar"></i></button>
-                        </div>
-                        <div x-show="show" x-transition>
-                            <canvas id="radarCompetencias" width="400" height="400"></canvas>
-                        </div>
-                        <div x-show="!show" x-transition>
-                            <canvas id="barCompetencias" width="400" height="400"></canvas>
-                        </div>
-                    </div>
-                    <div class="col-4">
-                        <canvas id="jefeGrafica" width="400" height="400"></canvas>
-                    </div>
-                    <div class="col-4">
-                        <canvas id="equipoGrafica" width="400" height="400"></canvas>
-                    </div>
-                    <div class="col-4">
-                        <canvas id="areaGrafica" width="400" height="400"></canvas>
-                    </div>
+            @if ($evaluacion->include_competencias)
+                <div class="mt-2 text-center form-group col-12"
+                    style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
+                    Resultado de la evaluación por competencias
                 </div>
-            </div>
-            @can('seguimiento_evaluaciones_acceder')
+                @if (session()->has('success'))
+                    <div class="alert alert-success">
+                        {{ session()->get('success') }}
+                    </div>
+                @endif
                 <div class="col-12">
-                    <div class="mt-4 row">
-                        <div class="mt-2 text-center form-group col-12"
-                            style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
-                            Resultado de la evaluación por objetivos
+                    {{-- <div class="mt-2 row">
+                        <div class="p-0 col-12 progress">
+                            <div class="progress-bar bg-success" role="progressbar" style="width: {{ $calificacion_final }}%;"
+                                aria-valuenow="{{ $calificacion_final }}" aria-valuemin="0" aria-valuemax="100">
+                                {{ $calificacion_final }}%
+                            </div>
                         </div>
-                    </div>
-                </div>
-                <div class="col-12">
-                    <small><i class="fas fa-info mr-1"></i> Para editar la columna "logrado" se debe posicionar sobre el
-                        número y dar doble clic, se habilitará un input y podrá realizar la edición.
-                        Una vez que termine de editar recargue la página para que se vean reflejados los cambios. </small>
-
-                    <table id="tblobjetivos" hidden>
-                        <thead>
-                            <th>Evaluador</th>
-                            <th>
-                                Objetivo
-                            </th>
-                            <th>
-                                KPI
-                            </th>
-                            <th>
-                                Puesto
-                            </th>
-                            <th>
-                                Logrado
-                            </th>
-                            <th>
-                                <small>Descripción</small>
-                            </th>
-                            <th>
-                                Comentarios
-                            </th>
-                        </thead>
-                        @forelse ($evaluadores_objetivos as $evaluador)
-                            <tbody>
-                                <div class="col-12" id="tblObjetivosSupervisor">
-                                    @forelse ($evaluador['objetivos'] as $idx => $objetivo)
-                                        <tr>
-                                            @if ($evaluador['esAutoevaluacion'])
-                                                <td>{{ $evaluador['nombre'] }}</td>
-                                            @endif
-                                            @if ($evaluador['esSupervisor'])
-                                                @if (isset($jefe_evaluador->name))
-                                                    <td>{{ $jefe_evaluador->name }}</td>
-                                                @else
-                                                    <td>{{ $jefe_evaluador[0] }}</td>
-                                                @endif
-                                            @endif
-                                            <td>
-                                                {{ $objetivo['nombre'] }}
-                                            </td>
-                                            <td>
-                                                {{ $objetivo['KPI'] }}
-                                            </td>
-                                            <td>
-                                                {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
-                                            </td>
-                                            @if (!empty($escalas))
-                                                <td>
-                                                    @foreach ($escalas as $escala)
-                                                        @if ($objetivo['calificacion_percepcion'] == $escala->valor)
-                                                            {{ $escala->parametro }}
-                                                        @endif
-                                                    @endforeach
-                                                </td>
-                                            @else
-                                                <td>
-                                                    {{ $objetivo['calificacion'] }}
-                                                </td>
-                                            @endif
-                                            <td>
-                                                {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
-                                            </td>
-                                            <td>
-                                                {{ $objetivo['meta_alcanzada'] }}
-                                            </td>
-                                        </tr>
-                                    @empty
-                                        <tr>
-                                            <strong class="text-muted">
-                                                <i class="fas fa-info-circle"></i>
-                                                Sin objetivos a evaluar
-                                            </strong>
-                                        </tr>
-                                    @endforelse
-                                @empty
-                                    <tr>Sin objetivos a evaluar</tr>
-                        @endforelse
-                        </tbody>
-                    </table>
-                    <div class="text-center">
-                        <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
-                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                    </div> --}}
+                    <div class="mt-2">
+                        <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['tipo'] ?? '' }}</span>
+                        <span style="font-size: 11px">{{ $lista_autoevaluacion->first()['peso_general'] ?? '' }}%</span>
+                        <button id="btnExportarAutoevaluacion" class="btn-sm rounded pr-2"
+                            style="background-color:#fff; border: #fff">
+                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                                title="Exportar Excel Autoevaluación"></i>
                         </button>
+                        @forelse ($lista_autoevaluacion->first()['evaluaciones'] as $evaluador)
+                            @include(
+                                'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                                [
+                                    'tipo' => 'autoevaluacion',
+                                ]
+                            )
+                        @empty
+                            <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
+                                aplica
+                                para la evaluación
+                            </div>
+                        @endforelse
                     </div>
-                    @forelse ($evaluadores_objetivos as $evaluador)
-                        <div class="row">
-                            <div class="col-12">
-                                <div class="mt-2 row">
-                                    <div class="col-12" style="font-size: 12px">
-                                        Evaluación realizada por:
-                                        @if ($evaluador['esAutoevaluacion'])
-                                            <strong> {{ $evaluador['nombre'] }}</strong>
-                                            <span class="badge badge-primary">Autoevaluación</span>
-                                        @endif
-                                        @if ($evaluador['esSupervisor'])
-                                            @if (isset($jefe_evaluador->name))
-                                                <strong>{{ $jefe_evaluador->name }}</strong>
-                                            @else
-                                                <strong>{{ $jefe_evaluador[0]->name }}</strong>
-                                            @endif
-                                            <span class="badge badge-success">Evaluador</span>
-                                        @endif
-                                    </div>
-                                    <div class="text-center text-white col-2"
-                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                        <small>Objetivo</small>
-                                    </div>
-                                    <div class="text-center text-white col-3"
-                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>KPI</small>
-                                    </div>
-                                    <div class="text-center text-white col-1"
-                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                        <small>Puesto</small>
-                                    </div>
-                                    <div class="text-center text-white col-1"
-                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                        <small>Logrado</small>
-                                    </div>
-                                    <div class="text-center text-white col-2"
-                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                        <small>Descripción</small>
-                                    </div>
-                                    <div class="text-center text-white col-3"
-                                        style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
-                                        <small>Comentarios</small>
-                                    </div>
-                                </div>
+
+                    <div class="mt-2">
+                        <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['tipo'] }}</span>
+                        <span style="font-size: 11px">{{ $lista_jefe_inmediato->first()['peso_general'] }}%</span>
+                        <button id="btnExportarJefe" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                                title="Exportar Excel Jefe"></i>
+                        </button>
+                        @forelse ($lista_jefe_inmediato->first()['evaluaciones'] as $evaluador)
+                            @include(
+                                'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                                ['tipo' => 'jefe']
+                            )
+                        @empty
+                            <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
+                                aplica
+                                para la evaluación
                             </div>
-                            <div class="col-12" id="tblObjetivosSupervisor">
-                                @forelse ($evaluador['objetivos'] as $idx => $objetivo)
-                                    <div class="row">
-                                        <div class="text-white col-2"
-                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:10px">
-                                            {{ $objetivo['nombre'] }}
-                                        </div>
-                                        <div class="text-center border col-3" style="font-size:10px">
-                                            {{ $objetivo['KPI'] }}
-                                        </div>
-                                        <div class="text-center border col-1" style="font-size:10px">
-                                            {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
-                                        </div>
-                                        <div class="text-center border col-1" style="font-size:10px">
-                                            @if (!empty($escalas))
-                                                @foreach ($escalas as $escala)
-                                                    @if ($objetivo['calificacion_percepcion'] == $escala->valor)
-                                                        {{ $escala->parametro }}
-                                                    @endif
-                                                @endforeach
-                                            @else
-                                                {{ $objetivo['calificacion'] }}
-                                            @endif
-                                        </div>
-                                        <div class="text-center border col-2" style="font-size:10px">
-                                            {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
-                                        </div>
-                                        <div class="text-center border col-3" style="font-size:10px">
-                                            {{ $objetivo['meta_alcanzada'] }}
-                                        </div>
-                                    </div>
-                                @empty
-                                    <div>
-                                        <strong class="text-muted">
-                                            <i class="fas fa-info-circle"></i>
-                                            Sin objetivos a evaluar
-                                        </strong>
-                                    </div>
-                                @endforelse
+                        @endforelse
+                    </div>
+
+                    <div class="mt-2">
+                        <span style="font-size: 11px">Subordinado</span>
+                        <span style="font-size: 11px">{{ $lista_equipo_a_cargo->first()['peso_general'] }}%</span>
+                        <button id="btnExportarSubordinado" class="btn-sm rounded pr-2"
+                            style="background-color:#fff; border: #fff">
+                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                                title="Exportar Excel Subordinado"></i>
+                        </button>
+                        @forelse ($lista_equipo_a_cargo->first()['evaluaciones'] as $evaluador)
+                            @include(
+                                'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                                ['tipo' => 'equipo']
+                            )
+                        @empty
+                            <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
+                                aplica
+                                para la evaluación
                             </div>
-                        </div>
-                    @empty
-                        <div>Sin objetivos a evaluar</div>
-                    @endforelse
-                </div>
-                <div class="col-12">
-                    <div class="mt-3 row" style="font-size:11px">
+                        @endforelse
+                    </div>
+
+                    <div class="mt-2">
+                        <span style="font-size: 11px">Par</span>
+                        <span style="font-size: 11px">{{ $lista_misma_area->first()['peso_general'] }}%</span>
+                        <button id="btnExportarPar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                            <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935"
+                                title="Exportar Excel Colega"></i>
+                        </button>
+                        @forelse ($lista_misma_area->first()['evaluaciones'] as $evaluador)
+                            @include(
+                                'admin.recursos-humanos.evaluacion-360.evaluaciones.consultas.evaluacion_competencia_template',
+                                [
+                                    'tipo' => 'misma_area',
+                                ]
+                            )
+                        @empty
+                            <div class="text-muted" style="font-size:11px"><i class="fas fa-exclamation-triangle"></i> No
+                                aplica
+                                para la evaluación
+                            </div>
+                        @endforelse
+                    </div>
+                    <div class="mt-3 row">
                         <div class="col-8"></div>
                         <div class="col-4">
                             <p class="m-0 text-center text-white" style="background: #3e3e3e; border: 1px solid #fff">
-                                Objetivos
+                                Competencias
                             </p>
-                            <div class="col-12">
+                            <div class="col-12" style="font-size:11px">
                                 <div class="row">
                                     <div class="border col-6">Promedio</div>
-                                    <div class="border col-6">{{ number_format($promedio_objetivos / 100, 2) }}</div>
+                                    <div class="border col-6">
+                                        {{ number_format(($promedio_competencias * 100) / $peso_general_competencias / 100, 2) }}
+                                    </div>
                                 </div>
                                 <div class="row">
                                     <div class="border col-6">% Participación</div>
-                                    <div class="border col-6">{{ round($promedio_objetivos, 2) }}%</div>
+                                    <div class="border col-6">
+                                        {{ round(($promedio_competencias * 100) / $peso_general_competencias, 2) }}%</div>
                                 </div>
                                 <div class="row">
                                     <div class="border col-6">Promedio total en la evaluación</div>
                                     <div class="border col-6">
-                                        {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
+                                        {{ round(($promedio_competencias / $peso_general_competencias) * $peso_general_competencias, 2) }}%
                                     </div>
                                 </div>
                             </div>
@@ -562,9 +283,9 @@
                 </div>
                 <div class="mt-2 text-center form-group col-12"
                     style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
-                    Gráficas Objetivos
+                    Gráficas Competencias
                 </div>
-                <div id="graficasObjetivos">
+                <div id="graficasCompetencias">
                     <div class="row">
                         <div class="col-12" x-data="{ show: false }">
                             <div style="display: flex;justify-content: end">
@@ -576,33 +297,282 @@
                                         class="fas fa-chart-bar"></i></button>
                             </div>
                             <div x-show="show" x-transition>
-                                <canvas id="objetivosGrafica" width="400" height="500"></canvas>
+                                <canvas id="radarCompetencias" width="400" height="400"></canvas>
                             </div>
                             <div x-show="!show" x-transition>
-                                <canvas id="barObjetivos" width="400" height="400"></canvas>
+                                <canvas id="barCompetencias" width="400" height="400"></canvas>
+                            </div>
+                        </div>
+                        <div class="col-4">
+                            <canvas id="jefeGrafica" width="400" height="400"></canvas>
+                        </div>
+                        <div class="col-4">
+                            <canvas id="equipoGrafica" width="400" height="400"></canvas>
+                        </div>
+                        <div class="col-4">
+                            <canvas id="areaGrafica" width="400" height="400"></canvas>
+                        </div>
+                    </div>
+                </div>
+            @endif
+            @if ($evaluacion->include_objevos)
+                @can('seguimiento_evaluaciones_acceder')
+                    <div class="col-12">
+                        <div class="mt-4 row">
+                            <div class="mt-2 text-center form-group col-12"
+                                style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
+                                Resultado de la evaluación por objetivos
                             </div>
                         </div>
                     </div>
-                </div>
-                <div class="mt-2 text-center form-group col-12"
-                    style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
-                    Sección de Firmas
-                </div>
-                <div class="col-12">
-                    <div class="row">
-                        <div class="col-6 border text-center">
-                            <img class="img-fluid" src="{{ asset($firmaAuto) }}"
-                                style="{{ !$existeFirmaAuto ? 'max-width:97px' : '' }}" />
-                            <h6 class="my-2">Firma Autoevaluación</h6>
+                    <div class="col-12">
+                        <small><i class="fas fa-info mr-1"></i> Para editar la columna "logrado" se debe posicionar sobre el
+                            número y dar doble clic, se habilitará un input y podrá realizar la edición.
+                            Una vez que termine de editar recargue la página para que se vean reflejados los cambios. </small>
+
+                        <table id="tblobjetivos" hidden>
+                            <thead>
+                                <th>Evaluador</th>
+                                <th>
+                                    Objetivo
+                                </th>
+                                <th>
+                                    KPI
+                                </th>
+                                <th>
+                                    Puesto
+                                </th>
+                                <th>
+                                    Logrado
+                                </th>
+                                <th>
+                                    <small>Descripción</small>
+                                </th>
+                                <th>
+                                    Comentarios
+                                </th>
+                            </thead>
+                            @forelse ($evaluadores_objetivos as $evaluador)
+                                <tbody>
+                                    <div class="col-12" id="tblObjetivosSupervisor">
+                                        @forelse ($evaluador['objetivos'] as $idx => $objetivo)
+                                            <tr>
+                                                @if ($evaluador['esAutoevaluacion'])
+                                                    <td>{{ $evaluador['nombre'] }}</td>
+                                                @endif
+                                                @if ($evaluador['esSupervisor'])
+                                                    @if (isset($jefe_evaluador->name))
+                                                        <td>{{ $jefe_evaluador->name }}</td>
+                                                    @else
+                                                        <td>{{ $jefe_evaluador[0] }}</td>
+                                                    @endif
+                                                @endif
+                                                <td>
+                                                    {{ $objetivo['nombre'] }}
+                                                </td>
+                                                <td>
+                                                    {{ $objetivo['KPI'] }}
+                                                </td>
+                                                <td>
+                                                    {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
+                                                </td>
+                                                @if (!empty($escalas))
+                                                    <td>
+                                                        @foreach ($escalas as $escala)
+                                                            @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                                {{ $escala->parametro }}
+                                                            @endif
+                                                        @endforeach
+                                                    </td>
+                                                @else
+                                                    <td>
+                                                        {{ $objetivo['calificacion'] }}
+                                                    </td>
+                                                @endif
+                                                <td>
+                                                    {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
+                                                </td>
+                                                <td>
+                                                    {{ $objetivo['meta_alcanzada'] }}
+                                                </td>
+                                            </tr>
+                                        @empty
+                                            <tr>
+                                                <strong class="text-muted">
+                                                    <i class="fas fa-info-circle"></i>
+                                                    Sin objetivos a evaluar
+                                                </strong>
+                                            </tr>
+                                        @endforelse
+                                    @empty
+                                        <tr>Sin objetivos a evaluar</tr>
+                            @endforelse
+                            </tbody>
+                        </table>
+                        <div class="text-center">
+                            <button id="btnExportar" class="btn-sm rounded pr-2" style="background-color:#fff; border: #fff">
+                                <i class="fas fa-file-excel" style="font-size: 1.1rem;color:#0f6935" title="Exportar Excel"></i>
+                            </button>
                         </div>
-                        <div class="col-6 border text-center">
-                            <img class="img-fluid" src="{{ asset($firmaJefe) }}"
-                                style="{{ !$existeFirmaJefe ? 'max-width:97px' : '' }}" />
-                            <h6 class="my-2">Firma Jefe Inmediato</h6>
+                        @forelse ($evaluadores_objetivos as $evaluador)
+                            <div class="row">
+                                <div class="col-12">
+                                    <div class="mt-2 row">
+                                        <div class="col-12" style="font-size: 12px">
+                                            Evaluación realizada por:
+                                            @if ($evaluador['esAutoevaluacion'])
+                                                <strong> {{ $evaluador['nombre'] }}</strong>
+                                                <span class="badge badge-primary">Autoevaluación</span>
+                                            @endif
+                                            @if ($evaluador['esSupervisor'])
+                                                @if (isset($jefe_evaluador->name))
+                                                    <strong>{{ $jefe_evaluador->name }}</strong>
+                                                @else
+                                                    <strong>{{ $jefe_evaluador[0]->name }}</strong>
+                                                @endif
+                                                <span class="badge badge-success">Evaluador</span>
+                                            @endif
+                                        </div>
+                                        <div class="text-center text-white col-2"
+                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                            <small>Objetivo</small>
+                                        </div>
+                                        <div class="text-center text-white col-3"
+                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:11px"><small>KPI</small>
+                                        </div>
+                                        <div class="text-center text-white col-1"
+                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                            <small>Puesto</small>
+                                        </div>
+                                        <div class="text-center text-white col-1"
+                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                            <small>Logrado</small>
+                                        </div>
+                                        <div class="text-center text-white col-2"
+                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                            <small>Descripción</small>
+                                        </div>
+                                        <div class="text-center text-white col-3"
+                                            style="background: #3e3e3e; border: 1px solid #fff; font-size:11px">
+                                            <small>Comentarios</small>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-12" id="tblObjetivosSupervisor">
+                                    @forelse ($evaluador['objetivos'] as $idx => $objetivo)
+                                        <div class="row">
+                                            <div class="text-white col-2"
+                                                style="background: #3e3e3e; border: 1px solid #fff; font-size:10px">
+                                                {{ $objetivo['nombre'] }}
+                                            </div>
+                                            <div class="text-center border col-3" style="font-size:10px">
+                                                {{ $objetivo['KPI'] }}
+                                            </div>
+                                            <div class="text-center border col-1" style="font-size:10px">
+                                                {{ $objetivo['meta'] }} {{ $objetivo['metrica'] }}
+                                            </div>
+                                            <div class="text-center border col-1" style="font-size:10px">
+                                                @if (!empty($escalas))
+                                                    @foreach ($escalas as $escala)
+                                                        @if ($objetivo['calificacion_percepcion'] == $escala->valor)
+                                                            {{ $escala->parametro }}
+                                                        @endif
+                                                    @endforeach
+                                                @else
+                                                    {{ $objetivo['calificacion'] }}
+                                                @endif
+                                            </div>
+                                            <div class="text-center border col-2" style="font-size:10px">
+                                                {{ $objetivo['descripcion_meta'] ? $objetivo['descripcion_meta'] : 'N/A' }}
+                                            </div>
+                                            <div class="text-center border col-3" style="font-size:10px">
+                                                {{ $objetivo['meta_alcanzada'] }}
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <div>
+                                            <strong class="text-muted">
+                                                <i class="fas fa-info-circle"></i>
+                                                Sin objetivos a evaluar
+                                            </strong>
+                                        </div>
+                                    @endforelse
+                                </div>
+                            </div>
+                        @empty
+                            <div>Sin objetivos a evaluar</div>
+                        @endforelse
+                    </div>
+                    <div class="col-12">
+                        <div class="mt-3 row" style="font-size:11px">
+                            <div class="col-8"></div>
+                            <div class="col-4">
+                                <p class="m-0 text-center text-white" style="background: #3e3e3e; border: 1px solid #fff">
+                                    Objetivos
+                                </p>
+                                <div class="col-12">
+                                    <div class="row">
+                                        <div class="border col-6">Promedio</div>
+                                        <div class="border col-6">{{ number_format($promedio_objetivos / 100, 2) }}</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="border col-6">% Participación</div>
+                                        <div class="border col-6">{{ round($promedio_objetivos, 2) }}%</div>
+                                    </div>
+                                    <div class="row">
+                                        <div class="border col-6">Promedio total en la evaluación</div>
+                                        <div class="border col-6">
+                                            {{ round(($promedio_general_objetivos / $peso_general_objetivos) * $peso_general_objetivos, 2) }}%
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                </div>
-            @endcan
+                    <div class="mt-2 text-center form-group col-12"
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
+                        Gráficas Objetivos
+                    </div>
+                    <div id="graficasObjetivos">
+                        <div class="row">
+                            <div class="col-12" x-data="{ show: false }">
+                                <div style="display: flex;justify-content: end">
+                                    <button title="Gráfica Radar" @click="show=true" class="btn btn-sm"
+                                        x-bind:style="show ? 'background:blue;color:white' : 'backgrond:white'"><i
+                                            class="fas fa-chart-area"></i></button>
+                                    <button title="Gráfica de Barras" @click="show=false" class="btn btn-sm"
+                                        x-bind:style="!show ? 'background:blue;color:white' : 'backgrond:white'"><i
+                                            class="fas fa-chart-bar"></i></button>
+                                </div>
+                                <div x-show="show" x-transition>
+                                    <canvas id="objetivosGrafica" width="400" height="500"></canvas>
+                                </div>
+                                <div x-show="!show" x-transition>
+                                    <canvas id="barObjetivos" width="400" height="400"></canvas>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="mt-2 text-center form-group col-12"
+                        style="background-color:var(--color-tbj); border-radius: 100px; color: white; text-transform: uppercase;">
+                        Sección de Firmas
+                    </div>
+                    <div class="col-12">
+                        <div class="row">
+                            <div class="col-6 border text-center">
+                                <img class="img-fluid" src="{{ asset($firmaAuto) }}"
+                                    style="{{ !$existeFirmaAuto ? 'max-width:97px' : '' }}" />
+                                <h6 class="my-2">Firma Autoevaluación</h6>
+                            </div>
+                            <div class="col-6 border text-center">
+                                <img class="img-fluid" src="{{ asset($firmaJefe) }}"
+                                    style="{{ !$existeFirmaJefe ? 'max-width:97px' : '' }}" />
+                                <h6 class="my-2">Firma Jefe Inmediato</h6>
+                            </div>
+                        </div>
+                    </div>
+                @endcan
+            @endif
         </div>
     </div>
 @endsection
