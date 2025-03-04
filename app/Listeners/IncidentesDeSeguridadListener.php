@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\IncidentesDeSeguridadEvent;
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
 use App\Notifications\IncidentesDeSeguridadNotification;
@@ -31,7 +32,7 @@ class IncidentesDeSeguridadListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(IncidentesDeSeguridadEvent $event)
     {
         $incidente = $event->incidentesSeguridad; // Asegúrate de que $event->incidentesDeSeguridad es del tipo correcto
         $tipo_consulta = 'update'; // Asigna el valor correspondiente

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\TimesheetEvent;
 use App\Models\Empleado;
 use App\Models\User;
 use App\Notifications\TimesheetNotification;
@@ -31,7 +32,7 @@ class TimesheetListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(TimesheetEvent $event)
     {
 
         try {

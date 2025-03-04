@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\TimesheetProyectoEvent;
 use App\Models\Empleado;
 use App\Models\ListaInformativa;
 use App\Models\User;
@@ -32,7 +33,7 @@ class TimesheetProyectoListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(TimesheetProyectoEvent $event)
     {
         try {
             $lista = ListaInformativa::with('participantes')->where('modelo', 'TimesheetProyecto')->first();

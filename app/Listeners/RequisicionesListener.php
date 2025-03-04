@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\RequisicionesEvent;
 use App\Models\ContractManager\Comprador;
 use App\Models\ContractManager\Requsicion;
 use App\Models\Empleado;
@@ -35,7 +36,7 @@ class RequisicionesListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(RequisicionesEvent $event)
     {
         // //Colaboradores
         try {

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\MejorasEvent;
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
 use App\Notifications\MejorasNotification;
@@ -31,7 +32,7 @@ class MejorasListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(MejorasEvent $event)
     {
         $mejoras = $event->mejoras; // Asegúrate de que $event->mejoras es del tipo correcto
         $tipo_consulta = 'update'; // Asigna el valor correspondiente

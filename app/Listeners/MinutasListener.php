@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\MinutasEvent;
 use App\Models\Minutasaltadireccion;
 use App\Models\User;
 use App\Notifications\MinutasNotification;
@@ -36,7 +37,7 @@ class MinutasListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(MinutasEvent $event)
     {
         $minuta = Minutasaltadireccion::with('participantes')->where('id', $event->minutas->id)->first();
 

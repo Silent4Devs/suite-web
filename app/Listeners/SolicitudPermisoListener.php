@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\SolicitudPermisoEvent;
 use App\Models\Empleado;
 use App\Models\User;
 use App\Notifications\SolicitudPermisoNotification;
@@ -31,7 +32,7 @@ class SolicitudPermisoListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(SolicitudPermisoEvent $event)
     {
         try {
             $empleado = Empleado::where('id', $event->permiso->empleado_id)->first();

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\QuejasEvent;
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
 use App\Notifications\QuejasNotification;
@@ -31,7 +32,7 @@ class QuejasListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(QuejasEvent $event)
     {
         $quejas = $event->quejas; // Asegúrate de que $event->quejas es del tipo correcto
         $tipo_consulta = 'update'; // Asigna el valor correspondiente
