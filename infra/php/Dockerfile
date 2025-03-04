@@ -27,6 +27,7 @@ RUN apk update && apk upgrade --no-cache && apk add --no-cache \
     yarn \
     openssh-client \
     postgresql-libs \
+    postgresql16-client \
     zlib-dev \
     sudo \
     zip \
