@@ -30,7 +30,7 @@
     </div>
 
 </div>
-<script>
+{{-- <script>
     document.addEventListener('DOMContentLoaded', function() {
         CKEDITOR.replace('definicion', {
             toolbar: [{
@@ -89,4 +89,4 @@
             ]
         });
     })
-</script>
+</script> --}}

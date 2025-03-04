@@ -15,10 +15,13 @@ class EV360ConductasController extends Controller
         ]);
         if ($request->ajax()) {
             $nivel_maximo_actual = Conducta::where('competencia_id', $request->competencia_id)->max('ponderacion');
-            $ponderacion = 1;
+            $ponderacion = 0;
             if ($nivel_maximo_actual) {
                 $ponderacion = $nivel_maximo_actual + 1;
+            } elseif($nivel_maximo_actual === 0) {
+                $ponderacion = 1;
             }
+
             $conducta = Conducta::create([
                 'definicion' => $request->definicion,
                 'ponderacion' => $ponderacion,
@@ -26,14 +29,13 @@ class EV360ConductasController extends Controller
             ]);
         }
 
-        // $this->resetCounter(intval($request->competencia_id));
         return response()->json(['success' => true]);
     }
 
     public function resetCounter($competencia_id)
     {
         $niveles = Conducta::where('competencia_id', $competencia_id)->get()->sortBy('ponderacion');
-        $contador = 1;
+        $contador = 0;
         foreach ($niveles as $nivel) {
             $nivel->update(['ponderacion' => $contador]);
             $contador++;
