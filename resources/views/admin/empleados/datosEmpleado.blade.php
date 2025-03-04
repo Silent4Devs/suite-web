@@ -62,7 +62,7 @@
     {{-- <label class="ml-4">Sin registro</label> --}}
     {{-- @else --}}
 
-    <h5 class="col-12 titulo_general_funcion">Datos de {{ $visualizarEmpleados->name }}</h5>
+    <h5 class="col-12 titulo_general_funcion">Datos de {{ $visualizarEmpleados->name ?? '' }}</h5>
     {{-- @endif --}}
     <div>
         <div class="mt-4 row justify-content-center">
@@ -88,7 +88,7 @@
                         <div class="mt-4 ml-4 col-sm-7 datos_iz_cv">
                             <h5 class="py-2 pl-2"
                                 style="color:#fff; font-weight:bold; background-color:#7F7F7F; width:100%">
-                                {{ $visualizarEmpleados->puesto }}</h5>
+                                {{ $visualizarEmpleados->puesto ?? '' }}</h5>
                             <div class="mt-4 mb-3 w-100 dato_mairg" style="border-bottom: solid 2px #0CA193;">
                                 <span style="font-size: 17px; font-weight: bold;">
                                     Datos Laborales</span>
@@ -96,15 +96,15 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <span><strong>Nombre</strong>
-                                        <div>{{ $visualizarEmpleados->name }}</div>
+                                        <div>{{ $visualizarEmpleados->name ?? ''  }}</div>
                                 </div>
                                 <div class="col-4">
                                     <span><strong>N° de empleado</strong>
-                                        <div>{{ $visualizarEmpleados->n_empleado }}</div>
+                                        <div>{{ $visualizarEmpleados->n_empleado ?? ''  }}</div>
                                 </div>
                                 <div class="col-4">
                                     <span><strong>Área</strong>
-                                        <div>{{ $visualizarEmpleados->area->area }}</div>
+                                        <div>{{ $visualizarEmpleados->area->area ?? ''  }}</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -116,7 +116,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Nivel Jerárquico</strong>
-                                            <span>{{ $visualizarEmpleados->supervisor->name }}</span>
+                                            <span>{{ $visualizarEmpleados->supervisor->name ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -128,23 +128,23 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Nivel Jerárquico</strong>
-                                            <span>{{ $visualizarEmpleados->perfil->nombre }}</span>
+                                            <span>{{ $visualizarEmpleados->perfil->nombre ?? ''  }}</span>
                                     </div>
                                 @endif
 
                                 <div class="col-4">
                                     <span><strong>Género</strong>
-                                        <div>{{ $visualizarEmpleados->genero }}</div>
+                                        <div>{{ $visualizarEmpleados->genero  ?? ''  }}</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <span><strong>Estatus</strong>
-                                        <div>{{ $visualizarEmpleados->estatus }}</div>
+                                        <div>{{ $visualizarEmpleados->estatus  ?? ''  }}</div>
                                 </div>
                                 <div class="col-4">
                                     <span><strong>Correo electrónico</strong>
-                                        <div>{{ $visualizarEmpleados->email }}</div>
+                                        <div>{{ $visualizarEmpleados->email  ?? ''  }}</div>
                                 </div>
 
                                 @if (is_null($visualizarEmpleados->telefono_movil))
@@ -155,14 +155,14 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Teléfono móvil</strong>
-                                            <span>{{ $visualizarEmpleados->telefono_movil }}</span>
+                                            <span>{{ $visualizarEmpleados->telefono_movil  ?? ''  }}</span>
                                     </div>
                                 @endif
                             </div>
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <span><strong>Teléfono de oficina</strong></span>
-                                    <div>{{ $visualizarEmpleados->telefono }}</div>
+                                    <div>{{ $visualizarEmpleados->telefono ?? ''  }}</div>
                                 </div>
                                 @if (is_null($visualizarEmpleados->extension))
                                     <div class="col-4">
@@ -172,7 +172,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Ext.</strong>
-                                            <span>{{ $visualizarEmpleados->extension }}</span>
+                                            <span>{{ $visualizarEmpleados->extension ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -186,7 +186,7 @@
                             <div class="row mb-3">
                                 <div class="col-4">
                                     <span><strong>Fecha de ingreso</strong>
-                                        <div>{{ $visualizarEmpleados->antiguedad }}</div>
+                                        <div>{{ $visualizarEmpleados->antiguedad  ?? '' }}</div>
                                 </div>
 
 
@@ -198,7 +198,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Dirección</strong>
-                                            <span>{{ $visualizarEmpleados->direccion }}</span>
+                                            <span>{{ $visualizarEmpleados->direccion ?? ''  }}</span>
                                     </div>
                                 @endif
                                 @if (is_null($visualizarEmpleados->tipo_contrato_empleados_id))
@@ -209,7 +209,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Tipo de contrato</strong>
-                                            <span>{{ $visualizarEmpleados->tipo_contrato_empleados_id }}</span>
+                                            <span>{{ $visualizarEmpleados->tipo_contrato_empleados_id ?? ''  }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -223,7 +223,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Fecha de terminación de contrato</strong>
-                                            <span>{{ $visualizarEmpleados->terminacion_contrato }}</span>
+                                            <span>{{ $visualizarEmpleados->terminacion_contrato  ?? '' }}</span>
                                     </div>
                                 @endif
 
@@ -235,7 +235,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Esquema de contratación</strong>
-                                            <span>{{ $visualizarEmpleados->esquema_contratacion }}</span>
+                                            <span>{{ $visualizarEmpleados->esquema_contratacion ?? ''  }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -252,7 +252,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Banco</strong>
-                                            <span>{{ $visualizarEmpleados->banco }}</span>
+                                            <span>{{ $visualizarEmpleados->banco  ?? '' }}</span>
                                     </div>
                                 @endif
 
@@ -264,7 +264,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Cuenta Bancaria</strong>
-                                            <span>{{ $visualizarEmpleados->cuenta_bancaria }}</span>
+                                            <span>{{ $visualizarEmpleados->cuenta_bancaria ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -276,7 +276,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Clave Interbancaria</strong>
-                                            <span>{{ $visualizarEmpleados->clabe_interbancaria }}</span>
+                                            <span>{{ $visualizarEmpleados->clabe_interbancaria ?? ''  }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -289,7 +289,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Centro de costos</strong>
-                                            <span>{{ $visualizarEmpleados->centro_costos }}</span>
+                                            <span>{{ $visualizarEmpleados->centro_costos ?? ''  }}</span>
                                     </div>
                                 @endif
                                 @if (is_null($visualizarEmpleados->salario_bruto))
@@ -300,7 +300,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Salario Bruto</strong>
-                                            <span>{{ $visualizarEmpleados->salario_bruto }}</span>
+                                            <span>{{ $visualizarEmpleados->salario_bruto ?? ''  }}</span>
                                     </div>
                                 @endif
                                 @if (is_null($visualizarEmpleados->salario_diario))
@@ -311,7 +311,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Salario Diario</strong>
-                                            <span>{{ $visualizarEmpleados->salario_diario }}</span>
+                                            <span>{{ $visualizarEmpleados->salario_diario ?? ''  }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -324,7 +324,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Salario Diario Integrado</strong>
-                                            <span>{{ $visualizarEmpleados->salario_diario_integrado }}</span>
+                                            <span>{{ $visualizarEmpleados->salario_diario_integrado ?? ''  }}</span>
                                     </div>
                                 @endif
                                 @if (is_null($visualizarEmpleados->salario_base_mensual))
@@ -335,7 +335,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Salario Base Mensual</strong>
-                                            <span>{{ $visualizarEmpleados->salario_base_mensual }}</span>
+                                            <span>{{ $visualizarEmpleados->salario_base_mensual ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -347,7 +347,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Pagadora Actual</strong>
-                                            <span>{{ $visualizarEmpleados->pagadora_actual }}</span>
+                                            <span>{{ $visualizarEmpleados->pagadora_actual  ?? ''  }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -361,7 +361,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Periodicidad de nómina</strong>
-                                            <span>{{ $visualizarEmpleados->periodicidad_nomina }}</span>
+                                            <span>{{ $visualizarEmpleados->periodicidad_nomina ?? ''  }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -403,7 +403,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Entidad crediticia</strong>
-                                            <span>{{ $visualizarEmpleados->entidad_crediticias_id }}</span>
+                                            <span>{{ $visualizarEmpleados->entidad_crediticias_id ?? ''  }}</span>
                                     </div>
                                 @endif
                                 @if (is_null($visualizarEmpleados->numero_credito))
@@ -414,7 +414,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Número de crédito</strong>
-                                            <span>{{ $visualizarEmpleados->numero_credito }}</span>
+                                            <span>{{ $visualizarEmpleados->numero_credito ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -426,7 +426,7 @@
                                 @else
                                     <div class="col-4">
                                         <span><strong>Descuento</strong>
-                                            <span>{{ $visualizarEmpleados->descuento }}</span>
+                                            <span>{{ $visualizarEmpleados->descuento  ?? '' }}</span>
                                     </div>
                                 @endif
                             </div>
@@ -439,7 +439,7 @@
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <span><strong>Resumen</strong>
-                                        <div>{{ $visualizarEmpleados->resumen }}</div>
+                                        <div>{{ $visualizarEmpleados->resumen ?? ''  }}</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -473,7 +473,7 @@
                             <div class="row mb-3">
                                 <div class="col-12">
                                     <span><strong>Capacitaciones</strong>
-                                        <div>{{ $visualizarEmpleados->resumen }}</div>
+                                        <div>{{ $visualizarEmpleados->resumen ?? '' }}</div>
                                 </div>
                             </div>
                             <div class="row mb-3">
@@ -551,7 +551,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>Calle {{ $visualizarEmpleados->calle }}</span>
+                                        <span>Calle {{ $visualizarEmpleados->calle ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -560,7 +560,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>Núm. Exterior {{ $visualizarEmpleados->num_exterior }}</span>
+                                        <span>Núm. Exterior {{ $visualizarEmpleados->num_exterior ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -569,7 +569,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>Núm. Interior {{ $visualizarEmpleados->num_interior }}</span>
+                                        <span>Núm. Interior {{ $visualizarEmpleados->num_interior ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -578,7 +578,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>Colonia {{ $visualizarEmpleados->colonia }}</span>
+                                        <span>Colonia {{ $visualizarEmpleados->colonia ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -587,7 +587,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>Delegación o Municipio {{ $visualizarEmpleados->delegacion }}</span>
+                                        <span>Delegación o Municipio {{ $visualizarEmpleados->delegacion ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -596,7 +596,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>Estado {{ $visualizarEmpleados->estado }}</span>
+                                        <span>Estado {{ $visualizarEmpleados->estado ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -605,7 +605,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>País {{ $visualizarEmpleados->pais }}</span>
+                                        <span>País {{ $visualizarEmpleados->pais ?? ''  }}</span>
                                     </div>
                                 @endif
 
@@ -614,7 +614,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>C.P. {{ $visualizarEmpleados->cp }}</span>
+                                        <span>C.P. {{ $visualizarEmpleados->cp ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -625,7 +625,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->telefono_casa }}</span>
+                                        <span>{{ $visualizarEmpleados->telefono_casa  ?? '' }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -636,7 +636,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->correo_personal }}</span>
+                                        <span>{{ $visualizarEmpleados->correo_personal ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -648,7 +648,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->estado_civil }}</span>
+                                        <span>{{ $visualizarEmpleados->estado_civil ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -661,7 +661,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->NSS }}</span>
+                                        <span>{{ $visualizarEmpleados->NSS ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -672,7 +672,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->CURP }}</span>
+                                        <span>{{ $visualizarEmpleados->CURP ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -683,7 +683,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->RFC }}</span>
+                                        <span>{{ $visualizarEmpleados->RFC ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -694,7 +694,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->cumpleaños }}</span>
+                                        <span>{{ $visualizarEmpleados->cumpleaños ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -705,7 +705,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->lugar_nacimiento }}</span>
+                                        <span>{{ $visualizarEmpleados->lugar_nacimiento ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
@@ -716,7 +716,7 @@
                                 @else
                                     <div style="margin-left:28px;">
 
-                                        <span>{{ $visualizarEmpleados->nacionalidad }}</span>
+                                        <span>{{ $visualizarEmpleados->nacionalidad ?? ''  }}</span>
                                     </div>
                                 @endif
                                 <br>
