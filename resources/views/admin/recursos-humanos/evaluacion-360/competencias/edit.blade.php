@@ -162,19 +162,17 @@
                     $('#formConductaCreate').removeAttr('method');
                     $('#formConductaCreate').attr('action', "{{ route('admin.ev360-conductas.store') }}");
                     $('#formConductaCreate').attr('method', 'POST');
-                    CKEDITOR.instances.definicion.setData('');
+                    document.querySelector('textarea[name="definicion"]').value = '';
                     $('#conductasModal').modal('show');
-                    // document.getElementById('nivelEditCreate').innerHTML =
-                    //     `<i class="fas fa-circle-notch fa-spin mr-2"></i> Cargando...`;
                     let ultimo_nivel = obtenerUltimoNivel(@json($competencia->id));
                     ultimo_nivel.then(data => {
                         document.getElementById('nivelEditCreate').innerHTML =
-                            `<i class="fas fa-info-circle mr-1"></i>Nivel <strong>${ data + 1 }</strong>`;
+                            `<i class="fas fa-info-circle mr-1"></i>Nivel <strong>${ data }</strong>`;
                     });
                     let ultimo_nivel2 = obtenerUltimoNivel(@json($competencia->id));
                     ultimo_nivel2.then(data => {
                         document.getElementById('nivelEditCreate2').innerHTML =
-                            `<i class="mr-1 fas fa-chalkboard-teacher"></i> Conductas Esperadas - Nivel <strong>${ data + 1 }</strong>`;
+                            `<i class="mr-1 fas fa-chalkboard-teacher"></i> Conductas Esperadas - Nivel <strong>${ data }</strong>`;
                     });
 
 
@@ -251,7 +249,7 @@
                 success: function({
                     conducta
                 }) {
-                    CKEDITOR.instances.definicion.setData(conducta.definicion);
+                    document.querySelector('textarea[name="definicion"]').value = conducta.definicion;
                     document.getElementById('nivelEditCreate').innerHTML =
                         `<i class="fas fa-info-circle mr-1"></i>Nivel Actual: <strong>${ conducta.ponderacion }</strong>`;
                     $('#conductasModal').modal('show');
@@ -316,7 +314,7 @@
             document.getElementById('btnGuardarConducta').addEventListener('click', function(e) {
                 e.preventDefault();
                 limpiarErrores();
-                let definicion = CKEDITOR.instances.definicion.getData();
+                let definicion = document.querySelector('textarea[name="definicion"]').value;
                 let competencia_id = @json($competencia->id);
                 // let datos = $('#formConductaCreate').serialize();
                 let datos = {
