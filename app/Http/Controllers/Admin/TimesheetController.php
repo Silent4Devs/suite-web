@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers\Admin;
 
-use App\Events\TimesheetEvent;
 use App\Http\Controllers\Controller;
 use App\Mail\NotificacionNuevoProyecto;
 use App\Mail\TimesheetHorasSobrepasadas;
@@ -1090,8 +1089,6 @@ class TimesheetController extends Controller
             'comentarios' => $request->comentarios,
         ]);
 
-        // event(new TimesheetEvent($aprobar, 'aprobar', 'timesheet', 'Timesheet Aprobado'));
-
         $solicitante = Empleado::getDataColumns()->where('id', $aprobar->empleado_id)->first();
 
         $aprobador = Empleado::getDataColumns()->where('id', $aprobar->aprobador_id)->first();
@@ -1112,8 +1109,6 @@ class TimesheetController extends Controller
     {
         abort_if(Gate::denies('timesheet_administrador_aprobar_horas'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         $rechazar = Timesheet::where('id', $id)->first();
-
-        event(new TimesheetEvent($rechazar, 'rechazar', 'timesheet', 'Timesheet Rechazado'));
 
         $rechazar->update([
             'estatus' => 'rechazado',
