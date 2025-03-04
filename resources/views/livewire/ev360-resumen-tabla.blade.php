@@ -61,12 +61,18 @@
                                 </div>
                             </td>
                             @php
-                                $promedio_competencias =
-                                    ($evaluado['informacion_evaluacion']['promedio_general_competencias'] * 100) /
-                                    $evaluado['informacion_evaluacion']['peso_general_competencias'];
-                                $promedio_objetivos =
-                                    ($evaluado['informacion_evaluacion']['promedio_general_objetivos'] * 100) /
-                                    $evaluado['informacion_evaluacion']['peso_general_objetivos'];
+                                if ($dataEvaluacion->include_competencias) {
+                                    # code...
+                                    $promedio_competencias =
+                                        ($evaluado['informacion_evaluacion']['promedio_general_competencias'] * 100) /
+                                        $evaluado['informacion_evaluacion']['peso_general_competencias'];
+                                }
+                                if ($dataEvaluacion->include_objetivos) {
+                                    # code...
+                                    $promedio_objetivos =
+                                        ($evaluado['informacion_evaluacion']['promedio_general_objetivos'] * 100) /
+                                        $evaluado['informacion_evaluacion']['peso_general_objetivos'];
+                                }
                             @endphp
                             <td>{{ $evaluado['informacion_evaluacion']['peso_general_competencias'] }}%</td>
                             <td>{{ $evaluado['informacion_evaluacion']['peso_general_objetivos'] }}%</td>
