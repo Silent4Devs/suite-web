@@ -91,6 +91,7 @@ class RegistroVisitantes extends Component
                 'serie' => '',
             ]]),
         ]);
+        $this->foto =null;
     }
 
     public function render()
@@ -127,7 +128,7 @@ class RegistroVisitantes extends Component
     public function goToStep($step)
     {
         if ($step > $this->currentStep) {
-            $this->validateData();
+            // $this->validateData();
             $this->currentStep = $step;
             $this->showStepByCurrent();
         } else {
@@ -139,7 +140,8 @@ class RegistroVisitantes extends Component
     public function increaseStep()
     {
         $this->resetErrorBag();
-        $this->validateData();
+        // $this->validateData();
+        // dd("Antes de validar");
         $this->currentStep++;
         $this->showStepByCurrent();
         $this->dispatch('increaseStepVisitantes', $this->currentStep);
@@ -178,6 +180,7 @@ class RegistroVisitantes extends Component
             $this->showStepThree = true;
             $this->showStepFour = false;
         } elseif ($this->currentStep == 4) {
+            // dd($this->empleado_id);
             $this->showStepOne = false;
             $this->showStepTwo = false;
             $this->showStepThree = false;
@@ -208,59 +211,69 @@ class RegistroVisitantes extends Component
         }
     }
 
-    public function validateData()
-    {
-        if ($this->currentStep == 1) {
-            $this->validate([
-                'nombre' => 'required|string|max:255',
-                'apellidos' => 'required|string|max:255',
-                'correo' => 'required|email|max:255',
-                'celular' => 'nullable|regex:/[0-9]{10}/',
-                'dispositivo' => 'nullable|string|max:255',
-                'serie' => 'nullable|string|max:255',
-                'motivo' => 'required|string',
-                'dispositivos.*.dispositivo' => 'required_unless:dispositivos.*.serie,""|required_unless:dispositivos.*.marca,""',
-                'dispositivos.*.marca' => 'required_unless:dispositivos.*.dispositivo,""|required_unless:dispositivos.*.serie,""',
-                'dispositivos.*.serie' => 'required_unless:dispositivos.*.dispositivo,""|required_unless:dispositivos.*.marca,""',
-            ], [
-                'dispositivos.*.dispositivo.required_unless' => 'El campo dispositivo es requerido cuando se ha ingresado información en alguno de los campos contiguos',
-                'dispositivos.*.marca.required_unless' => 'El campo marca es requerido cuando se ha ingresado información en alguno de los campos contiguos',
-                'dispositivos.*.serie.required_unless' => 'El campo serie es requerido cuando se ha ingresado información en alguno de los campos contiguos',
-                'celular' => 'El formato del celular debe ser de 10 digitos',
-            ]);
-        } elseif ($this->currentStep == 2) {
-            if (ResponsableVisitantes::first()) {
-                if (ResponsableVisitantes::first()->fotografia_requerida) {
-                    $this->validate([
-                        'foto' => 'required',
-                    ], [
-                        'foto.required' => 'Es requerido por la organización que se tome una fotografia para ingresar',
-                    ]);
-                } else {
-                    $this->validate([
-                        'foto' => 'nullable',
-                    ]);
-                }
-            }
-        } elseif ($this->currentStep == 3) {
-            $this->validate([
-                'tipo_visita' => 'required',
-            ]);
-            if ($this->tipo_visita == 'persona') {
-                $this->validate([
-                    'empleado_id' => 'required|integer',
-                ]);
-            }
-            if ($this->tipo_visita == 'area') {
-                $this->validate([
-                    'area_id' => 'required|integer',
-                ]);
-            }
-        }
-    }
+    // public function validateData()
+    // {
+    //     // dd($this->currentStep, $this->all());
+    //     if ($this->currentStep == 1) {
+    //         $this->validate([
+    //             'nombre' => 'required|string|max:255',
+    //             'apellidos' => 'required|string|max:255',
+    //             'correo' => 'required|email|max:255',
+    //             'celular' => 'nullable|regex:/[0-9]{10}/',
+    //             'dispositivo' => 'nullable|string|max:255',
+    //             'serie' => 'nullable|string|max:255',
+    //             'motivo' => 'required|string',
+    //             'dispositivos.*.dispositivo' => 'required_unless:dispositivos.*.serie,""|required_unless:dispositivos.*.marca,""',
+    //             'dispositivos.*.marca' => 'required_unless:dispositivos.*.dispositivo,""|required_unless:dispositivos.*.serie,""',
+    //             'dispositivos.*.serie' => 'required_unless:dispositivos.*.dispositivo,""|required_unless:dispositivos.*.marca,""',
+    //         ], [
+    //             'dispositivos.*.dispositivo.required_unless' => 'El campo dispositivo es requerido cuando se ha ingresado información en alguno de los campos contiguos',
+    //             'dispositivos.*.marca.required_unless' => 'El campo marca es requerido cuando se ha ingresado información en alguno de los campos contiguos',
+    //             'dispositivos.*.serie.required_unless' => 'El campo serie es requerido cuando se ha ingresado información en alguno de los campos contiguos',
+    //             'celular' => 'El formato del celular debe ser de 10 digitos',
+    //         ]);
+    //     } elseif ($this->currentStep == 2) {
+    //         if (ResponsableVisitantes::first()) {
+    //             if (ResponsableVisitantes::first()->fotografia_requerida) {
+    //                 $this->validate([
+    //                     'foto' => 'required',
+    //                 ], [
+    //                     'foto.required' => 'Es requerido por la organización que se tome una fotografia para ingresar',
+    //                 ]);
+    //             } else {
+    //                 $this->validate([
+    //                     'foto' => 'nullable',
+    //                 ]);
+    //             }
+    //         }
+    //     } elseif ($this->currentStep == 3) {
+    //         $this->validate([
+    //             'tipo_visita' => 'required',
+    //         ]);
+    //         if ($this->tipo_visita == 'persona') {
+    //             $this->validate([
+    //                 'empleado_id' => 'required|integer',
+    //             ]);
+    //         }
+    //         if ($this->tipo_visita == 'area') {
+    //             $this->validate([
+    //                 'area_id' => 'required|integer',
+    //             ]);
+    //         }
+    //     }
+    // }
 
+    public function guardarImagen($imageData)
+    {
+        $this->foto = $imageData;
+    }
     public function guardarRegistroVisitante()
     {
+        if (!$this->foto) {
+            $this->alert('Debes de tomarte una foto para continuar');
+            return; // Detener si la foto no está definida
+        }
+
         $this->registrarVisitante = RegistrarVisitante::create([
             'nombre' => $this->nombre,
             'apellidos' => $this->apellidos,
@@ -287,7 +300,7 @@ class RegistroVisitantes extends Component
             $this->registrarDispositivos();
         }
         $this->enviarCorreoDeConfirmacion($this->correo, $this->registrarVisitante);
-        $this->alert('success', 'Bien Hecho '.$this->nombre.', te has registrado correctamente', [
+        $this->alert('success', 'Bien Hecho ' . $this->nombre . ', te has registrado correctamente', [
             'position' => 'top-end',
             'timer' => 3000,
             'toast' => true,
@@ -312,6 +325,10 @@ class RegistroVisitantes extends Component
             ]);
         }
     }
+    // En tu controlador Livewire
+
+
+
 
     public function imprimirCredencial()
     {
@@ -321,12 +338,12 @@ class RegistroVisitantes extends Component
     public function imprimirCredencialImage($dataImage)
     {
         $pdf = \PDF::loadView('visitantes.credencial.index', ['credencial' => $dataImage])->output();
-        $fileName = 'Credencial de '.$this->registrarVisitante->nombre.' '.$this->registrarVisitante->apellidos.'.pdf';
+        $fileName = 'Credencial de ' . $this->registrarVisitante->nombre . ' ' . $this->registrarVisitante->apellidos . '.pdf';
 
         return response()->streamDownload(
             function () use ($pdf) {
                 echo $pdf;
-                $this->alert('success', 'Bien Hecho '.$this->nombre.', se ha imprimido correctamente la credencial', [
+                $this->alert('success', 'Bien Hecho ' . $this->nombre . ', se ha imprimido correctamente la credencial', [
                     'position' => 'top-end',
                     'timer' => 1000,
                     'toast' => true,
@@ -336,7 +353,7 @@ class RegistroVisitantes extends Component
             $fileName,
             [
                 'Content-Type' => 'application/pdf',
-                'Content-Disposition' => 'attachment; filename="'.$fileName.'"',
+                'Content-Disposition' => 'attachment; filename="' . $fileName . '"',
             ]
         );
     }

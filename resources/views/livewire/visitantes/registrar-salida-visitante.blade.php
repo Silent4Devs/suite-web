@@ -1,7 +1,8 @@
 <div class="row m-0">
     <x-loading-indicator />
     @if ($visitante)
-        <div class="p-3 col-sm-12 col-md-12 col-lg-6 col-12 mb-3 text-center header-text border border-3 rounded">
+        <div class="p-3 col-sm-12 col-md-12 col-lg-6 col-12 mb-3 text-center header-text border border-3 rounded"
+            data-page="registrar-salida">
             <h3 style="color: #3086AF">DATOS DE REGISTRO</h3>
             @include('visitantes.registro-visitantes._visitante-registrado', [
                 'visitante' => $visitante,
@@ -13,7 +14,8 @@
 
         </div>
         <div class="p-3 col-sm-12 col-md-12 col-lg-6 col-12 mb-3 text-center header-text rounded">
-            <x-signature wire:model.live="firma" />
+            <x-signature :visitante="$visitante" wire:model.live="firma"/>
+
             {{-- <div x-data="signaturePad(@entangle('firma').live)">
                 <div class="text-center" style="color: #1C274A">
                     <h3>REGISTRO DE SALIDA</h3>
@@ -54,7 +56,9 @@
         </div>
     @endif
     <div class="d-flex" style="justify-content: end">
-        <button type="button" class="btn tb-btn-primary" wire:click.prevent="registrarSalida">Finalizar</button>
+        <button type="button" class="btn tb-btn-primary text-white" wire:click.prevent="registrarSalida">
+            Finalizar
+        </button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function() {
@@ -63,7 +67,6 @@
                 const context = canvas.getContext('2d');
                 context.clearRect(0, 0, canvas.width, canvas.height);
             });
-
             Livewire.on('salidaRegistradaSelf', (id) => {
                 console.log('salidaRegistradaSelf');
                 window.location.href = "{{ route('visitantes.presentacion') }}";

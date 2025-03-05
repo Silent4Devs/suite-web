@@ -15,7 +15,7 @@ use App\Models\Proceso;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class ActivosInformacionController extends Controller
+class activeInformationController extends Controller
 {
     public function index(Request $request, $matriz)
     {
@@ -52,7 +52,7 @@ class ActivosInformacionController extends Controller
         $activos->contenedores()->sync($contenedores);
         $matriz = $request->matriz_id;
 
-        return redirect()->route('admin.activosInformacion.index', ['matriz' => $matriz])->with('success', 'Guardado con éxito');
+        return redirect()->route('admin.activeInformation.index', ['matriz' => $matriz])->with('success', 'Guardado con éxito');
     }
 
     public function edit(Request $request, $activos, $matriz)
@@ -75,7 +75,7 @@ class ActivosInformacionController extends Controller
         $activos->contenedores()->sync($request->contenedores);
         $matriz = $request->matriz_id;
 
-        return redirect()->route('admin.activosInformacion.index', ['matriz' => $matriz]);
+        return redirect()->route('admin.activeInformation.index', ['matriz' => $matriz]);
     }
 
     public function destroy($id)

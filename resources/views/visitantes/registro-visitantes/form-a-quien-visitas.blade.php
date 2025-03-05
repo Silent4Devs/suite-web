@@ -87,7 +87,7 @@
         </div>
     </div>
     <div class="col-12 mt-3" style="text-align: end">
-        <button class="btn tb-btn-primary" wire:click.prevent="increaseStep()">¡Listo!</button>
+        <button class="btn tb-btn-primary text-white"  wire:click.prevent="increaseStep()">¡Listo!</button>
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', () => {

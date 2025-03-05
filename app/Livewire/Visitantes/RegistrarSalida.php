@@ -16,9 +16,11 @@ class RegistrarSalida extends Component
 
     public $visitante;
 
+    public $firma;
+
     public $perPage = 5;
 
-    protected $listeners = ['salidaRegistrada' => 'render'];
+    protected $listeners = ['salidaRegistrada', 'refreshModals' => 'render'];
 
     public function render()
     {
@@ -30,6 +32,13 @@ class RegistrarSalida extends Component
     public function openModal($visitanteId)
     {
         $this->visitante = RegistrarVisitante::find($visitanteId);
-        $this->dispatch('openModal', visitante: $this->visitante);
+
+        // Emitir el visitante directamente como objeto
+        $this->dispatch('openModal', $this->visitante);
     }
+    // public function closeModal()
+    // {
+    //     $this->dispatch('closeModal');
+    // }
+
 }
