@@ -50,23 +50,25 @@
             </div>
         </div>
 
-        <div class="row">
-            <div class="form-group col-sm-4">
-                <div class="form-group">
-                    <label for="meta"><i class="fas fa-minus iconos-crear"></i>Valor Minimo</label>
-                    <span class="ml-1"> {{ $rangos_ind->valor_minimo}}</span>
+        @if (isset($rangos_ind->valor_minimo) && isset($rangos_ind->valor_maximo))
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <div class="form-group">
+                        <label for="meta"><i class="fas fa-minus iconos-crear"></i>Valor Minimo</label>
+                        <span class="ml-1"> {{ $rangos_ind->valor_minimo}}</span>
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <div class="row">
-            <div class="form-group col-sm-4">
-                <div class="form-group">
-                    <label for="meta"><i class="fas fa-plus iconos-crear"></i>Valor Maximo</label>
-                    <span class="ml-1"> {{ $rangos_ind->valor_maximo}}</span>
+            <div class="row">
+                <div class="form-group col-sm-4">
+                    <div class="form-group">
+                        <label for="meta"><i class="fas fa-plus iconos-crear"></i>Valor Maximo</label>
+                        <span class="ml-1"> {{ $rangos_ind->valor_maximo }}</span>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
 
         <div class="row">
             <div class="form-group col-sm-4">
