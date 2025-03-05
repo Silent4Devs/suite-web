@@ -36,7 +36,9 @@
                     <label><i class="fas fa-list iconos-crear"></i> Proyecto</label>
                     @if ($origen == 'tareas-proyectos')
                     <div class="form-control" style="background-color: #eee; width: 100%; max-width: 100%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
-                        {{ $proyecto_seleccionado->proyecto }}
+                        <span style="display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap;">
+                            {{ $proyecto_seleccionado->proyecto }}
+                        </span>
                     </div>
                     @endif
                     @if ($origen == 'tareas')
@@ -172,7 +174,7 @@
                                 <p class="parrafo">¿Desea eliminar la tarea {{ $tarea->tarea }}?</p>
                             </div>
 
-                            <div class="mt-4 d-flex justify-content-between">
+                            <div class="mt-4 d-flex justify-content-between align-items-center" style="gap: 0;">
                                 <button class="btn btn-outline-primary" data-dismiss="modal">
                                     Cancelar
                                 </button>
@@ -181,6 +183,7 @@
                                     Eliminar Tarea
                                 </button>
                             </div>
+
                         </div>
                     </div>
                 </div>

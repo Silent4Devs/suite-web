@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\ModelNotFoundException;
 
 class TBTenantMiddleware
 {
+
     protected $tbTenantManager;
 
     protected $tbStripeService;

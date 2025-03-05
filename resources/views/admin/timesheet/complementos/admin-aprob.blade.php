@@ -22,6 +22,7 @@
             $usuario->can('timesheet_administrador_proyectos_access') ||
             $usuario->can('timesheet_administrador_tareas_proyectos_access') ||
             $usuario->can('timesheet_administrador_clientes_access') ||
+            $usuario->can('timesheet_administrador_reportes_aprobador_access') ||
             $usuario->can('timesheet_administrador_dashboard_access'))
         <div class="option-fixed-admin">
 
@@ -36,6 +37,7 @@
                 $usuario->can('timesheet_administrador_proyectos_access') ||
                     $usuario->can('timesheet_administrador_tareas_proyectos_access') ||
                     $usuario->can('timesheet_administrador_clientes_access') ||
+                    $usuario->can('timesheet_administrador_reportes_aprobador_access') ||
                     $usuario->can('timesheet_administrador_dashboard_access'))
                 <button class="btn" onclick="document.querySelector('.modal-config').classList.remove('invisible');">
                     <img src="{{ asset('img/calendar-icon-time-config.svg') }}" alt="">
@@ -169,6 +171,7 @@
     $usuario->can('timesheet_administrador_proyectos_access') ||
         $usuario->can('timesheet_administrador_tareas_proyectos_access') ||
         $usuario->can('timesheet_administrador_clientes_access') ||
+        $usuario->can('timesheet_administrador_reportes_aprobador_access') ||
         $usuario->can('timesheet_administrador_dashboard_access'))
     <div class="modal-admin-time modal-config invisible">
         <button class="btn btn-close-time-config" style="position: absolute; right: 10px; top: 10px;"

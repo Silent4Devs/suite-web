@@ -43,6 +43,7 @@
     "spiral/roadrunner": "^2024.2",
     "stichoza/google-translate-php": "^5.2",
     "stancl/tenancy": "^3.8",
+    "stripe/stripe-php": "^16.5",
     "tucker-eric/eloquentfilter": "^3.2",
     "vladimir-yuldashev/laravel-queue-rabbitmq": "^14.0",
     "vxm/laravel-async": "^5.0",

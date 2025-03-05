@@ -45,25 +45,29 @@ Route::view('tenant', 'central.landing')->name('central.landing');
     Route::get('/', [LoginController::class, 'showLoginForm'])->name('users.login');
     Route::get('/usuario-bloqueado', [UsuarioBloqueado::class, 'usuarioBloqueado'])->name('users.usuario-bloqueado');
 
-Auth::routes();
+    Auth::routes();
 
-Route::get('/password-expired', [PasswordController::class, 'showExpiredForm'])
-    ->name('password.expired')
-    ->middleware('auth');
+    Route::post('/password-update', [PasswordController::class, 'updatePassword'])
+        ->name('password.update');
 
-Route::post('/password-expired', [PasswordController::class, 'updatePassword'])
-    ->name('password.update')
-    ->middleware('auth');
+    Route::get('/password-expired', [TbLoginController::class, 'showExpiredForm'])
+        ->name('password.expired')
+        ->middleware('autorized');
 
-// Tabla-Calendario
-Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
+    Route::post('/password-change', [TbLoginController::class, 'renewPasswordUpdate'])
+        ->name('password.renew-password-update')
+        ->middleware('autorized');
 
-    // Route::group(['middleware' => ['general_tabantaj']], function () {
-    // Inicio usuario
-    Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
-    Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
-    Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
-    Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
+    // Tabla-Calendario
+    Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
+
+
+        // Route::group(['middleware' => ['general_tabantaj']], function () {
+        // Inicio usuario
+        Route::get('inicioUsuario', [InicioUsuarioController::class, 'index'])->name('inicio-Usuario.index');
+        Route::get('inicioUsuario/perfil-puesto', [InicioUsuarioController::class, 'perfilPuesto'])->name('inicio-Usuario.perfil-puesto');
+        Route::get('competencias/{empleado}/cv', 'CompetenciasController@miCurriculum')->name('miCurriculum');
+        Route::get('inicioUsuario/mis-cursos', 'InicioUsuarioController@misCursos')->name('inicioUsuario.mis-cursos');
 
         Route::get('inicioUsuario/expediente/{id_empleado}', [InicioUsuarioController::class, 'expediente'])->name('inicio-Usuario.expediente');
         Route::post('inicioUsuario/expediente/update', [InicioUsuarioController::class, 'expedienteUpdate'])->name('inicio-Usuario.expediente-update');
@@ -397,26 +401,6 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::resource('timesheet', 'TimesheetController')->except(['create', 'index', 'edit']);
             });
 
-
-                Route::get('timesheet/proyectos', 'TimesheetController@proyectos')->name('timesheet-proyectos');
-                Route::get('timesheet/proyectos/create', 'TimesheetController@createProyectos')->name('timesheet-proyectos-create');
-                Route::post('timesheet/proyectos/store', 'TimesheetController@storeProyectos')->name('timesheet-proyectos-store');
-                Route::get('timesheet/proyectos/edit/{id}', 'TimesheetController@editProyectos')->name('timesheet-proyectos-edit');
-                Route::post('timesheet/proyectos/update/{id}', 'TimesheetController@updateProyectos')->name('timesheet-proyectos-update');
-                // Route::get('timesheet/proyectos/notificacion-horas', 'TimesheetController@notificacionhorassobrepasadas')->name('timesheet-notificacion-horas');
-                Route::get('timesheet/proyectos/show/{id}', 'TimesheetController@showProyectos')->name('timesheet-proyectos-show');
-                Route::get('timesheet/tareas', 'TimesheetController@tareas')->name('timesheet-tareas');
-                Route::get('timesheet/tareas-proyecto/{proyecto_id}', 'TimesheetController@tareasProyecto')->name('timesheet-tareas-proyecto');
-                Route::get('timesheet/proyectos/reporte/registros', 'TimesheetController@reportesRegistros')->name('timesheet-reportes-registros');
-                Route::get('timesheet/proyectos/reporte/proyemp', 'TimesheetController@reportesProyemp')->name('timesheet-reportes-proyemp');
-                Route::get('timesheet/proyectos/reporte/empleados', 'TimesheetController@reportesEmpleados')->name('timesheet-reportes-empleados');
-                Route::get('timesheet/proyectos/reporte/proyectos', 'TimesheetController@reportesProyectos')->name('timesheet-reportes-proyectos');
-                Route::get('timesheet/proyectos/reporte/financiero', 'TimesheetController@reportesFinanciero')->name('timesheet-reportes-financiero');
-
-                Route::get('timesheet/proyecto-empleados/{proyecto_id}', 'TimesheetController@proyectosEmpleados')->name('timesheet-proyecto-empleados');
-                Route::get('timesheet/proyecto-externos/{proyecto_id}', 'TimesheetController@proyectosExternos')->name('timesheet-proyecto-externos');
-
-
             // Comunicacion Sgis
             Route::delete('comunicacion-sgis/destroy', 'ComunicacionSgiController@massDestroy')->name('comunicacion-sgis.massDestroy');
             Route::post('comunicacion-sgis/media', 'ComunicacionSgiController@storeMedia')->name('comunicacion-sgis.storeMedia');
@@ -461,7 +445,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             Route::delete('contenedores/{contenedor}', 'ContenedorMatrizOctaveController@destroy')->name('contenedores.destroy');
             Route::resource('contenedores', 'ContenedorMatrizOctaveController')->except(['index', 'create', 'edit', 'destroy']);
 
-            Route::group(['middleware' => ['gestion_talento']], function () {
+            // Route::group(['middleware' => ['gestion_talento']], function () {
                 //Modulo Capital Humano
                 // Route::middleware('cacheResponse')->get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
                 Route::get('capital-humano', 'RH\CapitalHumanoController@index')->name('capital-humano.index');
@@ -551,6 +535,8 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::get('solicitud-vacaciones/{id}/respuesta', 'SolicitudVacacionesController@respuesta')->name('solicitud-vacaciones.respuesta');
                 Route::get('solicitud-vacaciones/{id}/show', 'SolicitudVacacionesController@show')->name('solicitud-vacaciones.show');
                 Route::post('solicitud-vacaciones/destroy', 'SolicitudVacacionesController@destroy')->name('solicitud-vacaciones.destroy');
+                Route::post('solicitudAprobacionVacacion/updateAprobacion/{id}', 'SolicitudVacacionesController@updateAprobacion')->name('solicitud-vacaciones.updateAprobacion');
+
                 Route::resource('solicitud-vacaciones', 'SolicitudVacacionesController')->names([
                     'create' => 'solicitud-vacaciones.create',
                     'store' => 'solicitud-vacaciones.store',
@@ -569,6 +555,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::get('solicitud-dayoff/{id}/respuesta', 'SolicitudDayOffController@respuesta')->name('solicitud-dayoff.respuesta');
                 Route::get('solicitud-dayoff/{id}/show', 'SolicitudDayOffController@show')->name('solicitud-dayoff.show');
                 Route::post('solicitud-dayoff/destroy', 'SolicitudDayOffController@destroy')->name('solicitud-dayoff.destroy');
+                Route::post('solicitudAprobacionDayOff/updateAprobacion/{id}', 'SolicitudDayOffController@updateAprobacion')->name('solicitud-DayOff.updateAprobacion');
                 Route::resource('solicitud-dayoff', 'SolicitudDayOffController')->names([
                     'create' => 'solicitud-dayoff.create',
                     'store' => 'solicitud-dayoff.store',
@@ -827,7 +814,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
                 Route::resource('recursos', 'RecursosController')->except(['update']);
 
                 Route::resource('categoria-capacitacion', 'CategoriaCapacitacionController');
-            });
+            // });
 
             Route::group(['middleware' => ['gestion_normativa']], function () {
 
@@ -1731,7 +1718,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
             // Route::resource('/', MejorasController::class);
         });
         // Fin visitantes
-    });
+     });
 
     Route::group(['prefix' => 'profile', 'as' => 'profile.', 'namespace' => 'Auth', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
         // Change password
@@ -1854,7 +1841,7 @@ Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'mi
     });
 
     //KATBOL
-    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser']], function () {
+    Route::group(['prefix' => 'contract_manager', 'as' => 'contract_manager.', 'namespace' => 'ContractManager', 'middleware' => ['autorized', 'doubleAuth', 'activeUser', 'password_expired']], function () {
         Route::group(['middleware' => 'primeros.pasos'], function () {
 
             Route::group(['middleware' => ['katbol']], function () {

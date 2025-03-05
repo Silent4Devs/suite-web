@@ -1,13 +1,7 @@
 @extends('layouts.app')
 @section('classBody', $errors->has('email') ? ' is-invalid' : 'animate-active')
 @section('content')
-    @if (session('message'))
-        <div class="alert alert-info" role="alert">
-            {{ session('message') }}
-        </div>
-    @endif
-
-    <form method="POST" action="{{ route('login') }}">
+    <form method="POST" action="{{ route('login.authenticate') }}">
         @csrf
 
         @php
@@ -58,11 +52,19 @@
             <a href="{{ route('visitantes.presentacion') }}" id="registrar_visitantes">Registro de Visitantes</a>
         </div>
 
-        @if ($errors->has('email'))
-            <div class="invalid-feedback">
-                {{ $errors->first('email') }}
-            </div>
-        @endif
+        <div>
+            @if ($errors->has('email'))
+                <div class="invalid-feedback">
+                    {{ $errors->first('email') }}
+                </div>
+            @endif
+            @if (session('message'))
+                <div class="invalid-feedback" role="alert">
+                    {{ session('message') }}
+                </div>
+            @endif
+        </div>
+
     </form>
     @include('auth.aviso-privacidad-s4b')
 @endsection

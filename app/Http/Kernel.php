@@ -72,7 +72,7 @@ class Kernel extends HttpKernel
         'version_iso_2022' => \App\Http\Middleware\Tabantaj\VersionIso2022::class,
         'doNotCacheResponse' => \Spatie\ResponseCache\Middlewares\DoNotCacheResponse::class,
         'cacheResponse' => \Spatie\ResponseCache\Middlewares\CacheResponse::class,
-        'password.expired' => \App\Http\Middleware\PasswordExpired::class,
+        'password_expired' => \App\Http\Middleware\PasswordExpired::class,
         'course' => \App\Http\Middleware\Tabantaj\CourseMiddleware::class,
         // 'XssSanitization' => \App\Http\Middleware\XssSanitization::class,
         //milddleware control accesos tenant

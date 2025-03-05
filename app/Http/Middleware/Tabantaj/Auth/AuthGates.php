@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Services\Tenant\TBTenantTenantManager;
 use Closure;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Gate;
 
@@ -48,7 +49,7 @@ class AuthGates
                 });
             }
         }
-
+        // dd($request, $next($request));
         return $next($request);
     }
 }

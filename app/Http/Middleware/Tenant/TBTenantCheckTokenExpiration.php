@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class TBTenantCheckTokenExpiration
 {
+
     /**
      * Handle an incoming request.
      *

@@ -27,6 +27,7 @@ class TBTenantVisitantesMiddleware
      */
     public function handle(Request $tbRequest, Closure $tbNext): Response
     {
+
         $tbModulosValidos = ['Visitantes'];
 
         $tbEstado = $this->tbStripeService->tbTenantSubscriptionStatusOnPremise($tbModulosValidos);
