@@ -391,7 +391,7 @@
                                id="ano"
                                value="{{ old('ano', $indicadoresSgsi->ano) }}"
                                required>
-                        <label for="ano" class="asterisco">Año*</label>
+                        <label for="ano" style="margin-top: -10px !important;" class="asterisco">Año*</label>
                         @if ($errors->has('ano'))
                             <div class="text-danger">
                                 {{ $errors->first('ano') }}
