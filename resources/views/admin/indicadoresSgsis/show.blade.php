@@ -67,6 +67,24 @@
                             {{ $indicadoresSgsi->formula }}
                         </td>
                     </tr>
+                    @if (isset($indicadoresSgsi->rangosIndicadoresSGSI->valor_minimo) && isset($indicadoresSgsi->rangosIndicadoresSGSI->valor_maximo))
+                    <tr>
+                        <th>
+                            Valor Minimo
+                        </th>
+                        <td>
+                            {{ $indicadoresSgsi->rangosIndicadoresSGSI->valor_minimo }}
+                        </td>
+                    </tr>
+                    <tr>
+                        <th>
+                            Valor Maximo
+                        </th>
+                        <td>
+                            {{ $indicadoresSgsi->rangosIndicadoresSGSI->valor_maximo }}
+                        </td>
+                    </tr>
+                @endif
                     <tr>
                         <th>
                             Frecuencia

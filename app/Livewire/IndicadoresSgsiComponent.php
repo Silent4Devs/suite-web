@@ -177,10 +177,12 @@ class IndicadoresSgsiComponent extends Component
                 }
             }
 
-            if($result > $this->rangos_ind->valor_maximo || $result < $this->rangos_ind->valor_minimo){
-                $this->alert('error', 'El resultado de la operación:'. $result .' no se encuentra dentro de los valores limite del indicador');
+            if (isset($this->rangos_ind->valor_maximo) && isset($this->rangos_ind->valor_minimo)) {
+                if($result > $this->rangos_ind->valor_maximo || $result < $this->rangos_ind->valor_minimo){
+                    $this->alert('error', 'El resultado de la operación:'. $result .' no se encuentra dentro de los valores limite del indicador');
 
-                return false;
+                    return false;
+                }
             }
 
         }else{
@@ -248,10 +250,12 @@ class IndicadoresSgsiComponent extends Component
                 }
             }
 
-            if($result > $this->rangos_ind->valor_maximo || $result < $this->rangos_ind->valor_minimo){
-                $this->alert('error', 'El resultado de la operación: '. $result .' no se encuentra dentro de los valores limite del indicador');
+            if (isset($this->rangos_ind->valor_maximo) && isset($this->rangos_ind->valor_minimo)) {
+                if($result > $this->rangos_ind->valor_maximo || $result < $this->rangos_ind->valor_minimo){
+                    $this->alert('error', 'El resultado de la operación: '. $result .' no se encuentra dentro de los valores limite del indicador');
 
-                return false;
+                    return false;
+                }
             }
         }else{
             $result = $this->indicadoresSgsis->verde;

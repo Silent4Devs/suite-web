@@ -144,7 +144,7 @@ class IndicadoresSgsiController extends Controller
             'valor_maximo' => 'required',
             'flujo' => 'required',
         ]);
-        // $indicadoresSgsi = IndicadoresSgsi::create($request->all());
+
         $indicadoresSgsi = IndicadoresSgsi::create([
             'nombre' => $request->nombre,
             'id_area' => $request->id_area,
@@ -204,26 +204,38 @@ class IndicadoresSgsiController extends Controller
             'meta' => 'required',
             'no_revisiones' => 'required',
             'ano' => 'required',
+            'valor_minimo' => 'required',
+            'valor_maximo' => 'required',
+            'flujo' => 'required',
         ]);
-        $indicadoresSgsi->update($request->all());
-        // update([
-            //     'nombre' => $request->nombre,
-            //     'id_area' => $request->id_area,
-            //     'id_empleado' => $request->id_empleado,
-            //     'id_proceso' => $request->id_proceso,
-            //     'descripcion' => $request->descripcion,
-            //     'rojo' => $request->rojo,
-            //     'amarillo' => $request->amarillo,
-            //     'verde' => $request->verde,
-            //     'formula' => $request->formula,
-            //     'frecuencia' => $request->frecuencia,
-            //     'unidadmedida' => $request->unidadmedida,
-            //     'meta' => $request->meta,
-            //     'no_revisiones' => $request->no_revisiones,
-            //     'ano' => $request->ano,
-            // ]);
 
-        // return redirect()->route('admin.indicadores-sgsis.index');
+        $indicadoresSgsi->update([
+                'nombre' => $request->nombre,
+                'id_area' => $request->id_area,
+                'id_empleado' => $request->id_empleado,
+                'id_proceso' => $request->id_proceso,
+                'descripcion' => $request->descripcion,
+                'rojo' => $request->rojo,
+                'amarillo' => $request->amarillo,
+                'verde' => $request->verde,
+                'formula' => $request->formula,
+                'frecuencia' => $request->frecuencia,
+                'unidadmedida' => $request->unidadmedida,
+                'meta' => $request->meta,
+                'no_revisiones' => $request->no_revisiones,
+                'ano' => $request->ano,
+            ]);
+
+        if($indicadoresSgsi->rangosIndicadoresSGSI()->exists())
+        {
+            $indicadoresSgsi->rangosIndicadoresSGSI->update([
+                'valor_minimo' => $request->valor_minimo,
+                'valor_maximo' => $request->valor_maximo,
+                'flujo' => $request->flujo,
+                'id_indicador_sgsi' => $indicadoresSgsi->id,
+            ]);
+        }
+
         return redirect()->route('admin.indicadores-sgsisUpdate', ['id' => $indicadoresSgsi->id])->with('success', 'Editado con éxito');
     }
 
