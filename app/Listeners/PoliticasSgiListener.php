@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\PoliticasSgiEvent;
 use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
@@ -32,7 +33,7 @@ class PoliticasSgiListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(PoliticasSgiEvent $event)
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', 'PoliticaSgsi')->first();
 

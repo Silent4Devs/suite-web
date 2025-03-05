@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\EvaluacionEvent;
 use App\Models\User;
 use App\Notifications\EvaluacionNotification;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -30,7 +31,7 @@ class EvaluacionListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(EvaluacionEvent $event)
     {
         // corregir
         User::select('users.id', 'users.name', 'users.email', 'role_user.role_id')

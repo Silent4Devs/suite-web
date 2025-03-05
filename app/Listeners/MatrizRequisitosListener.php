@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\MatrizRequisitosEvent;
 use App\Models\Empleado;
 use App\Models\ListaDistribucion;
 use App\Models\User;
@@ -32,7 +33,7 @@ class MatrizRequisitosListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(MatrizRequisitosEvent $event)
     {
         $lista = ListaDistribucion::with('participantes')->where('modelo', 'MatrizRequisitoLegale')->first();
 

@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\SugerenciasEvent;
 use App\Models\AprobadorSeleccionado;
 use App\Models\User;
 use App\Notifications\SugerenciasNotification;
@@ -31,7 +32,7 @@ class SugerenciasListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(SugerenciasEvent $event)
     {
         $sugerencias = $event->sugerencias; // Asegúrate de que $event->sugerencias es del tipo correcto
         $tipo_consulta = 'update'; // Asigna el valor correspondiente

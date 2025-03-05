@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Events\SolicitudVacacionesEvent;
 use App\Models\Empleado;
 use App\Models\User;
 use App\Notifications\SolicitudVacacionesNotification;
@@ -31,7 +32,7 @@ class SolicitudVacacionesListener implements ShouldQueue
      * @param  object  $event
      * @return void
      */
-    public function handle($event)
+    public function handle(SolicitudVacacionesEvent  $event)
     {
 
         try {
