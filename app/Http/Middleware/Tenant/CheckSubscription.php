@@ -17,6 +17,7 @@ class CheckSubscription
             return redirect(route('tenant.settings.application'));
         }
 
+
         return $next($request);
     }
 }

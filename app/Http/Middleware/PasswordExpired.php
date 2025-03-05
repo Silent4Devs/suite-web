@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 
 class PasswordExpired
 {
+
     /**
      * Handle an incoming request.
      *
@@ -14,7 +15,9 @@ class PasswordExpired
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->check() && auth()->user()->passwordExpired()) {
+        //Validar 6 meses desde el ultimo cambio de contraseña
+        if(auth()->check() && auth()->user()->passwordExpired())
+        {
             return redirect()->route('password.expired');
         }
 

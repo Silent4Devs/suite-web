@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantSilent4UniversityMiddleware
 {
+
     protected $tbTenantManager;
 
     protected $tbStripeService;

@@ -1,30 +1,30 @@
 pipeline {
     agent any
-
+    environment {
+        DEPLOY_SERVER = '192.168.9.78'
+        DEPLOY_PATH = '/var/contenedor/suite-web'
+    }
     stages {
-        stage('Git Pull via SSH') {
+        stage('Deploy via SSH') {
             steps {
                 script {
                     withCredentials([
-                        usernamePassword(credentialsId: 'TabantajQa', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASSWORD'),
-                        string(credentialsId: 'IpQaTabantaj', variable: 'SERVER_IP')
+                        usernamePassword(credentialsId: 'QA-CREDENCIALES', usernameVariable: 'SSH_USER', passwordVariable: 'SSH_PASS'),
+                        string(credentialsId: 'GITHUB_PAT_TOKEN', variable: 'GITHUB_TOKEN')  
                     ]) {
-                        sh '''
-                            # Elimina la clave antigua del archivo known_hosts
-                            ssh-keygen -f "/root/.ssh/known_hosts" -R $SERVER_IP || true
+                        sh """
+                            sshpass -p "$SSH_PASS" ssh -o StrictHostKeyChecking=no ${SSH_USER}@${DEPLOY_SERVER} "
+                                cd ${DEPLOY_PATH} && 
+                                echo '$SSH_PASS' | sudo -S chmod -R 777 ${DEPLOY_PATH} && 
+                                echo '$SSH_PASS' | sudo -S git pull https://jonathansilent:${GITHUB_TOKEN}@github.com/Silent4Devs/suite-web.git develop_Onpremise && 
+                                echo '$SSH_PASS' | sudo -S chmod -R 777 ${DEPLOY_PATH}
+                            "
+                        """
 
-                            # Crea un archivo de configuración SSH temporal
-                            echo "Host $SERVER_IP\n    StrictHostKeyChecking=no\n" > /tmp/ssh_config
-
-                            # Realiza la conexión SSH y ejecuta el comando de git pull
-                            sshpass -p $SSH_PASSWORD ssh -F /tmp/ssh_config $SSH_USER@$SERVER_IP "cd /var/contenedor/suite-web && echo $SSH_PASSWORD | sudo -S git pull"
-
-                            # Elimina el archivo de configuración SSH temporal
-                            rm /tmp/ssh_config
-                        '''
                     }
                 }
             }
         }
     }
 }
+

@@ -10,6 +10,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class TBTenantPlanesTrabajoMiddleware
 {
+
     protected $tbTenantManager;
 
     protected $tbStripeService;

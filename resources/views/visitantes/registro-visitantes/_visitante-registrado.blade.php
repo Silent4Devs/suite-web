@@ -5,10 +5,15 @@
             <span>Entrada: {{ now()->format('h:i A') }}</span>
         </div>
         <div class="mt-3">
-            <img src="{{ $visitante['foto'] ? $visitante['foto'] : asset('assets/user.png') }}"
-                style="max-width: 250px;clip-path: circle();" alt="{{ $visitante['nombre'] }}" width="150px"
-                height="150px">
+            <img src="{{ isset($foto) && !empty($foto)
+                ? $foto
+                : (isset($visitante->foto) && !empty($visitante->foto)
+                    ? $visitante->foto
+                    : asset('assets/user.png')) }}"
+                style="max-width: 250px; height: 150px; width: 150px; clip-path: circle();" alt="Foto Capturada">
+
         </div>
+
         <div class="mt-3 rounded border border-2  p-2" style="text-transform: capitalize">
             {{ $visitante['nombre'] }} {{ $visitante['apellidos'] }}
         </div>
@@ -55,3 +60,24 @@
         @endif
     @endif
 </div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        const isRegistrarSalida = document.querySelector('[data-page="registrar-salida"]') !== null;
+
+        // Si estamos en registrar salida, NO ejecutamos este script
+        if (isRegistrarSalida) {
+            console.log("🛑 Script de 'capturedImage' no se ejecuta en Registrar Salida.");
+            return;
+        }
+
+        const capturedImageElement = document.getElementById("capturedImage");
+        if (!capturedImageElement) return;
+
+        const imageData = localStorage.getItem("capturedImage");
+        if (imageData) {
+            capturedImageElement.src = imageData;
+            console.log("✅ Imagen cargada en la vista");
+        }
+    });
+</script>

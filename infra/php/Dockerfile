@@ -1,10 +1,13 @@
-FROM php:8.2-fpm-alpine
+FROM php:8.2-fpm-alpine3.18
 
 # Add docker-php-extension-installer script
 ADD https://github.com/mlocati/docker-php-extension-installer/releases/latest/download/install-php-extensions /usr/local/bin/
 
+# Install Node.js (latest 20.x version available in Alpine 3.18)
+RUN apk add --no-cache nodejs npm
+
 # Install dependencies
-RUN apk add --no-cache \
+RUN apk update && apk upgrade --no-cache && apk add --no-cache \
     bash \
     curl \
     freetype-dev \
@@ -17,9 +20,9 @@ RUN apk add --no-cache \
     libzip-dev \
     libpq-dev \
     make \
+    musl-dev \
+    gcompat \
     #mysql-client \
-    nodejs \
-    npm \
     oniguruma-dev \
     yarn \
     openssh-client \
@@ -64,21 +67,14 @@ RUN mkdir -p /var/log/php-fpm && \
     chown -R www-data:www-data /var/log/php-fpm && \
     chmod 755 /var/log/php-fpm
 
-# Enable phpredis extension
-#RUN echo "extension=redis.so" > /usr/local/etc/php/conf.d/docker-php-ext-redis.ini
-
 # Copy custom php.ini
 COPY php.ini /usr/local/etc/php/php.ini
 
 # Copy custom www.conf
 COPY www.conf /usr/local/etc/php-fpm.d/www.conf
 
-
 RUN chown -R www-data:www-data /var/www \
     && chmod 755 -R /var/www
-
-# Install npm
-# RUN npm install -g npm@latest
 
 # Healthcheck
 HEALTHCHECK --interval=15m --timeout=3s \

@@ -21,6 +21,7 @@ class VisitantesAvisoPrivacidadController extends Controller
         abort_if(Gate::denies('visitantes_administrador'), Response::HTTP_FORBIDDEN, '403 Forbidden');
         if (AvisoPrivacidadVisitante::count() > 0) {
             $aviso_privacidad = AvisoPrivacidadVisitante::first();
+            $aviso_privacidad->aviso_privacidad = trim($aviso_privacidad->aviso_privacidad);
         } else {
             $aviso_privacidad = new AvisoPrivacidadVisitante;
         }

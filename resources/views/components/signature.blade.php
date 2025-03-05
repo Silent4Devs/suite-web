@@ -1,14 +1,13 @@
 <h3>REGISTRO DE SALIDA</h3>
-<span style="font-size: 18px">Por favor,firma tu salida para
-    completar tu
-    registro</span>
+<span style="font-size: 18px">Por favor, firma tu salida para completar tu registro</span>
 <div class="wrapper" style="border: 1px dotted gray">
-    <canvas {{ $attributes }} id="signature-pad"
+    <canvas id="canvas-firma{{ $visitante->id }}"
         style="width: 100%; @error('firma') border: 2px solid red !important; @enderror" class="signature-pad" width=320
-        height=250></canvas>
+        height=250>
+    </canvas>
 </div>
 <div>
-    <i id="clear" style="cursor: pointer; font-size: 25px;" class="bi bi-trash"></i>
+    <i id="clear-firma{{ $visitante->id }}" style="cursor: pointer; font-size: 25px;" class="bi bi-trash"></i>
     <div>
         @error('firma')
             <strong class="text-danger">
@@ -17,28 +16,43 @@
         @enderror
     </div>
 </div>
+
 <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
 <script>
-    var signaturePad = new SignaturePad(document.getElementById('signature-pad'), {
-        backgroundColor: 'rgba(255, 255, 255, 0)',
-        penColor: 'rgb(0, 0, 0)'
-    });
-    signaturePad.addEventListener("afterUpdateStroke", (data) => {
-        let attributes = @json($attributes->get('wire:model.live'));
-        @this.set(attributes, signaturePad.toDataURL('image/png'), true);
+    document.addEventListener('DOMContentLoaded', function() {
+        function inicializarFirma(visitanteId) {
+            let canvas = document.getElementById("canvas-firma" + visitanteId);
 
-    });
-    // var saveButton = document.getElementById('save');
-    var cancelButton = document.getElementById('clear');
+            if (!canvas) {
+                console.error("No se encontró el canvas para el visitante " + visitanteId);
+                return;
+            }
 
-    // saveButton.addEventListener('click', function(event) {
-    //     var data = signaturePad.toDataURL('image/png');
+            let signaturePad = new SignaturePad(canvas);
 
-    //     // Send data to server instead...
-    //     window.open(data);
-    // });
+            signaturePad.addEventListener("endStroke", function() {
+                let firmaDataUrl = signaturePad.toDataURL('image/png');
+                Livewire.dispatch("updateFirma", {
+                    id: visitanteId,
+                    firma: firmaDataUrl
+                });
+            });
 
-    cancelButton.addEventListener('click', function(event) {
-        signaturePad.clear();
+            // Botón para limpiar la firma
+            document.getElementById("clear-firma" + visitanteId)?.addEventListener("click", function() {
+                signaturePad.clear();
+            });
+        }
+
+        // Inicializar todas las firmas al cargar la página
+        document.querySelectorAll("[id^='canvas-firma']").forEach(canvas => {
+            let visitanteId = canvas.id.replace("canvas-firma", "");
+            inicializarFirma(visitanteId);
+        });
+
+        // Cuando Livewire actualice la lista de visitantes, reinicializar firmas
+        Livewire.on("refreshFirmas", (visitanteId) => {
+            inicializarFirma(visitanteId);
+        });
     });
 </script>
