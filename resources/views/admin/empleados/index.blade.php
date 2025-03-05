@@ -70,7 +70,7 @@
                         @else
                             <td>Sin Registro</td>
                         @endif
-                        <td>{{ $empleado->area->area }}</td>
+                        <td>{{ $empleado->area->area ?? '' }}</td>
                         <td>{{ $empleado->puesto }}</td>
                         @if (optional($empleado->supervisor)->name)
                             <td>{{ optional($empleado->supervisor)->name }}</td>
